@@ -1,0 +1,7 @@
+{
+  "name": "com.br.repassauto",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
