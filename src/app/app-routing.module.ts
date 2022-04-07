@@ -4,13 +4,41 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'offers',
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  }
+    path: 'offers',
+    loadChildren: () => import('./offers/offers.module').then( m => m.OffersPageModule)
+  },
+  {
+    path: 'myOffers',
+    loadChildren: () => import('./myOffers/myOffers.module').then( m => m.MyOffersPageModule)
+  },
+  {
+    path: 'myVehicles',
+    loadChildren: () => import('./myVehicles/myVehicles.module').then( m => m.MyVehiclesPageModule)
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
+  },
+  {
+    path: 'perimeters',
+    loadChildren: () => import('./perimeters/perimeters.module').then( m => m.PerimetersPageModule)
+  },
+  {
+    path: 'signOut',
+    loadChildren: () => import('./signOut/signOut.module').then( m => m.SignOutPageModule)
+  },
+  {
+    path: 'help',
+    loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule)
+  },
+  {
+    path: 'terms',
+    loadChildren: () => import('./terms/terms.module').then( m => m.TermsPageModule)
+  },
 ];
 
 @NgModule({

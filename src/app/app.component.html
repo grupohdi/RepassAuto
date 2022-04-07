@@ -2,9 +2,16 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
+        <ion-list id="repassauto-list">
+          <ion-list-header>RepassAuto</ion-list-header><br>
+          <ion-item-divider ></ion-item-divider>    <br>
+          <ion-note><ion-icon name="car-sport-outline"></ion-icon><b>{{ user.companyName.substr(0,25) }}</b></ion-note><br>
+          <ion-note><ion-icon name="person-circle-outline"></ion-icon>{{ user.name.substr(0,25) }}</ion-note>
+          <ion-note><ion-icon name="mail-outline"></ion-icon>{{ user.mail.substr(0,25) }}</ion-note>
+          <ion-note><ion-icon name="call-outline"></ion-icon>{{ user.phone }}</ion-note><br>
+          <ion-note><ion-icon name="shirt-outline"></ion-icon><b>{{ user.role=="platform_manager_access"?"Gerente":"Vendedor" }}</b></ion-note>
+
+          <ion-item-divider ></ion-item-divider>    
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
@@ -14,13 +21,16 @@
           </ion-menu-toggle>
         </ion-list>
 
+        <br>
+        <br>
+        <ion-item-divider ></ion-item-divider>    
         <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
-          </ion-item>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of labelPages; let i = index">
+            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
         </ion-list>
       </ion-content>
     </ion-menu>

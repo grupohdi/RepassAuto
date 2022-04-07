@@ -1,0 +1,56 @@
+@import '~swiper/scss';
+@import '~swiper/scss/autoplay';
+@import '~swiper/scss/keyboard';
+@import '~swiper/scss/pagination';
+@import '~swiper/scss/scrollbar';
+@import '~swiper/scss/zoom';
+@import '~@ionic/angular/css/ionic-swiper';
+
+ion-menu-button {
+  color: var(--ion-color-primary);
+}
+
+ion-content {
+  display: block;
+  max-height: calc(98%) !important;
+}
+
+ion-label{
+  font-size: 14px;
+}
+
+#container {
+  display: block;
+  max-height: calc(85%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    display: block;
+  }}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+p {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 22px;
+  color: red;
+  margin-top: 15px;
+}
