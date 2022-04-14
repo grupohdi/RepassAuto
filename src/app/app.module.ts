@@ -1,8 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+
+import { SQLite } from '@ionic-native/sqlite/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,16 +15,86 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Network } from '@ionic-native/network/ngx';
 
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpInterceptorProvider } from '../providers/http-interceptor/http-interceptor';
+import { ValidacaoCamposProvider } from '../providers/validacao-campos/validacao-campos';
+import { LocalStorageRepository } from '../repository/LocalStorageRepository';
+import { HttpClientProxy } from '../services/HttpClientProxy';
+
+import { AlertComponent } from '../components/alert/alert';
+import { LoaderComponent } from '../components/loader/loader';
+import { ToastComponent } from '../components/toast/toast';
+import { LocalNotificationComponent } from '../components/local-notification/local-notification';
+
+
+import { DataBaseProvider } from '../providers/database/database';
+import { UserProvider } from '../providers/database/user';
+import { ParametroProvider } from '../providers/database/parametro';
+
+import { UserService } from '../services/UserService';
+import { RlUserService } from '../services/RlUserService';
+import { CompanyService } from '../services/CompanyService';
+import { ParametroRepository } from '../Repository/ParametroRepository';
+import { ParametroService } from '../services/ParametroService';
+import { ConfiguracaoService } from '../services/ConfiguracaoService';
+import { OfferService } from '../services/OfferService';
+
+import { Camera } from '@ionic-native/camera/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, SwiperModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-                SplashScreen,
-                StatusBar,
-                ScreenOrientation,
-                Network
+  imports: [ FormsModule, CommonModule, HttpClientModule, BrowserModule, AppRoutingModule, IonicModule.forRoot()],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    SQLite,
+    SplashScreen,
+    StatusBar,
+    ScreenOrientation,
+    Network,
+    ValidacaoCamposProvider,
+    DataBaseProvider,
+    HttpInterceptorProvider,
+    LocalStorageRepository,
+    Keyboard,
+    Geolocation,
+    AlertComponent,
+    LoaderComponent,
+    ToastComponent,
+    LocalNotificationComponent,
+    StatusBar,
+    SplashScreen,
+    AndroidPermissions,
+    ValidacaoCamposProvider,
+    HttpInterceptorProvider,
+    UserProvider,
+    ParametroProvider,
+    ScreenOrientation,
+    Network,
+    Camera,
+    BackgroundMode,
+    SwiperModule,
+  { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  { provide: 'LocalStorageRepositoryToken', useClass: LocalStorageRepository },
+  { provide: 'UserServiceToken', useClass: UserService },
+  { provide: 'RlUserServiceToken', useClass: RlUserService },
+  { provide: 'CompanyServiceToken', useClass: CompanyService },
+  { provide: 'HttpClientProxyToken', useClass: HttpClientProxy },
+  { provide: 'ParametroRepositoryToken', useClass: ParametroRepository },
+  { provide: 'ParametroServiceToken', useClass: ParametroService },
+  { provide: 'ConfiguracaoServiceToken', useClass: ConfiguracaoService },
+  { provide: 'OfferServiceToken', useClass: OfferService },
+  { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorProvider, multi: true },
+
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }

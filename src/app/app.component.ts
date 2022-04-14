@@ -1,8 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Platform,NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { ILocalStorageRepository } from '../repository/interfaces/ILocalStorageRepository';
+import { UserDto } from '../dto/UserDto';
+import { RlUserDto } from '../dto/RlUserDto';
+import { CompanyDto } from '../dto/CompanyDto';
 
 @Component({
   selector: 'app-root',
@@ -10,27 +15,44 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
+  public appPagesManager = [
     { title: 'Ofertas', url: '/offers', icon: 'megaphone' },
     { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket' },
     { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport' },
     { title: 'Vendedores', url: '/users', icon: 'people' },
     { title: 'Perímetros', url: '/perimeters', icon: 'settings' },
-    { title: 'Sair', url: '/signOut', icon: 'exit' },
   ];
+  public appPagesUser = [
+    { title: 'Ofertas', url: '/offers', icon: 'megaphone' },
+    { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket' },
+    { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport' },
+    { title: 'Perímetros', url: '/perimeters', icon: 'settings' },
+  ];
+
+
   public labelPages = [
+    { title: 'Login', url: '/login', icon: 'person' },
+    { title: 'Sair', url: '/signOut', icon: 'exit' },
     { title: 'Ajuda', url: '/help', icon: 'help' },
     { title: 'Termos e Condições', url: '/terms', icon: 'library' },
   ];
 
-  public user: string;
+  public user: UserDto = new UserDto(); // = { id: "", name:"", phone:"",  mail:"", role:"", companyId: "", companyName: "Agência" };
+  public rlUser: RlUserDto = new RlUserDto(); // = { id: "", name:"", phone:"",  mail:"", role:"", companyId: "", companyName: "Agência" };
+  public company: CompanyDto = new CompanyDto(); // = { id: "", name:"", phone:"",  mail:"", role:"", companyId: "", companyName: "Agência" };
+  public logged: boolean = false;
+  public manager: boolean = false;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private screenOrientation: ScreenOrientation,
     private statusBar: StatusBar,
-    public nav: NavController
+    public nav: NavController,
+    private androidPermissions: AndroidPermissions,
+    @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
+
+
   ) {
     this.initializeApp();
   }
@@ -43,24 +65,108 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
   
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);          
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);      
+      
 
+      this.verifyPermissions();
+
+      let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
+      if (user) {
+        this.user = JSON.parse(user);
+
+        let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
+        if (rlUser) {
+          this.rlUser = JSON.parse(rlUser);
+
+
+          let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
+          if (rlUser) {
+            this.company = JSON.parse(company);
+
+
+            this.logged = true;
+            this.manager = (this.user.role =="platform_manager_access");
+            this.nav.navigateForward('/offers');
+          };
+        };
+     };
+  
     });
   
 
-
-    let logged: any = { id: "USER-GER-0001",
-                        name:"Jose dos Santos", 
-                        phone:"+5511983194534", 
-                        mail:"gerente@grupohdi.com", 
-                        role:"platform_manager_access",
-                        companyId: "XYZ-0001",
-                        companyName: "Agência de Testes 0001",
-                      };
-
-
-    localStorage.setItem("user",JSON.stringify(logged));
-    this.user = JSON.parse(localStorage.getItem("user"));
   }
+
+  private verifyPermissions() {
+
+
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
+      result => { 
+        console.log('CAMERA Has permission?',result.hasPermission);
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA);
+      },
+      err => {
+        console.log('CAMERA Has error',err);
+      }
+    );
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+      result => { 
+        console.log('READ_EXTERNAL_STORAGE Has permission?',result.hasPermission);
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE);
+      },
+      err => {
+        console.log('READ_EXTERNAL_STORAGE Has error',err);
+      }
+    );
+
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+      result => { 
+        console.log('WRITE_EXTERNAL_STORAGE Has permission?',result.hasPermission);
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE);
+      },
+      err => {
+        console.log('WRITE_EXTERNAL_STORAGE Has error',err);
+      }
+    );
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.INTERNET).then(
+      result => { 
+        console.log('INTERNET Has permission?',result.hasPermission);
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.INTERNET);
+      },
+      err => {
+        console.log('INTERNET Has error',err);
+      }
+    );
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_NETWORK_STATE).then(
+      result => { 
+        console.log('ACCESS_NETWORK_STATE Has permission?',result.hasPermission);
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_NETWORK_STATE);
+      },
+      err => {
+        console.log('ACCESS_NETWORK_STATE Has error',err);
+      }
+    );
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+      result => { 
+        console.log('ACCESS_COARSE_LOCATION Has permission?',result.hasPermission);
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION);
+      },
+      err => {
+        console.log('ACCESS_COARSE_LOCATION Has error',err);
+      }
+    );
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
+      result => { 
+        console.log('ACCESS_FINE_LOCATION Has permission?',result.hasPermission);
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION);
+      },
+      err => {
+        console.log('ACCESS_FINE_LOCATION Has error',err);
+      }
+    );       
+
+
+    console.log('Passed by permission---------------------');
+}
+
 }
 
