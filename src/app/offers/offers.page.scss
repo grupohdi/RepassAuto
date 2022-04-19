@@ -36,21 +36,15 @@ ion-label{
 }
 
 #container p {
-  font-size: 16px;
-  line-height: 22px;
-  color: #8c8c8c;
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-
-p {
   text-align: center;
   font-weight: bold;
   font-size: 14px;
   line-height: 22px;
   color: red;
   margin-top: 15px;
+  margin: 5px;
+}
+
+#container a {
+  text-decoration: none;
 }

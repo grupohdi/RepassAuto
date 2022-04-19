@@ -37,7 +37,7 @@ import { CompanyService } from '../services/CompanyService';
 import { ParametroRepository } from '../Repository/ParametroRepository';
 import { ParametroService } from '../services/ParametroService';
 import { ConfiguracaoService } from '../services/ConfiguracaoService';
-import { OfferService } from '../services/OfferService';
+import { VeiculoOfertaService } from '../services/VeiculoOfertaService';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
@@ -90,7 +90,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
   { provide: 'ParametroRepositoryToken', useClass: ParametroRepository },
   { provide: 'ParametroServiceToken', useClass: ParametroService },
   { provide: 'ConfiguracaoServiceToken', useClass: ConfiguracaoService },
-  { provide: 'OfferServiceToken', useClass: OfferService },
+  { provide: 'VeiculoOfertaServiceToken', useClass: VeiculoOfertaService },
   { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorProvider, multi: true },
 
   ],
