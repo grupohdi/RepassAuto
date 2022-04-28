@@ -89,7 +89,7 @@ export class AppComponent {
 
             this.logged = true;
             this.manager = (this.user.role =="platform_manager_access");
-            this.nav.navigateForward('/myVehicles');
+            this.nav.navigateForward('/offers');
           };
         };
      };

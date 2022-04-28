@@ -17,9 +17,18 @@
     </ion-toolbar>
   </ion-header>
 
+  <div id="box">
+    <div id="leftbox" (click)="tiraFoto()">
+      <ion-icon name="car-sport-outline"></ion-icon>
+    </div>
+    <div id="rightbox" (click)="apagaFoto()">
+      <ion-icon name="remove-circle-outline"></ion-icon>
+    </div>
+  </div>
+
   <div id="container">
     <div *ngIf="!vehicles">
-      <p>Nesse momento não existem veículos cadastrados...</p>
+      <p>{{carregando}}</p>
     </div>
     <div *ngIf="vehicles">
 
@@ -35,20 +44,21 @@
 
           </swiper>
 
+
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col class="cell-class">
                 <ion-label><b>{{ vehicle.placa }}</b></ion-label>
               </ion-col>
-              <ion-col>
+              <ion-col class="cell-class">
                 <ion-label>{{ vehicle.marca }}</ion-label>
               </ion-col>
-              <ion-col>
+              <ion-col class="cell-class">
                 <ion-label>{{ vehicle.modelo }}</ion-label>
               </ion-col>
             </ion-row>
             <ion-row aria-colspan="3">
-              <ion-col>
+              <ion-col class="cell-class">
                 <ion-label>{{ vehicle.versao }}</ion-label>
               </ion-col>
             </ion-row>

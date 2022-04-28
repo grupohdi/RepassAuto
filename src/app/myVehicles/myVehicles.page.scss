@@ -11,14 +11,11 @@ ion-menu-button {
   color: var(--ion-color-primary);
 }
 
-ion-content {
-  display: block;
-  max-height: calc(98%) !important;
-}
 
 ion-label {
-  font-size: 12px;
+  font-size: 20px;
 }
+
 
 ion-card {
   width: 90%;
@@ -28,10 +25,58 @@ ion-card {
   box-shadow: 5px 5px 5px rgb(66, 66, 66);
 }
 
+.cell-class {
+  border-color: black; 
+  border-width: .01em; 
+  border-style:solid; margin-bottom : -1px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+}
+
+
+#box {
+
+  display: flexbox;
+  height: 50px;
+  margin: 20px;
+  text-align: center;
+
+
+  #leftbox {
+    float: left;
+    background: rgb(20, 95, 1);
+    border-radius: 20px;
+    width: 30%;
+  }
+
+  #rightbox {
+    float: right;
+    background: #ff0000;
+    border-radius: 20px;
+    width: 30%;
+  }
+
+  ion-icon {
+    font-size: 40px;
+    color: #ffffff;
+  }
+
+}
+
+ion-content {
+  display: block;
+  max-height: calc(98%) !important;
+}
 
 #container {
+  max-height: calc(85%) !important;
+  width: 98%;
+  margin: auto;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #e0dada;
+
   display: block;
-  max-height: calc(90%);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -48,7 +93,7 @@ ion-card {
 #container p {
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 22px;
   color: red;
   margin-top: 15px;

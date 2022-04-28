@@ -1,6 +1,6 @@
 body {
   font-family: "CorporateACon-Reg" !important;
-  background-color: #000;
+  font-size: 16px;
 }
 
 ion-menu ion-content {
@@ -39,7 +39,7 @@ ion-menu.md ion-list#repassauto-list ion-list-header {
 }
 
 ion-menu.md ion-list#labels-list ion-list-header {
-  font-size: 16px;
+  font-size: 20px;
 
   margin-bottom: 18px;
 
@@ -114,9 +114,13 @@ ion-menu.ios ion-note {
 
 ion-note {
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
 
   color: var(--ion-color-medium-shade);
+}
+
+ion-item {
+  font-size: 20px;
 }
 
 ion-item.selected {

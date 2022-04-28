@@ -26,6 +26,7 @@ export class MyVehiclesPage implements OnInit {
   public rlUser: any;
   public company: any;
   public vehicles: any[];
+  public carregando:string = "Verificando se existem veículos cadastrados...";
 
   config: SwiperOptions = {
     slidesPerView: 1,
@@ -90,7 +91,9 @@ export class MyVehiclesPage implements OnInit {
 
           if (result) {
             this.vehicles = result;
-
+          }
+          else {
+            this.carregando = "nenhum veículo cadastrado";
           }
         })
         .catch((e: any) => {

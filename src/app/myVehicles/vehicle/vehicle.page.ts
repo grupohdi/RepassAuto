@@ -16,7 +16,7 @@ SwiperCore.use([Autoplay, Navigation, Keyboard, Pagination, Scrollbar, A11y, Zoo
 @Component({
   selector: 'app-vehicle',
   templateUrl: './vehicle.page.html',
-  styleUrls: ['./vehicle.page.scss','./vehicle.page.css'],
+  styleUrls: ['./vehicle.page.scss'],
 })
 
 export class VehiclePage implements OnInit {

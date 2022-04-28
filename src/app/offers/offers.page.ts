@@ -24,6 +24,26 @@ export class OffersPage implements OnInit {
   private confirm;
 
   public offers: any[];
+  public vehicle: any = {marca:"", modelo:"", versao:""};
+  public carregando: string = "Verificando se existem Ofertas...";
+  public Marcas: any[] = [{"Descricao":"BMW"},{"Descricao":"Mercedez Bens"},{"Descricao":"Toyota"}];
+  public Modelos: any[] = [{"Descricao":"X1"},{"Descricao":"C180"},{"Descricao":"XEI"}];
+  public Versoes: any[]= [{"Descricao":"TURBO ACTIVE XDRIVE25I SPORT"},{"Descricao":"CGI AVANTGARDE 7G-TRONIC"},{"Descricao":"XEI 1.8 Aut. Gasolina"}];
+
+  marcaActionSheetOptions: any = {
+    header: 'Marcas',
+    subHeader: 'Selecione a Marca',
+  };
+
+  modeloActionSheetOptions: any = {
+    header: 'Modelos',
+    subHeader: 'Selecione o Modelo',
+  };
+  versaoActionSheetOptions: any = {
+    header: 'Versões',
+    subHeader: 'Selecione a  Versão',
+  };
+
 
   config: SwiperOptions = {
     slidesPerView: 1,
@@ -79,8 +99,11 @@ export class OffersPage implements OnInit {
 
           if (result) {
             this.offers = result;
-
           }
+          else {
+            this.carregando = "Nesse momento não existem ofertas...";
+          }
+
         })
         .catch((e: any) => {
           this.loaderCtrl.hiddenLoader();
@@ -123,6 +146,19 @@ export class OffersPage implements OnInit {
 
 
 
+
+  }
+
+
+  preencheModelo() {
+
+    //
+
+  }
+
+  preencheVersao() {
+
+    //
 
   }
 

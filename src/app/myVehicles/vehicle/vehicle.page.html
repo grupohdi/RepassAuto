@@ -51,7 +51,7 @@
               <ion-label>Tipo:</ion-label>
             </ion-col>
             <ion-col>
-              <ion-select [(ngModel)]="vehicle.tipo">
+              <ion-select  interface="action-sheet" [(ngModel)]="vehicle.tipo">
                 <ion-select-option [value]="Carro">Carro</ion-select-option>
                 <ion-select-option [value]="Moto">Moto</ion-select-option>
                 <ion-select-option [value]="Van">Van</ion-select-option>
@@ -175,16 +175,18 @@
               <ion-input type="text" [(ngModel)]="vehicle.preco" [value]="vehicle.preco"></ion-input>
             </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row aria-colspan="2">
             <ion-col>
               <ion-label>Descrição:</ion-label>
             </ion-col>
+          </ion-row>
+          <ion-row aria-colspan="2">
             <ion-col>
-              <ion-textarea rows="8" cols="200" [(ngModel)]="vehicle.descricao" [value]="vehicle.descricao"></ion-textarea>
+              <ion-textarea rows="8" [(ngModel)]="vehicle.descricao" [value]="vehicle.descricao"></ion-textarea>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col aria-colspan="2">
+          <ion-row aria-colspan="2">
+            <ion-col >
               <ion-item-divider></ion-item-divider>
             </ion-col>
           </ion-row>
@@ -260,15 +262,14 @@
               <ion-input type="text" [(ngModel)]="vehicle.pais" [value]="vehicle.pais"></ion-input>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col aria-colspan="2">
+          <ion-row aria-colspan="2">
+            <ion-col >
               <ion-item-divider></ion-item-divider>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col></ion-col>
+          <ion-row aria-colspan="2">
             <ion-col>
-              <ion-button color="success" (click)="salvar()">Salvar</ion-button>
+              <ion-button center middle color="success" (click)="salvar()">Salvar</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

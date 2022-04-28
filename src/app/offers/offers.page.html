@@ -14,9 +14,20 @@
     </ion-toolbar>
   </ion-header>
 
+  <div id="filtros">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label>Filtros:</ion-label>
+          <ion-icon color="primary" name="filter-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+   </div>
+
   <div id="container">
     <div *ngIf="!offers">
-      <p>Nesse momento não existem ofertas...</p>
+      <p>{{carregando}}</p>
     </div>
     <div *ngIf="offers">
       <ion-card *ngFor="let offer of offers">

@@ -10,13 +10,8 @@ ion-menu-button {
   color: var(--ion-color-primary);
 }
 
-ion-content {
-  display: block;
-  max-height: calc(98%) !important;
-}
-
 ion-label{
-  font-size: 14px;
+  font-size: 20px;
 }
 
 ion-card {
@@ -31,23 +26,35 @@ ion-card {
   border-color: black; 
   border-width: .01em; 
   border-style:solid; margin-bottom : -1px;
-  background-color: lightgrey
+  background-color: rgb(252, 248, 248);
+  border-radius: 5px;
 }
 
-ion-grid {
 
-  ion-row{
-    background-color: #000000;
-  }
+ion-content {
+  display: block;
+  max-height: calc(98%) !important;
+  width: 98%;
+}
 
-  ion-col{
-    background-color: #ffffff;
-  }
+#filtros {
+  width: 98%;
+}
+
+ion-button{
+  font-size: 22px;
+  font-weight: 900;
+
 }
 
 #container {
+  max-height: calc(90%) !important;
+  width: 98%;
+  margin: auto;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #e0dada;
   display: block;
-  max-height: calc(90%);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -55,6 +62,7 @@ ion-grid {
   ::-webkit-scrollbar {
     display: block;
   }}
+
 
 #container strong {
   font-size: 20px;
@@ -64,11 +72,10 @@ ion-grid {
 #container p {
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 22px;
   color: red;
-  margin-top: 15px;
-  margin: 5px;
+  margin: auto;
 }
 
 #container a {
@@ -80,3 +87,4 @@ ion-grid {
   margin: 2px;
   text-align: center;
 }
+
