@@ -38,6 +38,8 @@ import { ParametroRepository } from '../Repository/ParametroRepository';
 import { ParametroService } from '../services/ParametroService';
 import { ConfiguracaoService } from '../services/ConfiguracaoService';
 import { VeiculoOfertaService } from '../services/VeiculoOfertaService';
+import { VeiculoService } from '../services/VeiculoService';
+import { VeiculoFotoService } from '../services/VeiculoFotoService';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
@@ -46,6 +48,7 @@ import { FormsModule } from '@angular/forms';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 
 
 
@@ -81,6 +84,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
     Camera,
     BackgroundMode,
     SwiperModule,
+    SocialSharing,
   { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   { provide: 'LocalStorageRepositoryToken', useClass: LocalStorageRepository },
   { provide: 'UserServiceToken', useClass: UserService },
@@ -91,6 +95,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
   { provide: 'ParametroServiceToken', useClass: ParametroService },
   { provide: 'ConfiguracaoServiceToken', useClass: ConfiguracaoService },
   { provide: 'VeiculoOfertaServiceToken', useClass: VeiculoOfertaService },
+  { provide: 'VeiculoServiceToken', useClass: VeiculoService },
+  { provide: 'VeiculoFotoServiceToken', useClass: VeiculoFotoService },
   { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorProvider, multi: true },
 
   ],

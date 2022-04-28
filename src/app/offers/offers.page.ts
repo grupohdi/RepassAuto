@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { AlertComponent } from '../../components/alert/alert';
@@ -6,7 +7,6 @@ import { LoaderComponent } from '../../components/loader/loader';
 
 import { ILocalStorageRepository } from '../../repository/interfaces/ILocalStorageRepository';
 
-import { VeiculoOfertaDto } from '../../dto/VeiculoOfertaDto';
 import { IVeiculoOfertaService } from '../../services/interfaces/IVeiculoOfertaService';
 
 
@@ -21,10 +21,12 @@ SwiperCore.use([Autoplay, Navigation, Keyboard, Pagination, Scrollbar, A11y, Zoo
 
 export class OffersPage implements OnInit {
 
+  private confirm;
+
   public offers: any[];
 
   config: SwiperOptions = {
-    slidesPerView: 3,
+    slidesPerView: 1,
     spaceBetween: 25,
     navigation: true,
     pagination: { clickable: true },
@@ -42,6 +44,7 @@ export class OffersPage implements OnInit {
 
 
   constructor(
+    private router: Router,
     private loaderCtrl: LoaderComponent,
     private platform: Platform,
     private alertCtrl: AlertComponent,
@@ -71,13 +74,13 @@ export class OffersPage implements OnInit {
 
       this.veiculoOfertaService.getOffers()
         .then((result: any) => {
-  
+
           this.loaderCtrl.hiddenLoader();
 
           if (result) {
-              this.offers = result;
+            this.offers = result;
 
-            }
+          }
         })
         .catch((e: any) => {
           this.loaderCtrl.hiddenLoader();
@@ -87,5 +90,40 @@ export class OffersPage implements OnInit {
 
   }
 
+
+  async verTodosDados(offer: any) {
+
+    let attemption = '<b>Atenção!</b><br> A visualização dos dados completos, gera uma tarifa de: <br> <b>R$ 20,00</b><br><br>';
+       attemption +=  'Será debitado do cartão da Agência.<br><br>';
+       attemption +=  'Tem certeza?';
+
+    const alert = await this.alertController.create({
+      subHeader: 'RepassAuto - Ofertas',
+      message: attemption,
+      cssClass: 'alert-warning',
+      buttons: [
+        {
+          text: 'Aceitar',
+          role: 'cancel',
+          handler: () => {
+            console.log('aceitou');
+            let navigationExtras: NavigationExtras = { state: { offer }  };
+            this.router.navigate(['/offers/vehicle-full'], navigationExtras);
+                  }
+        },
+        {
+          text: 'Não',
+          handler: () => {
+            console.log('Não');
+          }
+        }
+      ]
+    });
+    await alert.present();
+
+
+
+
+  }
 
 }

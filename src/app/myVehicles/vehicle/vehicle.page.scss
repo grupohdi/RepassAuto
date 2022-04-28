@@ -1,0 +1,190 @@
+@import '~swiper/scss';
+@import '~swiper/scss/autoplay';
+@import '~swiper/scss/keyboard';
+@import '~swiper/scss/pagination';
+@import '~swiper/scss/scrollbar';
+@import '~swiper/scss/zoom';
+@import '~@ionic/angular/css/ionic-swiper';
+
+
+ion-menu-button {
+  color: var(--ion-color-primary);
+}
+
+ion-content {
+  display: block;
+  max-height: calc(98%) !important;
+}
+
+ion-col {
+  text-align: left;
+  align-items: left;
+  align-content: left;
+}
+
+ion-label {
+  text-align: left;
+  align-items: left;
+  align-content: left;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+ion-card {
+  width: 90%;
+  background-color: #d8d9e9;
+  color: #000000;
+  margin: 20px;
+  box-shadow: 5px 5px 5px rgb(66, 66, 66);
+}
+
+
+
+ion-textarea {
+  width: 200px;
+  text-align: left;
+  align-items: left;
+  align-content: left;
+  font-size: 14px !important;
+  font-weight: 500;
+  border: 1px solid #5a5959;
+  border-radius: 5px;
+  background: white;
+  color: black;
+  padding: 4px !important;
+}
+
+ion-input {
+  height: 25px;
+  width: 200px;
+  text-align: left;
+  align-items: left;
+  align-content: left;
+  font-size: 14px !important;
+  font-weight: 500;
+  border: 1px solid #5a5959;
+  border-radius: 5px;
+  background: white;
+  color: black;
+  padding: 4px !important;
+}
+
+
+ion-item-divider {
+  min-height: 2px !important;
+}
+
+
+.goBack {
+  width: 20%;
+  text-align: left;
+  margin: 10px;
+}
+
+#agencia {
+  width: 95% !important;
+  font-size: 22px;
+  line-height: 22px;
+  color: #260975;
+  margin: 2px;
+  text-align: center;
+}
+
+#box {
+
+  display: flexbox;
+  height: 50px;
+
+  #leftbox {
+    float: left;
+    background: rgb(20, 95, 1);
+    width: 30%;
+  }
+
+  #rightbox {
+    float: right;
+    background: #ff0000;
+    width: 30%;
+  }
+
+  ion-icon {
+    font-size: 36px;
+    color: #ffffff;
+  }
+
+}
+
+
+
+
+#container {
+  display: block;
+  max-height: calc(85%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    display: block;
+  }
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 22px;
+  color: red;
+  margin-top: 15px;
+  margin: 5px;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+
+
+ion-select {
+  height: 25px;
+  width: 200px;
+  text-align: left;
+  align-items: left;
+  align-content: left;
+  font-size: 14px !important;
+  font-weight: 500;
+  border: 1px solid #5a5959;
+  border-radius: 5px;
+  background: white;
+  color: black;
+  padding: 4px !important;
+}
+
+.my-custom-interface .action-sheet-button .sc-ion-action-sheet-md  {
+  background-color: #ff0000;
+  font-size: 30px !important;
+}
+
+.action-sheet-button  {
+  background-color: #ff0000;
+  font-size: 30px !important;
+}
+
+.action-sheet-button-inner 
+{
+  background-color: #ff0000;
+  font-size: 30px !important;
+
+}
+
+.sc-ion-action-sheet-md{
+  background-color: #ff0000;
+  font-size: 30px !important;
+
+}

@@ -14,44 +14,69 @@
     </ion-toolbar>
   </ion-header>
 
+  <div id="container">
+    <div *ngIf="!offers">
+      <p>Nesse momento não existem ofertas...</p>
+    </div>
+    <div *ngIf="offers">
       <ion-card *ngFor="let offer of offers">
         <ion-card-content>
 
-            <swiper [config]="config" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()">
+          <swiper [config]="config" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()">
 
-              <ng-template swiperSlide *ngFor="let foto of offer.veiculoFotos">
-                teste {{ foto.ordem }}
-              </ng-template>
-  
-            </swiper>
+            <ng-template swiperSlide *ngFor="let foto of offer.veiculoFotos">
+              <img src="{{ foto.base64 }}" width="100" height="100" />
+            </ng-template>
+
+          </swiper>
 
           <ion-grid>
             <ion-row>
-              <ion-col>
-                <ion-label><b>{{ offer.veiculo.preco }}</b></ion-label>
+              <ion-col class="cell-class">
+                <h2><b>{{ offer.veiculo.preco }}</b></h2>
               </ion-col>
-              <ion-col>
+              <ion-col class="cell-class">
                 <ion-label>{{ offer.veiculo.marca }}</ion-label>
               </ion-col>
-              <ion-col>
+              <ion-col class="cell-class">
                 <ion-label>{{ offer.veiculo.modelo }}</ion-label>
               </ion-col>
             </ion-row>
-            <ion-row>
-            </ion-row>
-            <ion-row aria-colspan="3">
-              <ion-col>
+            <ion-row aria-colspan="2">
+              <ion-col class="cell-class">
                 <ion-label>{{ offer.veiculo.versao }}</ion-label>
               </ion-col>
             </ion-row>
+            <ion-row>
+              <ion-col class="cell-class">
+                <ion-label>{{ offer.veiculo.anoFabricacao  }}/{{ offer.veiculo.anoModelo }}</ion-label>
+              </ion-col>
+              <ion-col class="cell-class">
+                <ion-label>KMS {{ offer.veiculo.kms }}</ion-label>
+              </ion-col>
+              <ion-col class="cell-class">
+                <ion-label>Cor: {{ offer.veiculo.cor }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="cell-class">
+                <ion-label>{{ offer.veiculo.combustivel }}</ion-label>
+              </ion-col>
+              <ion-col class="cell-class">
+                <ion-label>Final Placa: {{ offer.veiculo.placa.substring(offer.veiculo.placa.length-1,offer.veiculo.placa.length) }}</ion-label>
+              </ion-col>
+              <ion-col class="cell-class">
+                <ion-label>Fipe {{ offer.veiculo.fipe }}</ion-label>
+              </ion-col>
+            </ion-row>
             <ion-row aria-colspan="3">
-              <ion-col>
+              <ion-col class="cell-class">
                 <ion-label>{{ offer.veiculo.descricao }}</ion-label>
               </ion-col>
             </ion-row>
             <ion-row aria-colspan="3">
-              <ion-col>
-                <ion-button>* Ver dados Completos</ion-button>
+              <ion-col class="cell-class">
+                <ion-button color="success" (click)="verTodosDados(offer)">* Ver dados Completos</ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -60,5 +85,7 @@
 
       </ion-card>
 
-      <p>* cobrança de tarifa para ver os dados de compra</p>
+    </div>
+  </div>
+  <div  id="aviso"><ion-label color="danger">* cobrança de tarifa para ver os dados de compra</ion-label></div>
 </ion-content>

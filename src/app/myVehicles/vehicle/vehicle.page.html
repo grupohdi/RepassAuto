@@ -1,0 +1,286 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title size="large">
+      Meus Veículos / Cadastro
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="normal">Meus Veículos / Cadastro</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <div class="goBack">
+    <ion-icon (click)="goBack()" color="primary" name="arrow-back-sharp"></ion-icon>
+  </div>
+
+
+  <div id="container">
+
+    <ion-card>
+      <ion-card-content>
+
+        <swiper [config]="config" (slideChange)="onSlideChange($event)">
+
+          <ng-template swiperSlide *ngFor="let foto of vehicle.veiculoFotos">
+            <img src="{{ foto.base64 }}" width="200" height="100" />
+          </ng-template>
+
+        </swiper>
+
+        <div id="box">
+          <div id="leftbox" (click)="tiraFoto()">
+            <ion-icon name="camera-outline"></ion-icon>
+          </div>
+          <div id="rightbox" (click)="apagaFoto()">
+            <ion-icon name="remove-circle-outline"></ion-icon>
+          </div>
+        </div>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label>Tipo:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-select [(ngModel)]="vehicle.tipo">
+                <ion-select-option [value]="Carro">Carro</ion-select-option>
+                <ion-select-option [value]="Moto">Moto</ion-select-option>
+                <ion-select-option [value]="Van">Van</ion-select-option>
+                <ion-select-option [value]="Caminhao">Caminhao</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-label>Marca:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-select interface="action-sheet" class="my-custom-interface" [interfaceOptions]="marcaActionSheetOptions" [(ngModel)]="vehicle.marca" (ionChange)="preencheModelo(vehicle.marca)">
+                <ion-select-option *ngFor="let marca of Marcas" [value]="marca.Descricao">
+                  {{marca.Descricao}}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-label>Modelo:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-select interface="action-sheet" class="my-custom-interface" [interfaceOptions]="modeloActionSheetOptions" [(ngModel)]="vehicle.modelo" (ionChange)="preencheVersao(vehicle.modelo)">
+                <ion-select-option *ngFor="let modelo of Modelos" [value]="modelo.Descricao">
+                  {{modelo.Descricao}}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-label>Versão:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-select interface="action-sheet" class="my-custom-interface" [interfaceOptions]="versaoActionSheetOptions" [(ngModel)]="vehicle.versao">
+                <ion-select-option *ngFor="let versao of Versoes" [value]="versao.Descricao">
+                  {{versao.Descricao}}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Fabricação:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.anoFabricacao" [value]="vehicle.anoFabricacao"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Modelo:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.anoModelo" [value]="vehicle.anoModelo"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>KMs:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.kms" [value]="vehicle.kms"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Cor:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.cor" [value]="vehicle.cor"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Combustível:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-select interface="action-sheet" class="custom-options" [(ngModel)]="vehicle.combustivel">
+                <ion-select-option [value]="Flex">Flex</ion-select-option>
+                <ion-select-option [value]="Gasolina">Gasolina</ion-select-option>
+                <ion-select-option [value]="Etanol">Etanol</ion-select-option>
+                <ion-select-option [value]="Diesel">Diesel</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Placa:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.placa" [value]="vehicle.placa"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Chassi:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.chassi" [value]="vehicle.chassi"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Fipe:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.fipe" [value]="vehicle.fipe"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Preço:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.preco" [value]="vehicle.preco"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Descrição:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-textarea rows="8" cols="200" [(ngModel)]="vehicle.descricao" [value]="vehicle.descricao"></ion-textarea>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col aria-colspan="2">
+              <ion-item-divider></ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Latitude:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.latitude" [value]="vehicle.latitude"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Longitude:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.longitude" [value]="vehicle.longitude"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Logradouro:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.logradouro" [value]="vehicle.logradouro"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Número:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.numero" [value]="vehicle.numero"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Compl.:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.complemento" [value]="vehicle.complemento"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>CEP:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.cep" [value]="vehicle.cep"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Cidade:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.cidade" [value]="vehicle.cidade"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>UF:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.uf" [value]="vehicle.uf"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>País:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.pais" [value]="vehicle.pais"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col aria-colspan="2">
+              <ion-item-divider></ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col></ion-col>
+            <ion-col>
+              <ion-button color="success" (click)="salvar()">Salvar</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-card-content>
+
+    </ion-card>
+
+  </div>
+
+  <div class="goBack">
+    <ion-icon (click)="goBack()" color="primary" name="arrow-back-sharp"></ion-icon>
+  </div>
+
+</ion-content>

@@ -20,7 +20,6 @@ export class VeiculoOfertaService implements IVeiculoOfertaService {
 
     getOffers() : Promise<VeiculoOfertaDto[]> {
 
-        //let strJson: string = `{ "userId" : "${user.id}"}`;
         let strJson: string = "{}";
 
         return new Promise((resolve, reject) => {

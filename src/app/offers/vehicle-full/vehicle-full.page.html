@@ -1,0 +1,311 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title size="large">
+      Oferta / Dados Completos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="normal">Oferta - Dados Completos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <div class="goBack">
+    <ion-icon (click)="goBack()" color="primary" name="arrow-back-sharp"></ion-icon>
+  </div>
+
+
+  <div id="container">
+
+    <ion-card>
+      <ion-card-content>
+
+        <div class="share">
+          <ion-icon (click)="share()" name="logo-whatsapp"></ion-icon>
+          <ion-label>Compartilhar - whatsapp</ion-label>
+        </div>
+
+        <swiper [config]="config" (slideChange)="onSlideChange($event)">
+
+          <ng-template swiperSlide *ngFor="let foto of offer.veiculoFotos">
+            <img src="{{ foto.base64 }}" width="200" height="100" />
+          </ng-template>
+
+        </swiper>
+
+        <ion-item-divider></ion-item-divider>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Agência:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.company.cnpj}} {{offer.company.nomeFantasia}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Contato/Telefone:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.company.contato}} {{offer.company.telefone}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row aria-colspan="2">
+            <ion-col>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Vendedor:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.vendedor.name}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>e-mail:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.vendedor.mail}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Telefone:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.vendedor.phone}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row aria-colspan="2">
+            <ion-col>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Tipo:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.tipo}}</ion-label>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Marca:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.marca}}</ion-label>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Modelo:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.modelo}}</ion-label>
+            </ion-col>
+          </ion-row>
+
+          <ion-row aria-colspan="2">
+            <ion-col class="cell-class">
+              <ion-label>Versão:</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row aria-colspan="2">
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.versao}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row aria-colspan="2">
+            <ion-col>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Fabricação:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.anoFabricacao}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Modelo:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.anoModelo}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>KMs:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.kms}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Cor:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.cor}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Combustível:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.combustivel}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Placa:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.placa}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Chassi:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.chassi}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Fipe:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.fipe}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Preço:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.preco}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row aria-colspan="2">
+            <ion-col class="cell-class">
+              <ion-label>Descrição:</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row aria-colspan="2">
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.descricao}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row aria-colspan="2">
+            <ion-col>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Latitude:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.latitude}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Longitude:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.longitude}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Logradouro:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.logradouro}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Número:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.numero}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Compl.:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.complemento}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>CEP:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.cep}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>Cidade:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.cidade}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>UF:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.uf}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="cell-class">
+              <ion-label>País:</ion-label>
+            </ion-col>
+            <ion-col class="cell-class">
+              <ion-label class="lblInput">{{offer.veiculo.pais}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-card-content>
+
+      <div class="share" (click)="share()">
+        <ion-icon  name="logo-whatsapp"></ion-icon>
+        <ion-label>Compartilhar - whatsapp</ion-label>
+      </div>
+
+    </ion-card>
+
+  </div>
+
+  <div class="goBack">
+    <ion-icon (click)="goBack()" color="primary" name="arrow-back-sharp"></ion-icon>
+  </div>
+
+</ion-content>

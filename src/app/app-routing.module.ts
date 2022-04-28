@@ -7,8 +7,16 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
   },
   {
+    path: 'company',
+    loadChildren: () => import('./company/company.module').then( m => m.CompanyPageModule)
+  },
+  {
     path: 'offers',
     loadChildren: () => import('./offers/offers.module').then( m => m.OffersPageModule)
+  },
+  {
+    path: 'offers/vehicle-full',
+    loadChildren: () => import('./offers/vehicle-full/vehicle-full.module').then( m => m.VehicleFullPageModule)
   },
   {
     path: 'myOffers',
@@ -17,6 +25,10 @@ const routes: Routes = [
   {
     path: 'myVehicles',
     loadChildren: () => import('./myVehicles/myVehicles.module').then( m => m.MyVehiclesPageModule)
+  },
+  {
+    path: 'myVehicles/vehicle',
+    loadChildren: () => import('./myVehicles/vehicle/vehicle.module').then( m => m.VehiclePageModule)
   },
   {
     path: 'users',

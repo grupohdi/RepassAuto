@@ -15,6 +15,9 @@ import { CompanyDto } from '../dto/CompanyDto';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  public appPagesInit = [
+    { title: 'Cadastrar Agência/Concessionária', url: '/company', icon: 'megaphone' },
+  ];
   public appPagesManager = [
     { title: 'Ofertas', url: '/offers', icon: 'megaphone' },
     { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket' },
@@ -86,7 +89,7 @@ export class AppComponent {
 
             this.logged = true;
             this.manager = (this.user.role =="platform_manager_access");
-            this.nav.navigateForward('/offers');
+            this.nav.navigateForward('/myVehicles');
           };
         };
      };
@@ -163,9 +166,6 @@ export class AppComponent {
         console.log('ACCESS_FINE_LOCATION Has error',err);
       }
     );       
-
-
-    console.log('Passed by permission---------------------');
 }
 
 }

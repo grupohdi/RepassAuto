@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { SwiperModule } from 'swiper/angular';
 import { IonicModule } from '@ionic/angular';
 
-import { MyVehiclesPageRoutingModule } from './myVehicles-routing.module';
+import { VehicleFullPageRoutingModule } from './vehicle-full-routing.module';
 
-import { MyVehiclesPage } from './myVehicles.page';
+import { VehicleFullPage } from './vehicle-full.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { MyVehiclesPage } from './myVehicles.page';
     FormsModule,
     IonicModule,
     SwiperModule,
-    MyVehiclesPageRoutingModule
+    VehicleFullPageRoutingModule
   ],
-  declarations: [MyVehiclesPage]
+  declarations: [VehicleFullPage]
 })
-export class MyVehiclesPageModule {}
+export class VehicleFullPageModule {}

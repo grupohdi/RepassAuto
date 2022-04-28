@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'CorporateACon-Reg';
+    font-style: normal;
+    font-weight: 400;
+    src: local("CorporateACon-Reg"), local("CorporateACon-Reg"), url("./assets/fonts/CorporateACon-Reg.ttf") format("truetype");
+}
+

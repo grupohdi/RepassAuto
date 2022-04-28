@@ -17,19 +17,26 @@ export class HttpInterceptorProvider implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.localStorageRepository.recuperaConfiguracaoPorChave('user')) {
-      this.user = JSON.parse(this.localStorageRepository.recuperaConfiguracaoPorChave('user'));
+    let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
+    if (user) {
+      this.user = JSON.parse(user);
     }
-    
-    if (this.localStorageRepository.recuperaConfiguracaoPorChave('sessionToken')) {
-      this.sessionToken = this.localStorageRepository.recuperaConfiguracaoPorChave('sessionToken');
+    let sessionToken = this.localStorageRepository.recuperaConfiguracaoPorChave('sessionToken');
+    if (sessionToken) {
+      this.sessionToken = sessionToken;
     }
+
 
     //let headers = new HttpHeaders();
     let headers = request.headers;
     let params = new HttpParams();
 
-    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append("Content-Type", "application/json");
+
+    //headers = headers.append("Access-Control-Allow-Origin", "*");
+    // headers = headers.append('Access-Control-Allow-Headers', '*');
+    // headers = headers.append('Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    // headers = headers.append("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
 
     if (!request.url.includes("/sessions")) {
 
@@ -49,10 +56,6 @@ export class HttpInterceptorProvider implements HttpInterceptor {
     //headers = headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
 
 
-    // headers = headers.append('Origin', '*');
-    //headers = headers.append('Access-Control-Allow-Origin', '*');
-    //headers = headers.append('Access-Control-Allow-Headers', '*');
-    //headers = headers.append('Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
     //      // headers = headers.append('Server', 'Cowboy');
     //       //headers = headers.append('Connection', 'keep-alive');
@@ -74,7 +77,7 @@ export class HttpInterceptorProvider implements HttpInterceptor {
       headers: headers,
       params: params
     });
-
+    //console.log('request:',request);
     return this.handleReq(request, next);
   }
   handleReq(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

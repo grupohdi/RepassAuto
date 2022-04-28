@@ -6,6 +6,8 @@
 @import '~swiper/scss/zoom';
 @import '~@ionic/angular/css/ionic-swiper';
 
+
+
 ion-menu-button {
   color: var(--ion-color-primary);
 }
@@ -15,46 +17,91 @@ ion-content {
   max-height: calc(98%) !important;
 }
 
-ion-label{
-  font-size: 14px;
+ion-label {
+  text-align: left;
+  font-size: 12px;
+
+}
+
+.lblInput {
+  width: 100%;
+  height: auto;
+  font-weight: 900;
+  text-align:justify;
+  font-size: 12px;
+  border-radius: 5px;
+  color: black;
+
+
 }
 
 ion-card {
-  width: 90%;
-  margin: 15px;
-  background-color: #e5f1e5;
+  background-color: #e5f7eb;
   color: #000000;
-  box-shadow: 5px 5px 5px rgb(92, 90, 90);
+  margin: 20px;
+  box-shadow: 5px 5px 5px rgb(53, 85, 60);
+}
+
+
+
+
+ion-item-divider {
+  min-height: 2px !important;
+}
+
+
+.goBack {
+  width: 20%;
+  text-align: left;
+  margin: 10px;
+}
+
+.share {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 10px;
+  font-weight: 900;
+  color:rgb(6, 150, 37);
+
+  ion-icon {
+    width: 100%;
+    font-size: 30px; 
+    color:rgb(6, 150, 37);
+  }
 }
 
 .cell-class {
   border-color: black; 
   border-width: .01em; 
-  border-style:solid; margin-bottom : -1px;
+  border-style:solid; 
+  margin-bottom : -1px;
   background-color: lightgrey
 }
 
-ion-grid {
 
-  ion-row{
-    background-color: #000000;
-  }
-
-  ion-col{
-    background-color: #ffffff;
-  }
+#agencia {
+  width: 95%!important;
+  font-size: 22px;
+  line-height: 22px;
+  color: #260975;
+  margin: 2px;
+  text-align: center;
 }
+
 
 #container {
   display: block;
-  max-height: calc(90%);
+  max-height: calc(85%);
   text-align: center;
   position: relative;
   overflow: hidden;
   overflow-y: auto;
+
   ::-webkit-scrollbar {
     display: block;
-  }}
+  }
+}
 
 #container strong {
   font-size: 20px;
@@ -73,10 +120,4 @@ ion-grid {
 
 #container a {
   text-decoration: none;
-}
-
-#aviso {
-  width: 95%!important;
-  margin: 2px;
-  text-align: center;
 }
