@@ -144,10 +144,10 @@ export class VehicleFullPage implements OnInit {
     ______________________\n\n
     Veiculo:\n
     Preço: *${this.offer.veiculo.preco}* \n
+    Referência FIPE: ${this.offer.veiculo.referencia} \n
     Marca: ${this.offer.veiculo.marca} \n
-    Modelo: ${this.offer.veiculo.modelo} \n
-    Versão:\n
-    ${this.offer.veiculo.versao} \n
+    Modelo:\n ${this.offer.veiculo.modelo} \n
+    Ano Modelo\Fabricação: ${this.offer.veiculo.anoFabricacao} \ ${this.offer.veiculo.anoModelo} \n
     Placa: *${this.offer.veiculo.placa}* \n
     Descrição:\n ${this.offer.veiculo.descricao} \n\n
     `;

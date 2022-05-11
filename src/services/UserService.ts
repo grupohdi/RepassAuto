@@ -9,6 +9,7 @@ import { IConfiguracaoService } from './interfaces/IConfiguracaoService';
 import { ILocalStorageRepository } from '../Repository/interfaces/ILocalStorageRepository';
 import { ValidacaoCamposProvider } from 'src/providers/validacao-campos/validacao-campos';
 
+const WEBAPI_PATH_USER = "/plt_user_v1/users";
 const WEBAPI_PATH_USER_FILTER = "/plt_user_v1/users/filters/items";
 const WEBAPI_PATH_SECURITY_SESSIONS = "/plt_security_v1/sessions";
 
@@ -41,43 +42,80 @@ export class UserService implements IUserService {
     }
 
 
-    obter(user: UserDto): Promise<any> {
-
-        let strJson: string = `{ "mail" : "${user.mail}"}`;
+    obterPorId(userId: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
-            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), WEBAPI_PATH_USER_FILTER, strJson)
+            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_USER}/${userId}`, null)
                 .subscribe((response: any) => {
-                    if (response.data) {
-
-                        let responseUser = response.data[0];
-                        let newUser = new UserDto();
-
-                        newUser.id = responseUser.id;
-                        newUser.mail = responseUser.mail;
-                        newUser.phone = responseUser.phone;
-                        newUser.password = responseUser.password;
-                        newUser.name = responseUser.name;
-                        newUser.companyId = "XXX";
-                        newUser.companyName = "Agência";
-                        newUser.role = responseUser.role;
-                        newUser.logged = "1";
-
-                        this.localStorageRepository.adicionaConfiguracao("user", JSON.stringify(newUser));
-
-                        resolve(true);
+                    if (response) {
+                        resolve(response);
                     }
                     else {
                         resolve(null);
                     }
                 }, (error:any) => {
-                    console.error("UserService - logar - Erro: ", JSON.stringify(error));
+                    console.error("UserService - obter - Erro: ", JSON.stringify(error));
                     reject(null);
                 });
 
         });
     }
+
+
+    obterPorEmail(email: string): Promise<any> {
+
+        let strJson: string = `{ "mail" : "${email}"}`;
+
+        return new Promise((resolve, reject) => {
+
+            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), WEBAPI_PATH_USER_FILTER, strJson)
+                .subscribe((response: any) => {
+                    if (response) {
+
+                        resolve(response.data[0]);
+                    }
+                    else {
+                        resolve(null);
+                    }
+                }, (error:any) => {
+                    console.error("UserService - obter - Erro: ", JSON.stringify(error));
+                    reject(null);
+                });
+
+        });
+    }
+
+
+    gerarToken(): Promise<any> {
+
+        let json = {
+            "mail": "admin@grupohdi.com",
+            "password": "admin123"
+        };
+
+        return new Promise((resolve, reject) => {
+
+            this.httpClientProxy.post(this.configuracaoService.webApiUrl(), WEBAPI_PATH_SECURITY_SESSIONS, json)
+                .subscribe((response: any) => {
+
+                    if (response.sessionToken) {
+                        this.localStorageRepository.adicionaConfiguracao("sessionToken", response.sessionToken);
+                        resolve(true);
+                    }
+                    else {
+                        reject(false);
+                    }
+                }, (error) => {
+                    console.error("UserService - pegarToken - Erro: ", JSON.stringify(error));
+                    reject(false);
+                });
+
+
+        });
+
+    }
+
 
     renovarToken(user: UserDto) {
 
@@ -108,7 +146,6 @@ export class UserService implements IUserService {
 
     }
 
-
     logar(user: UserDto): Promise<any> {
 
         let json = {
@@ -121,19 +158,13 @@ export class UserService implements IUserService {
             this.httpClientProxy.post(this.configuracaoService.webApiUrl(), WEBAPI_PATH_SECURITY_SESSIONS, json)
                 .subscribe((response: any) => {
 
+                    console.log('-------------logar----------------------');
                     console.log(response);
+
                     if (response.sessionToken) {
-
+                        this.localStorageRepository.adicionaConfiguracao('user', JSON.stringify(response));
                         this.localStorageRepository.adicionaConfiguracao("sessionToken", response.sessionToken);
-
-                        this.obter(user).then((responseObter: any) => {
-
-                            resolve(true);
-                        })
-                            .catch((e:any) => {
-                                debugger;
-                                reject(false);
-                            });
+                        resolve(true);
                     }
                     else {
                         reject(false);
@@ -161,6 +192,40 @@ export class UserService implements IUserService {
                 }).catch((error) => {
                     reject(false);
                 });
+        });
+
+    }
+
+    salvar(userDto: UserDto): Promise<UserDto> {
+
+        return new Promise((resolve, reject) => {
+
+            //inclusao
+            if (userDto.id == "") {
+
+                this.httpClientProxy.post(this.configuracaoService.webApiUrl(), WEBAPI_PATH_USER, JSON.stringify(userDto))
+                .subscribe((response: UserDto) => {
+                    resolve(response);
+                }, (error) => {
+                    console.error("UserService - salvar incluir - Erro: ", JSON.stringify(error));
+                    reject(false);
+                });
+
+
+            }
+
+            //alteração
+            else {
+
+                this.httpClientProxy.put(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_USER}/${userDto.id}`, JSON.stringify(userDto))
+                .subscribe((response: UserDto) => {
+                    resolve(response);
+                }, (error) => {
+                    console.error("UserService - salvar atualizar - Erro: ", JSON.stringify(error));
+                    reject(false);
+                });
+
+            }
         });
 
     }

@@ -9,7 +9,7 @@ import { ILocalStorageRepository } from '../../Repository/interfaces/ILocalStora
 export class HttpInterceptorProvider implements HttpInterceptor {
 
   public user: any;
-  public sessionToken: string ;
+  public sessionToken: string;
 
   constructor(@Inject('LocalStorageRepositoryToken') public localStorageRepository: ILocalStorageRepository) {
 
@@ -31,13 +31,6 @@ export class HttpInterceptorProvider implements HttpInterceptor {
     let headers = request.headers;
     let params = new HttpParams();
 
-    headers = headers.append("Content-Type", "application/json");
-
-    //headers = headers.append("Access-Control-Allow-Origin", "*");
-    // headers = headers.append('Access-Control-Allow-Headers', '*');
-    // headers = headers.append('Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    // headers = headers.append("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-
     if (!request.url.includes("/sessions")) {
 
       if (this.sessionToken) {
@@ -48,11 +41,29 @@ export class HttpInterceptorProvider implements HttpInterceptor {
         params = params.append('limit', '1000');
         params = params.append('page', '1');
       }
-
     }
+
+    headers = headers.append("content-type", "application/json");
+    headers = headers.append("access-control-allow-origin", "*");
+
+    // headers = headers.append('Accept', '*/*');
+
+    // headers = headers.append("vary", "Accept-Encoding");
+    // headers = headers.append("x-aspnet-version", "4.0.30319");
+    // headers = headers.append("x-aspnetmvc-version", "5.2");
+    // headers = headers.append("x-frame-options", "sameorigin");
+    // headers = headers.append("server", "cloudflare");
+    // headers = headers.append("authority", "veiculos.fipe.org.br");
+    // headers = headers.append("Referrer-Policy", "no-referrer, strict-origin-when-cross-origin");
+
+    // headers = headers.append('Access-Control-Allow-Headers', '*');
+    // headers = headers.append('Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    // headers = headers.append("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+
+
+
     //headers = headers.append('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept');
     //headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    // headers = headers.append('Accept', 'application/json');
     //headers = headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
 
 
@@ -60,7 +71,6 @@ export class HttpInterceptorProvider implements HttpInterceptor {
     //      // headers = headers.append('Server', 'Cowboy');
     //       //headers = headers.append('Connection', 'keep-alive');
     //      //headers = headers.append('"X-Powered-By', 'Express');
-    //       headers = headers.append('Access-Control-Allow-Origin', 'http://localhost:8100');
     //       //headers = headers.append('Content-Length', '226');
     //       //headers = headers.append('Etag', 'W/\"e2-z/MtBDkFOUrrPcYxv4ps7adQ3qM\"');
     //       //headers = headers.append('Date', 'Mon, 21 Dec 2020 21:41:29 GMT');
@@ -68,7 +78,6 @@ export class HttpInterceptorProvider implements HttpInterceptor {
     // //      headers = headers.append('', '');
 
 
-    // console.log("request=====================", request.headers);
     // console.log("headers=====================", headers);
     // console.log("params=====================", params);
     // debugger;

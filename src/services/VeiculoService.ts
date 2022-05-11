@@ -32,7 +32,7 @@ export class VeiculoService implements IVeiculoService {
                 .subscribe((response: any) => {
                     if (response) {
 
-                        console.log("-------------------------------------",response);
+                        console.log("---------getById----------------------------",response);
                         resolve(response);
                     }
                     else {
@@ -70,5 +70,43 @@ export class VeiculoService implements IVeiculoService {
     
     }
     
+    save(vehicle: VeiculoDto): Promise<VeiculoDto> {
+
+        return new Promise((resolve, reject) => {
+
+            if (vehicle.id == "") {
+                this.httpClientProxy.post(this.configuracaoService.webApiUrl(), WEBAPI_PATH_VEHICLE, vehicle)
+                .subscribe((response: any) => {
+                    if (response) {
+
+                        resolve(response);
+                    }
+                    else {
+                        resolve(null);
+                    }
+                }, (error:any) => {
+                    console.error("VeiculoService - salvar - Erro: ", JSON.stringify(error));
+                    reject(null);
+                });
+            }
+            else {
+
+                this.httpClientProxy.put(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_VEHICLE}/${vehicle.id}`, vehicle)
+                .subscribe((response: any) => {
+                    if (response) {
+
+                        resolve(response);
+                    }
+                    else {
+                        resolve(null);
+                    }
+                }, (error:any) => {
+                    console.error("VeiculoService - salvar - Erro: ", JSON.stringify(error));
+                    reject(null);
+                });
+            }
+
+        });
+    }
     
 }

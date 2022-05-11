@@ -11,7 +11,7 @@ ion-menu-button {
 }
 
 ion-content {
-  display: block;
+  display: flex;
   font-size: 20px !important;
   max-height: calc(99%) !important;
 }
@@ -38,6 +38,18 @@ ion-card {
   box-shadow: 5px 5px 5px rgb(66, 66, 66);
 }
 
+.cardFipe {
+  width: 100%;
+  background-color: #0c1bee;
+  color: #ffffff;
+  margin: 0 auto;
+  box-shadow: 5px 5px 5px rgb(66, 66, 66);
+  ion-card-content{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+  }
+
+}
 
 
 ion-textarea {

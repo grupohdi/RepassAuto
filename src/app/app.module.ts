@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, NavParams, IonicRouteStrategy } from '@ionic/angular';
 
 import { SQLite } from '@ionic-native/sqlite/ngx';
 
@@ -40,6 +40,9 @@ import { ConfiguracaoService } from '../services/ConfiguracaoService';
 import { VeiculoOfertaService } from '../services/VeiculoOfertaService';
 import { VeiculoService } from '../services/VeiculoService';
 import { VeiculoFotoService } from '../services/VeiculoFotoService';
+import { FipeService } from '../services/FipeService';
+import { PerimetroService } from '../services/PerimetroService';
+import { SetupService } from '../services/setupService';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
@@ -49,13 +52,12 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
-
-
+import { BrMaskerModule } from 'br-mask';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [ FormsModule, CommonModule, HttpClientModule, BrowserModule, AppRoutingModule, IonicModule.forRoot()],
+  imports: [ FormsModule, CommonModule, HttpClientModule, BrowserModule, AppRoutingModule, BrMaskerModule, IonicModule.forRoot()],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SQLite,
     SplashScreen,
@@ -85,6 +87,7 @@ import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
     BackgroundMode,
     SwiperModule,
     SocialSharing,
+    NavParams,
   { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   { provide: 'LocalStorageRepositoryToken', useClass: LocalStorageRepository },
   { provide: 'UserServiceToken', useClass: UserService },
@@ -97,6 +100,9 @@ import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
   { provide: 'VeiculoOfertaServiceToken', useClass: VeiculoOfertaService },
   { provide: 'VeiculoServiceToken', useClass: VeiculoService },
   { provide: 'VeiculoFotoServiceToken', useClass: VeiculoFotoService },
+  { provide: 'FipeServiceToken', useClass: FipeService },
+  { provide: 'PerimetroServiceToken', useClass: PerimetroService },
+  { provide: 'SetupServiceToken', useClass: SetupService },
   { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorProvider, multi: true },
 
   ],

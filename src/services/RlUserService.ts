@@ -47,5 +47,27 @@ export class RlUserService implements IRlUserService {
         });
     }
 
+    getByCompany(companyId: string): Promise<any> {
+
+        let strJson: string = `{ "companyId" : "${companyId}"}`;
+
+        return new Promise((resolve, reject) => {
+
+            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), WEBAPI_PATH_RLUSER_FILTER,strJson)
+                .subscribe((response: any) => {
+                    if (response.data) {
+
+                        resolve(response.data);
+                    }
+                    else {
+                        resolve(null);
+                    }
+                }, (error:any) => {
+                    console.error("RlUserService - obter por Company- Erro: ", JSON.stringify(error));
+                    reject(null);
+                });
+
+        });
+    }
 
 }

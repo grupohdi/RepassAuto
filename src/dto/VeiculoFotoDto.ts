@@ -11,6 +11,7 @@ export class VeiculoFotoDto {
     public tags: string;
     public base64: string;
 
+
     constructor() {
 
         this.id = "";
@@ -25,4 +26,6 @@ export class VeiculoFotoDto {
         this.base64 = "";
 
     }
+
+
 }

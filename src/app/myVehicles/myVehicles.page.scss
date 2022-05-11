@@ -16,6 +16,9 @@ ion-label {
   font-size: 20px;
 }
 
+.semQuebra{
+  white-space: nowrap;
+}
 
 ion-card {
   width: 90%;
@@ -26,56 +29,56 @@ ion-card {
 }
 
 .cell-class {
-  border-color: black; 
-  border-width: .01em; 
-  border-style:solid; margin-bottom : -1px;
+  border-color: black;
+  border-width: .01em;
+  border-style: solid;
+  margin-bottom: -1px;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
 }
 
 
-#box {
-
-  display: flexbox;
-  height: 50px;
-  margin: 20px;
-  text-align: center;
-
-
-  #leftbox {
-    float: left;
-    background: rgb(20, 95, 1);
-    border-radius: 20px;
-    width: 30%;
-  }
-
-  #rightbox {
-    float: right;
-    background: #ff0000;
-    border-radius: 20px;
-    width: 30%;
-  }
-
-  ion-icon {
-    font-size: 40px;
-    color: #ffffff;
-  }
-
+#addBox {
+  width: 100px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  background: rgb(20, 95, 1);
+  border-radius: 20px;
 }
+
+#minusBox {
+  width: 100px;
+  max-height: 65px;
+  margin: auto;
+  align-content: space-around;
+  background: #ff0000;
+  border-radius: 25px;
+}
+
+.dadosGrid {
+  width: 90%;
+}
+
+ion-icon {
+  font-size: 40px;
+  color: #ffffff;
+}
+
 
 ion-content {
   display: block;
-  max-height: calc(98%) !important;
+  max-height: calc(90%) !important;
 }
 
+
+
 #container {
-  max-height: calc(85%) !important;
+  max-height: calc(90%) !important;
   width: 98%;
   margin: auto;
   border-radius: 5px;
   border-style: solid;
   border-color: #e0dada;
-
   display: block;
   text-align: center;
   position: relative;
@@ -83,7 +86,20 @@ ion-content {
   overflow-y: auto;
   ::-webkit-scrollbar {
     display: block;
-  }}
+  }
+
+  #carregando {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    text-align: center;
+    font-weight: bold;
+    font-size: 26px;
+    color: red;
+    margin: 20px;
+    height: 600px;
+    }
+  
+}
 
 #container strong {
   font-size: 20px;
@@ -106,7 +122,7 @@ ion-content {
 
 
 #agencia {
-  width: 95%!important;
+  width: 95% !important;
   font-size: 22px;
   line-height: 22px;
   color: #260975;

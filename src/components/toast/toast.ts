@@ -9,22 +9,24 @@ export class ToastComponent {
 
   constructor(private toastCtrl: ToastController) { }
 
-  async showToastTop(message: string) {
+  async showToastTop(message: string, duration: number) {
     let toast = await this.toastCtrl
       .create({
         message: message,
-        duration: 5000,
-        position: 'top'
+        duration: duration,
+        position: 'top',
+        cssClass: 'toast-good-custom-class',
       });
     await toast.present();
   }
 
-  async showToastBottom(message: string) {
+  async showToastBottom(message: string, duration: number) {
     let toast = await this.toastCtrl
       .create({
         message: message,
-        duration: 5000,
-        position: 'bottom'
+        duration: duration,
+        position: 'bottom',
+        cssClass: 'toast-bad-custom-class',
       });
     await toast.present();
   }

@@ -23,6 +23,11 @@ export class HttpClientProxy implements IHttpClientProxy {
         return this.http.post(`${baseAddress}${url}`, data);
     }
 
+    public put(baseAddress: string, url: string, data: any): Observable<Object> {
+
+        return this.http.put(`${baseAddress}${url}`, data);
+    }
+
     public delete(baseAddress: string, url: string): Observable<Object> {
 
         return this.http.delete(`${baseAddress}${url}`);

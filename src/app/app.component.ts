@@ -16,28 +16,29 @@ import { CompanyDto } from '../dto/CompanyDto';
 })
 export class AppComponent {
   public appPagesInit = [
-    { title: 'Cadastrar Agência/Concessionária', url: '/company', icon: 'megaphone' },
+    { title: 'Cadastrar Agência', url: '/company', icon: 'settings', param:'0' },
   ];
   public appPagesManager = [
-    { title: 'Ofertas', url: '/offers', icon: 'megaphone' },
-    { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket' },
-    { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport' },
-    { title: 'Vendedores', url: '/users', icon: 'people' },
-    { title: 'Perímetros', url: '/perimeters', icon: 'settings' },
+    { title: 'Ofertas', url: '/offers', icon: 'megaphone', param:'0' },
+    { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket', param:'0' },
+    { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport' , param:'0'},
+    { title: 'Usuários', url: '/users', icon: 'people', param:'0' },
+    { title: 'Perímetros', url: '/perimeters', icon: 'location', param:'0' },
+    { title: 'Manutenção Agência', url: '/company', icon: 'settings', param:'1' },
   ];
   public appPagesUser = [
-    { title: 'Ofertas', url: '/offers', icon: 'megaphone' },
-    { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket' },
-    { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport' },
-    { title: 'Perímetros', url: '/perimeters', icon: 'settings' },
+    { title: 'Ofertas', url: '/offers', icon: 'megaphone', param:'0' },
+    { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket', param:'0' },
+    { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport', param:'0' },
+    { title: 'Perímetros', url: '/perimeters', icon: 'settings', param:'0' },
   ];
 
 
   public labelPages = [
-    { title: 'Login', url: '/login', icon: 'person' },
-    { title: 'Sair', url: '/signOut', icon: 'exit' },
-    { title: 'Ajuda', url: '/help', icon: 'help' },
-    { title: 'Termos e Condições', url: '/terms', icon: 'library' },
+    { title: 'Login', url: '/login', icon: 'person', param:'0' },
+    { title: 'Sair', url: '/signOut', icon: 'exit', param:'0' },
+    { title: 'Ajuda', url: '/help', icon: 'help' , param:'0'},
+    { title: 'Termos e Condições', url: '/terms', icon: 'library', param:'0' },
   ];
 
   public user: UserDto = new UserDto(); // = { id: "", name:"", phone:"",  mail:"", role:"", companyId: "", companyName: "Agência" };
@@ -45,6 +46,7 @@ export class AppComponent {
   public company: CompanyDto = new CompanyDto(); // = { id: "", name:"", phone:"",  mail:"", role:"", companyId: "", companyName: "Agência" };
   public logged: boolean = false;
   public manager: boolean = false;
+  public vendor: boolean = false;
 
   constructor(
     private platform: Platform,
@@ -88,8 +90,9 @@ export class AppComponent {
 
 
             this.logged = true;
-            this.manager = (this.user.role =="platform_manager_access");
-            this.nav.navigateForward('/offers');
+            this.manager = (this.user.role.trim() === "platform_manager_access");
+            this.vendor = (this.user.role.trim() ==="platform_user_access");
+            this.nav.navigateForward('/company');
           };
         };
      };

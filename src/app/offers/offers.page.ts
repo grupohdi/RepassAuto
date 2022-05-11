@@ -24,7 +24,7 @@ export class OffersPage implements OnInit {
   private confirm;
 
   public offers: any[];
-  public vehicle: any = {marca:"", modelo:"", versao:""};
+  public vehicle: any = {marca:"", modelo:"", referencia:""};
   public carregando: string = "Verificando se existem Ofertas...";
   public Marcas: any[] = [{"Descricao":"BMW"},{"Descricao":"Mercedez Bens"},{"Descricao":"Toyota"}];
   public Modelos: any[] = [{"Descricao":"X1"},{"Descricao":"C180"},{"Descricao":"XEI"}];
@@ -38,10 +38,6 @@ export class OffersPage implements OnInit {
   modeloActionSheetOptions: any = {
     header: 'Modelos',
     subHeader: 'Selecione o Modelo',
-  };
-  versaoActionSheetOptions: any = {
-    header: 'Versões',
-    subHeader: 'Selecione a  Versão',
   };
 
 
@@ -77,33 +73,28 @@ export class OffersPage implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   ionViewDidEnter() {
+
     this.initializeConfiguration();
   }
 
   initializeConfiguration() {
 
     this.platform.ready().then(() => {
-
-
-
       this.loaderCtrl.showLoader(`Aguarde, carregando ofertas...`);
-
-
       this.veiculoOfertaService.getOffers()
         .then((result: any) => {
-
           this.loaderCtrl.hiddenLoader();
-
           if (result) {
             this.offers = result;
+            this.ordenar();
           }
           else {
             this.carregando = "Nesse momento não existem ofertas...";
           }
-
         })
         .catch((e: any) => {
           this.loaderCtrl.hiddenLoader();
@@ -113,6 +104,32 @@ export class OffersPage implements OnInit {
 
   }
 
+  initializeConfigurationRefresh(refresher:any) {
+
+    this.platform.ready().then(() => {
+
+      this.veiculoOfertaService.getOffers()
+        .then((result: any) => {
+
+          if (result) {
+            this.offers = result || [];
+            this.ordenar();
+          }
+          else {
+            this.carregando = "Nesse momento não existem ofertas...";
+          }
+          if (refresher)
+          refresher.target.complete();
+
+        })
+        .catch((e: any) => {
+          if (refresher)
+          refresher.target.complete();
+          this.alertCtrl.showAlert('RepassAuto - Ofertas', `Erro ao carregar as Ofertas.`);
+        });
+    });
+
+  }
 
   async verTodosDados(offer: any) {
 
@@ -156,10 +173,19 @@ export class OffersPage implements OnInit {
 
   }
 
-  preencheVersao() {
 
-    //
+ doRefresh(refresher) {
+    this.initializeConfigurationRefresh(refresher);
+  }
 
+  ordenar() {
+    this.offers.sort(function (a, b) {
+      if (a.createdAt < b.updatedAt)
+        return -1;
+      if (a.createdAt > b.updatedAt)
+        return 1;
+      return 0;
+    });
   }
 
 }

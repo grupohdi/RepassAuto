@@ -9,60 +9,72 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="normal">Meus Veículos</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="box">
-    <div id="leftbox" (click)="tiraFoto()">
-      <ion-icon name="car-sport-outline"></ion-icon>
-    </div>
-    <div id="rightbox" (click)="apagaFoto()">
-      <ion-icon name="remove-circle-outline"></ion-icon>
-    </div>
+ 
+  <div id="addBox" (click)="adicionarVeiculo()">
+    <ion-icon name="add-outline"></ion-icon>
+    <ion-icon name="car-sport-outline"></ion-icon>
   </div>
 
   <div id="container">
-    <div *ngIf="!vehicles">
-      <p>{{carregando}}</p>
+
+    <div id="carregando" *ngIf="!vehicles">
+      {{carregando}}
     </div>
+
+
     <div *ngIf="vehicles">
 
-
       <ion-card *ngFor="let vehicle of vehicles">
-        <ion-card-content (click)="abrir(vehicle)">
+        <ion-card-content>
 
-          <swiper [config]="config" (slideChange)="onSlideChange()">
+          <div *ngIf="vehicle.veiculoFotos.length > 0">
+            <swiper [config]="config" (slideChange)="onSlideChange()">
+              <ng-template swiperSlide *ngFor="let foto of vehicle.veiculoFotos ">
+                <img src="{{ foto.base64 }}" width="100" height="100" />
+              </ng-template>
+            </swiper>
+          </div>
 
-            <ng-template swiperSlide *ngFor="let foto of vehicle.veiculoFotos">
-              <img src="{{ foto.base64 }}" width="100" height="100" />
-            </ng-template>
+          <div *ngIf="vehicle.veiculoFotos.length == 0">
+            <swiper [config]="config" (slideChange)="onSlideChange()">
+              <ng-template swiperSlide *ngFor="let foto of fotoNaoDisponivel">
+                <img src="{{ foto.base64 }}" width="100" height="100" />
+              </ng-template>
+            </swiper>
+          </div>
 
-          </swiper>
 
-
-          <ion-grid>
-            <ion-row>
+          <ion-grid class="dadosGrid" (click)="abrir(vehicle)">
+            <ion-row aria-colspan="4">
               <ion-col class="cell-class">
-                <ion-label><b>{{ vehicle.placa }}</b></ion-label>
-              </ion-col>
-              <ion-col class="cell-class">
-                <ion-label>{{ vehicle.marca }}</ion-label>
-              </ion-col>
-              <ion-col class="cell-class">
-                <ion-label>{{ vehicle.modelo }}</ion-label>
+                <ion-label><b>{{ (!!vehicle.preco) ? (vehicle.preco*1).toLocaleString('pt-BR', {minimumFractionDigits: 2 , style: 'currency', currency: 'BRL'}) : 0 }} &nbsp;</b></ion-label>
               </ion-col>
             </ion-row>
-            <ion-row aria-colspan="3">
+            <ion-row>
               <ion-col class="cell-class">
-                <ion-label>{{ vehicle.versao }}</ion-label>
+                <ion-label class="semQuebra">{{ vehicle.placa }} &nbsp;</ion-label>
+              </ion-col>
+              <ion-col class="cell-class">
+                <ion-label class="semQuebra">{{ vehicle.marcaDescricao }} &nbsp;</ion-label>
+              </ion-col>
+              <ion-col class="cell-class">
+                <ion-label class="semQuebra">{{ vehicle.anoModeloDescricao }} &nbsp;</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row aria-colspan="4">
+              <ion-col class="cell-class">
+                <ion-label>{{ vehicle.modeloDescricao }} &nbsp;</ion-label>
               </ion-col>
             </ion-row>
           </ion-grid>
+          Data de inclusão do veículoa: {{vehicle.createdAtISO | date: 'dd/MM/yyyy HH:mm:ss'}}
+
+          <div id="minusBox" slot="end" (click)="apagarVeiculo()">
+            <ion-icon name="remove-outline"></ion-icon>
+            <ion-icon name="car-sport-outline"></ion-icon>
+          </div>
+
 
         </ion-card-content>
 
@@ -70,4 +82,10 @@
 
     </div>
   </div>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.5" pullMin="100" pullMax="200">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
 </ion-content>
+

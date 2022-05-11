@@ -3,17 +3,247 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Agência/Concessionária</ion-title>
+    <ion-title size="large">
+      Agência / Cadastro
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="normal">Cadastro de Agência/Concessionária</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
   <div id="container">
+
+    <ion-card>
+      <ion-card-content>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label>Agência</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 0 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 0)" placeholder="Nome Fantasia" type="text" [(ngModel)]="companyData.NomeFantasia" [value]="companyData.NomeFantasia"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 1 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 1)" placeholder="Razão Social" type="text" [(ngModel)]="companyData.RazaoSocial" [value]="companyData.RazaoSocial"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 2 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 2)" placeholder="CNPJ 99.999.999/9999-99" [brmasker]="{mask: '99.999.999/9999-99'}" required="true" type="mask"  (change)="companyVerify()" [(ngModel)]="companyData.CNPJ" [value]="companyData.CNPJ">
+              </ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item-divider></ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Contato na Agência</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 3 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 3)" placeholder="Nome do Contato" type="text" [(ngModel)]="companyData.Contato" [value]="companyData.Contato"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 4 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 4)" placeholder="Telefone (DDD)9999-9999" type="tel" [brmasker]="{mask: '(99) 99999-9999'}" [(ngModel)]="companyData.Telefone" [value]="companyData.Telefone"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item-divider></ion-item-divider>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-label>Endereço da Agência</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 5 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 5)" placeholder="Latitude" type="text" [(ngModel)]="companyData.Latitude" [value]="companyData.Latitude"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 6 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 6)" placeholder="Longitude" type="text" [(ngModel)]="companyData.Longitude" [value]="companyData.Longitude"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 7 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 7)" placeholder="Logradouro" type="text" [(ngModel)]="companyData.Logradouro" [value]="companyData.Logradouro"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 8 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 8)" placeholder="Numero" type="text" [(ngModel)]="companyData.Numero" [value]="companyData.Numero"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 9 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 9)" placeholder="Complemento" type="text" [(ngModel)]="companyData.Complemento" [value]="companyData.Complemento"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 10 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 10)" placeholder="CEP" type="text" [(ngModel)]="companyData.CEP" [value]="companyData.CEP"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 11 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 11)" placeholder="Bairro" type="text" [(ngModel)]="companyData.Bairro" [value]="companyData.Bairro"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 12 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 12)" placeholder="Cidade" type="text" [(ngModel)]="companyData.Cidade" [value]="companyData.Cidade"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 13 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 13)" placeholder="UF" type="text" [(ngModel)]="companyData.UF" [value]="companyData.UF"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 14 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 14)" placeholder="Pais" type="text" [(ngModel)]="companyData.Pais" [value]="companyData.Pais"></ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row aria-colspan="2">
+            <ion-col>
+              <ion-item-divider></ion-item-divider>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col>
+              <ion-label>Cartão de Crédito</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-list>
+                <ion-radio-group [(ngModel)]="companyData.CartaoBandeira" [value]="companyData.CartaoBandeira">
+                  <ion-list-header>
+                    <ion-label>Bandeira</ion-label>
+                  </ion-list-header>
+
+                  <ion-item>
+                    <ion-label>Master Card</ion-label>
+                    <ion-radio slot="start" value="mastercard" checked></ion-radio>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Visa</ion-label>
+                    <ion-radio slot="start" value="visa"></ion-radio>
+                  </ion-item>
+
+                </ion-radio-group>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 15 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 15)" placeholder="Número cartão" type="text" [(ngModel)]="companyData.CartaoNumero" [value]="companyData.CartaoNumero"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 16 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 16)" placeholder="Vencto (Mes/Ano)" type="text" [(ngModel)]="companyData.CartaoVencimento" [value]="companyData.CartaoVencimento"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 17-->
+              <ion-input #items (keypress)="onKeyPressed($event, 17)" placeholder="Código" type="text" [(ngModel)]="companyData.CartaoCodigo" [value]="companyData.CartaoCodigo"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 18 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 18)" placeholder="Nome no Cartão" type="text" [(ngModel)]="companyData.CartaoNome" [value]="companyData.CartaoNome"></ion-input>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row aria-colspan="2">
+            <ion-col>
+              <ion-item-divider></ion-item-divider>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-label>Gerente da conta</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <!-- 19 -->
+              <ion-input #items (keypress)="onKeyPressed($event, 19)" placeholder="Nome do Gerente" type="text"  required="true" [(ngModel)]="companyData.UsuarioGerenteNome" [value]="companyData.UsuarioGerenteNome"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-input #items (keypress)="onKeyPressed($event, 20)" placeholder="e-mail" (change)="userVerify()" type="email"  required="true" [(ngModel)]="companyData.UsuarioGerenteEmail" [value]="companyData.UsuarioGerenteEmail"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-input #items (keypress)="onKeyPressed($event, 21)" placeholder="Telefone (DDD) 9999-9999" type="tel" [brmasker]="{mask: '(99) 99999-9999'}" [(ngModel)]="companyData.UsuarioGerenteTelefone" [value]="companyData.UsuarioGerenteTelefone"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-input #items (keypress)="onKeyPressed($event, 22)" placeholder="senha" type="password"  required="true" [(ngModel)]="companyData.UsuarioGerenteSenha" [value]="companyData.UsuarioGerenteSenha"></ion-input>
+            </ion-col>
+          </ion-row>
+
+
+
+          <ion-row aria-colspan="2">
+            <ion-col>
+              <!-- 24 -->
+              <ion-button #items color="success" (click)="salvar()">* Criar</ion-button>
+              <ion-label>* Cria a Agência e Usuário para acessar as funcionalidades do RepassAuto.</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-card-content>
+
+    </ion-card>
+
   </div>
+
 </ion-content>

@@ -47,6 +47,7 @@ ion-button{
 
 }
 
+
 #container {
   max-height: calc(90%) !important;
   width: 98%;
@@ -61,7 +62,20 @@ ion-button{
   overflow-y: auto;
   ::-webkit-scrollbar {
     display: block;
-  }}
+  }
+
+  #carregando {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    text-align: center;
+    font-weight: bold;
+    font-size: 26px;
+    color: red;
+    margin: 20px;
+    height: 600px;
+    }
+  
+}
 
 
 #container strong {

@@ -28,15 +28,23 @@
     <ion-card>
       <ion-card-content>
 
+        <div *ngIf="vehicle.veiculoFotos.length > 0">
         <swiper [config]="config" (slideChange)="onSlideChange($event)">
-
           <ng-template swiperSlide *ngFor="let foto of vehicle.veiculoFotos">
             <img src="{{ foto.base64 }}" width="200" height="100" />
           </ng-template>
-
         </swiper>
+      </div>
+      <div *ngIf="vehicle.veiculoFotos.length == 0">
+        <swiper [config]="config" (slideChange)="onSlideChange($event)">
+          <ng-template swiperSlide *ngFor="let foto of fotoNaoDisponivel">
+            <img src="{{ foto.base64 }}" width="200" height="100" />
+          </ng-template>
+        </swiper>
+      </div>
 
-        <div id="box">
+
+      <div id="box">
           <div id="leftbox" (click)="tiraFoto()">
             <ion-icon name="camera-outline"></ion-icon>
           </div>
@@ -51,11 +59,23 @@
               <ion-label>Tipo:</ion-label>
             </ion-col>
             <ion-col>
-              <ion-select  interface="action-sheet" [(ngModel)]="vehicle.tipo">
-                <ion-select-option [value]="Carro">Carro</ion-select-option>
-                <ion-select-option [value]="Moto">Moto</ion-select-option>
-                <ion-select-option [value]="Van">Van</ion-select-option>
-                <ion-select-option [value]="Caminhao">Caminhao</ion-select-option>
+              <ion-select  interface="action-sheet"  cancelText="Fechar e voltar" [interfaceOptions]="tipoActionSheetOptions"  [(ngModel)]="vehicle.tipo" (ionChange)="preencheTabelaReferencias()">
+                <ion-select-option *ngFor="let tipo of Tipos" [value]="tipo.Value">
+                  {{tipo.Label}}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-label>Referência:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-select interface="action-sheet" cancelText="Fechar e voltar"  [interfaceOptions]="referenciaActionSheetOptions" [(ngModel)]="vehicle.referencia" (ionChange)="preencheMarcas()">
+                <ion-select-option *ngFor="let referencia of Referencias" [value]="referencia.Codigo">
+                  {{referencia.Mes}}
+                </ion-select-option>
               </ion-select>
             </ion-col>
           </ion-row>
@@ -65,9 +85,9 @@
               <ion-label>Marca:</ion-label>
             </ion-col>
             <ion-col>
-              <ion-select interface="action-sheet" class="my-custom-interface" [interfaceOptions]="marcaActionSheetOptions" [(ngModel)]="vehicle.marca" (ionChange)="preencheModelo(vehicle.marca)">
-                <ion-select-option *ngFor="let marca of Marcas" [value]="marca.Descricao">
-                  {{marca.Descricao}}
+              <ion-select interface="action-sheet" cancelText="Fechar e voltar" [interfaceOptions]="marcaActionSheetOptions" [(ngModel)]="vehicle.marca" (ionChange)="preencheModelos()">
+                <ion-select-option *ngFor="let marca of Marcas" [value]="marca.Value">
+                  {{marca.Label}}
                 </ion-select-option>
               </ion-select>
             </ion-col>
@@ -78,9 +98,9 @@
               <ion-label>Modelo:</ion-label>
             </ion-col>
             <ion-col>
-              <ion-select interface="action-sheet" class="my-custom-interface" [interfaceOptions]="modeloActionSheetOptions" [(ngModel)]="vehicle.modelo" (ionChange)="preencheVersao(vehicle.modelo)">
-                <ion-select-option *ngFor="let modelo of Modelos" [value]="modelo.Descricao">
-                  {{modelo.Descricao}}
+              <ion-select interface="action-sheet" cancelText="Fechar e voltar" [interfaceOptions]="modeloActionSheetOptions" [(ngModel)]="vehicle.modelo" (ionChange)="preencheAnoModelo()">
+                <ion-select-option *ngFor="let modelo of Modelos" [value]="modelo.Value">
+                  {{modelo.Label}}
                 </ion-select-option>
               </ion-select>
             </ion-col>
@@ -88,30 +108,53 @@
 
           <ion-row>
             <ion-col>
-              <ion-label>Versão:</ion-label>
+              <ion-label>Ano Modelo:</ion-label>
             </ion-col>
             <ion-col>
-              <ion-select interface="action-sheet" class="my-custom-interface" [interfaceOptions]="versaoActionSheetOptions" [(ngModel)]="vehicle.versao">
-                <ion-select-option *ngFor="let versao of Versoes" [value]="versao.Descricao">
-                  {{versao.Descricao}}
+              <ion-select interface="action-sheet" cancelText="Fechar e voltar" [interfaceOptions]="anoModeloActionSheetOptions" [(ngModel)]="vehicle.anoModelo" (ionChange)="preencheCardFipe()">
+                <ion-select-option *ngFor="let anoModelo of AnoModelos" [value]="anoModelo.Value">
+                  {{anoModelo.Label}}
                 </ion-select-option>
               </ion-select>
             </ion-col>
           </ion-row>
+
           <ion-row>
             <ion-col>
-              <ion-label>Fabricação:</ion-label>
+              <ion-label>Ano Fabr.:</ion-label>
             </ion-col>
             <ion-col>
               <ion-input type="text" [(ngModel)]="vehicle.anoFabricacao" [value]="vehicle.anoFabricacao"></ion-input>
             </ion-col>
           </ion-row>
+
+
+          <ion-row aria-colspan="2">
+            <ion-col>
+              <ion-card class="cardFipe">
+                <ion-card-content>
+                    Fipe: <b>{{ vehicle.codigoFipe}}</b><br>
+                    Preço Médio: <b>{{ vehicle.valorFipe}}</b>
+                </ion-card-content>
+              </ion-card>
+
+            </ion-col>
+          </ion-row>
+
           <ion-row>
             <ion-col>
-              <ion-label>Modelo:</ion-label>
+              <ion-label>Preço Venda:</ion-label>
             </ion-col>
             <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.anoModelo" [value]="vehicle.anoModelo"></ion-input>
+              <ion-input type="text" [(ngModel)]="vehicle.preco" [value]="vehicle.preco"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>Placa:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-input type="text" [(ngModel)]="vehicle.placa" [value]="vehicle.placa"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -132,47 +175,10 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Combustível:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-select interface="action-sheet" class="custom-options" [(ngModel)]="vehicle.combustivel">
-                <ion-select-option [value]="Flex">Flex</ion-select-option>
-                <ion-select-option [value]="Gasolina">Gasolina</ion-select-option>
-                <ion-select-option [value]="Etanol">Etanol</ion-select-option>
-                <ion-select-option [value]="Diesel">Diesel</ion-select-option>
-              </ion-select>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-label>Placa:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.placa" [value]="vehicle.placa"></ion-input>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
               <ion-label>Chassi:</ion-label>
             </ion-col>
             <ion-col>
               <ion-input type="text" [(ngModel)]="vehicle.chassi" [value]="vehicle.chassi"></ion-input>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-label>Fipe:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.fipe" [value]="vehicle.fipe"></ion-input>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-label>Preço:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.preco" [value]="vehicle.preco"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row aria-colspan="2">

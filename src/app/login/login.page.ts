@@ -42,10 +42,10 @@ export class LoginPage implements OnInit {
     @Inject('RlUserServiceToken') private rlUserService: IRlUserService,
     @Inject('CompanyServiceToken') private companyService: ICompanyService) {
 
-  }
+      this.initializeConfiguration();
+    }
 
   ngOnInit() {
-
   }
 
   ionViewWillEnter() {
@@ -56,10 +56,10 @@ export class LoginPage implements OnInit {
 
     this.platform.ready().then(() => {
 
-      if (this.localStorageRepository.recuperaConfiguracaoPorChave('user')) {
-        this.user = JSON.parse(this.localStorageRepository.recuperaConfiguracaoPorChave('user'));
-        this.logged = true;
-      }
+    //   if (!!this.localStorageRepository.recuperaConfiguracaoPorChave('user')) {
+    //     this.user = JSON.parse(this.localStorageRepository.recuperaConfiguracaoPorChave('user'));
+    //     this.logged = true;
+    //   }
     });
 
   }
@@ -85,14 +85,14 @@ export class LoginPage implements OnInit {
     this.loaderCtrl.showLoader(`Aguarde, fazendo login...`);
 
 
-    this.userService.logar(this.user)
-      .then((result: any) => {
+    console.log(this.user);
 
-        if (result) {
+    this.userService.logar(this.user)
+      .then((responseUser: any) => {
+
+        if (responseUser) {
           let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
-          if (user) {
-            this.user = JSON.parse(user);
-          }
+          this.user = JSON.parse(user);
 
           this.rlUserService.getByUser(this.user.id)
             .then((result2: any) => {
@@ -146,6 +146,7 @@ export class LoginPage implements OnInit {
 
         }
         else {
+          this.loaderCtrl.hiddenLoader();
           this.logged = false;
           this.alertCtrl.showAlert('RepassAuto - Login', `Usuário e Senha inválidas.`);
         }

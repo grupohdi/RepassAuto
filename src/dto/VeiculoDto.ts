@@ -1,22 +1,29 @@
+import { VeiculoFotoDto } from '../dto/VeiculoFotoDto';
+
 export class VeiculoDto {
 
     public id: string;
     public companyId: string;
     public userId: string;
     public tipo: string;
-    public chassi: string;
-    public placa: string;
-    public cor: string;
-    public combustivel: string;
-    public kms: string;
-    public anoFabricacao: string;
-    public anoModelo: string;
+    public referencia: string;
     public marca: string;
     public modelo: string;
-    public versao: string;
-    public fipe: string;
-    public descricao: string;
+    public anoModelo: string;
+    public tipoDescricao: string;
+    public referenciaDescricao: string;
+    public marcaDescricao: string;
+    public modeloDescricao: string;
+    public anoModeloDescricao: string;
+    public anoFabricacao: string;
+    public codigoFipe: string;
+    public valorFipe: string;
     public preco: string;
+    public placa: string;
+    public cor: string;
+    public kms: string;
+    public chassi: string;
+    public descricao: string;
     public latitude: string;
     public longitude: string;
     public logradouro: string;
@@ -35,6 +42,7 @@ export class VeiculoDto {
     public comments: string;
     public meta: any;
     public tags: string;
+    public veiculoFotos: any;
 
     constructor() {
 
@@ -42,19 +50,24 @@ export class VeiculoDto {
         this.companyId = "";
         this.userId = "";
         this.tipo = "";
-        this.chassi = "";
-        this.placa = "";
-        this.cor = "";
-        this.combustivel = "";
-        this.kms = "";
-        this.anoFabricacao = "";
-        this.anoModelo = "";
+        this.referencia = "";
         this.marca = "";
         this.modelo = "";
-        this.versao = "";
-        this.fipe = "";
-        this.descricao = "";
+        this.anoModelo = "";
+        this.tipoDescricao = "";
+        this.referenciaDescricao = "";
+        this.marcaDescricao = "";
+        this.modeloDescricao = "";
+        this.anoModeloDescricao = "";
+        this.anoFabricacao = "";
+        this.codigoFipe = "";
+        this.valorFipe = "";
         this.preco = "";
+        this.placa = "";
+        this.cor = "";
+        this.kms = "";
+        this.chassi = "";
+        this.descricao = "";
         this.latitude = "";
         this.longitude = "";
         this.logradouro = "";
@@ -71,9 +84,9 @@ export class VeiculoDto {
         this.updatedAtISO = "";
         this.status = "";
         this.comments = "";
-        this.meta = {};
+        this.meta = [];
         this.tags = "";
-    
+        this.veiculoFotos = [];
     }
 
 }

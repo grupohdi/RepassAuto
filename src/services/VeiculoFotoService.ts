@@ -18,8 +18,8 @@ export class VeiculoFotoService implements IVeiculoFotoService {
     ) {
 
         this.options = {
-            cameraDirection: this.camera.Direction.BACK,
-            quality: 50,
+            cameraDirection: 0,
+            quality: 70,
             saveToPhotoAlbum: false,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,

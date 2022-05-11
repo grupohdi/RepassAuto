@@ -35,8 +35,16 @@ const routes: Routes = [
     loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
   },
   {
+    path: 'users/user',
+    loadChildren: () => import('./users/user/user.module').then( m => m.UserPageModule)
+  },
+  {
     path: 'perimeters',
     loadChildren: () => import('./perimeters/perimeters.module').then( m => m.PerimetersPageModule)
+  },
+  {
+    path: 'perimeters/perimeter',
+    loadChildren: () => import('./perimeters/perimeter/perimeter.module').then( m => m.PerimeterPageModule)
   },
   {
     path: 'signOut',

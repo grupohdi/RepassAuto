@@ -25,17 +25,26 @@
             <ion-item-divider></ion-item-divider>
           </div>
           
-          <div *ngIf="manager">
-            <ion-menu-toggle  auto-hide="false" *ngFor="let p of appPagesManager">
-              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+          <div *ngIf="!logged">
+            <ion-menu-toggle  auto-hide="false" *ngFor="let p of appPagesInit">
+              <ion-item routerDirection="root" [href]="[p.url+'?mode='+p.param]" lines="none" para detail="false" routerLinkActive="selected">
                 <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
           </div>
-          <div *ngIf="!manager">
+
+          <div *ngIf="manager">
+            <ion-menu-toggle  auto-hide="false" *ngFor="let p of appPagesManager">
+              <ion-item routerDirection="root" [href]="[p.url+'?mode='+p.param]" lines="none" detail="false" routerLinkActive="selected">
+                <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
+          <div *ngIf="vendor">
             <ion-menu-toggle auto-hide="false" *ngFor="let pUser of appPagesUser">
-            <ion-item routerDirection="root" [routerLink]="[pUser.url]" lines="none" detail="false" routerLinkActive="selected">
+            <ion-item routerDirection="root" [href]="[pUser.url+'?mode='+p.param]" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon slot="start" [ios]="pUser.icon + '-outline'" [md]="pUser.icon + '-sharp'"></ion-icon>
               <ion-label>{{ pUser.title }}</ion-label>
             </ion-item>
@@ -44,12 +53,10 @@
 
       </ion-list>
 
-        <br>
-        <br>
         <ion-item-divider>
           <ion-list id="labels-list">
             <ion-menu-toggle auto-hide="false" *ngFor="let p of labelPages; let i = index">
-              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+              <ion-item routerDirection="root" [href]="[p.url+'/?mode='+p.param]" lines="none" detail="false" routerLinkActive="selected">
                 <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>

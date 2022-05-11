@@ -8,11 +8,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="normal">Lista de Ofertas</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
   <div id="filtros">
     <ion-grid>
@@ -26,8 +21,8 @@
    </div>
 
   <div id="container">
-    <div *ngIf="!offers">
-      <p>{{carregando}}</p>
+    <div id="carregando" *ngIf="!offers">
+      {{carregando}}
     </div>
     <div *ngIf="offers">
       <ion-card *ngFor="let offer of offers">
@@ -47,15 +42,15 @@
                 <h2><b>{{ offer.veiculo.preco }}</b></h2>
               </ion-col>
               <ion-col class="cell-class">
-                <ion-label>{{ offer.veiculo.marca }}</ion-label>
+                <ion-label>{{ offer.veiculo.marcaDescricao }}</ion-label>
               </ion-col>
               <ion-col class="cell-class">
-                <ion-label>{{ offer.veiculo.modelo }}</ion-label>
+                <ion-label>{{ offer.veiculo.referenciaDescricao }}</ion-label>
               </ion-col>
             </ion-row>
             <ion-row aria-colspan="2">
               <ion-col class="cell-class">
-                <ion-label>{{ offer.veiculo.versao }}</ion-label>
+                <ion-label>{{ offer.veiculo.modeloDescricao }}</ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -71,13 +66,10 @@
             </ion-row>
             <ion-row>
               <ion-col class="cell-class">
-                <ion-label>{{ offer.veiculo.combustivel }}</ion-label>
-              </ion-col>
-              <ion-col class="cell-class">
                 <ion-label>Final Placa: {{ offer.veiculo.placa.substring(offer.veiculo.placa.length-1,offer.veiculo.placa.length) }}</ion-label>
               </ion-col>
               <ion-col class="cell-class">
-                <ion-label>Fipe {{ offer.veiculo.fipe }}</ion-label>
+                <ion-label>Fipe {{ offer.veiculo.coddigoFipe }} {{ offer.veiculo.valorFipe }}</ion-label>
               </ion-col>
             </ion-row>
             <ion-row aria-colspan="3">
@@ -91,7 +83,7 @@
               </ion-col>
             </ion-row>
           </ion-grid>
-
+          Data de criação da oferta: {{offer.createdAtISO | date: 'dd/MM/yyyy HH:mm:ss'}}
         </ion-card-content>
 
       </ion-card>
@@ -99,4 +91,9 @@
     </div>
   </div>
   <div  id="aviso"><ion-label color="danger">* cobrança de tarifa para ver os dados de compra</ion-label></div>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.5" pullMin="200" pullMax="300">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
 </ion-content>

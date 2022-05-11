@@ -9,6 +9,7 @@ import { ILocalStorageRepository } from '../Repository/interfaces/ILocalStorageR
 import { ValidacaoCamposProvider } from 'src/providers/validacao-campos/validacao-campos';
 
 const WEBAPI_PATH_COMPANY = "/plt_company_v1/companies";
+const WEBAPI_PATH_COMPANY_FILTER = "/plt_company_v1/companies/filters/items";
 
 
 @Injectable()
@@ -46,5 +47,26 @@ export class CompanyService implements ICompanyService {
         });
     }
 
+    getByCNPJ(cnpj: string): Promise<any> {
+    
+        let strJson =  `{"cnpj": "${cnpj}" }`;
 
+        return new Promise((resolve, reject) => {
+
+            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), WEBAPI_PATH_COMPANY_FILTER, strJson)
+                .subscribe((response: any) => {
+                    if (response) {
+
+                        resolve(response.data[0]);
+                    }
+                    else {
+                        resolve(null);
+                    }
+                }, (error:any) => {
+                    console.error("CompanyService - getByCNPJ - Erro: ", JSON.stringify(error));
+                    reject(null);
+                });
+
+        });
+    }
 }
