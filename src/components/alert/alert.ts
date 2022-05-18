@@ -17,7 +17,7 @@ export class AlertComponent {
       .create({
         subHeader: title,
         message: message,
-        cssClass:'alert-warning',
+        cssClass:'custom-alert-class',
         buttons: ['OK']
       });
 
@@ -30,7 +30,7 @@ export class AlertComponent {
       .create({
         subHeader: title,
         message: message,
-        cssClass:'alert-warning',
+        cssClass:'custom-alert-class',
         buttons: [
           {
             text: "Sim",

@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { SwiperModule } from 'swiper/angular';
 import { IonicModule } from '@ionic/angular';
 
-import { MyOffersPageRoutingModule } from './myOffers-routing.module';
+import { MyOfferPageRoutingModule } from './myOffer-routing.module';
 
-import { MyOffersPage } from './myOffers.page';
+import { MyOfferPage } from './myOffer.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { MyOffersPage } from './myOffers.page';
     FormsModule,
     IonicModule,
     SwiperModule,
-    MyOffersPageRoutingModule
+    MyOfferPageRoutingModule
   ],
-  declarations: [MyOffersPage]
+  declarations: [MyOfferPage]
 })
-export class MyOffersPageModule {}
+export class MyOfferPageModule {}

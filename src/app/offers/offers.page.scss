@@ -64,16 +64,24 @@ ion-button{
     display: block;
   }
 
-  #carregando {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    text-align: center;
-    font-weight: bold;
-    font-size: 26px;
-    color: red;
-    margin: 20px;
-    height: 600px;
+  .carregando {
+    display: flexbox;
+    width: 98%;
+    height: 250px;
+    align-items: center;
+
+    .carregandoTitle {
+      width: 100%;
+      position: relative;
+      top: 50%;
+
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      font-weight: bold;
+      font-size: 22px;
+      color: red;
     }
+  }
   
 }
 

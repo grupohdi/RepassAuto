@@ -1,5 +1,5 @@
 
 export interface ISetupService {
 
-    save(companyInit: any): Promise<any>;
+    createCompanyData(companyData: any): Promise<any>;
 }

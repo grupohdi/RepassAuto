@@ -1,3 +1,11 @@
+@import '~swiper/scss';
+@import '~swiper/scss/autoplay';
+@import '~swiper/scss/keyboard';
+@import '~swiper/scss/pagination';
+@import '~swiper/scss/scrollbar';
+@import '~swiper/scss/zoom';
+@import '~@ionic/angular/css/ionic-swiper';
+
 ion-menu-button {
   color: var(--ion-color-primary);
 }
@@ -23,19 +31,24 @@ ion-label {
 }
 
 ion-card {
-  width: 92%;
-  background-color: #daf7ed;
+  width: 90%;
+  background-color: #f5c084;
   color: #000000;
   margin: 20px;
-  box-shadow: 5px 5px 5px rgb(118, 117, 141);
+  box-shadow: 5px 5px 5px rgb(66, 66, 66);
 }
 
-.cards {
-  width: 95%;
-  background-color: #9af0d2;
-  color: #000000;
-  margin: auto;
-  box-shadow: 5px 5px 5px rgb(163, 163, 165);
+.cardFipe {
+  width: 100%;
+  background-color: #0c1bee;
+  color: #ffffff;
+  margin: 0 auto;
+  box-shadow: 5px 5px 5px rgb(66, 66, 66);
+  ion-card-content{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+  }
+
 }
 
 
@@ -51,40 +64,9 @@ ion-textarea {
   padding: 4px !important;
 }
 
-:root {
-  --ion-safe-area-top: 20px;
-  --ion-safe-area-bottom: 22px;
-}
-
-
-ion-radio-group {
-  box-shadow: 5px 5px 5px rgb(12, 11, 31);
-}
-
-ion-radio-group .item-radio-checked ion-icon {
-  fill: teal;
-}
-
-ion-radio-group ion-icon::after {
-  content: "";
-  width: 14px;
-  height: 14px;
-  background: teal;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  border-radius: 50%;
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-  transform: scale(0);
-}
-
-ion-radio-group .item-radio-checked ion-icon::after {
-  transform: scale(1);
-}
-
 ion-input {
   height: 25px;
-  width: 95%;
+  width: 200px;
   text-align: left;
   align-items: left;
   align-content: left;
@@ -99,7 +81,7 @@ ion-input {
 
 ion-select {
   height: 25px;
-  width: 95%;
+  width: 200px;
   text-align: left;
   align-items: left;
   align-content: left;
@@ -109,46 +91,30 @@ ion-select {
   border-radius: 5px;
   background: white;
   color: black;
-  --padding: 4px !important;
-
+  padding: 4px !important;
 }
 
+ion-button{
+  width:50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 900;
+  font-size: 20px !important;
+  text-align: center;
+}
 
 ion-item-divider {
   min-height: 2px !important;
 }
 
-ion-button {
-  width: 70%;
-  display: block;
-  margin: auto;
-  align-items: center;
-  text-align: center;
-  align-content: center;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-weight: 900;
-  font-size: 24px !important;
-  color:#dbd7d7 !important; 
-  border: 1px solid #5a5959 !important; 
-  border-radius: 5px;
+
+
+.goBack {
+  width: 20%;
+  text-align: left;
+  margin: 10px;
 }
-
-.info {
-  width: 95%;
-  display: block;
-  margin-top: 50px;
-  align-items: center;
-  text-align: center;
-  align-content: center;
-  font-family:Arial, Helvetica, sans-serif;
-  font-weight: 900;
-  font-size: 22px !important;
-  color:#0f46ec !important; 
-}
-
-
-
-
 
 
 #box {
@@ -180,7 +146,7 @@ ion-button {
 
 #container {
   display: block;
-  max-height: calc(95%);
+  max-height: calc(85%);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -210,9 +176,7 @@ ion-button {
   text-decoration: none;
 }
 
-select::placeholder {
-  opacity:0.7;
-}
-input::placeholder {
- opacity:0.7;
-}
+
+
+
+

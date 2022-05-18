@@ -97,7 +97,7 @@
               <ion-label>Tipo:</ion-label>
             </ion-col>
             <ion-col class="cell-class">
-              <ion-label class="lblInput">{{offer.veiculo.tipo}}</ion-label>
+              <ion-label class="lblInput">{{offer.veiculo.tipo==1?"Carro":offer.veiculo.tipo==2?"Moto":offer.veiculo.tipo==3?"Caminhão/Vans/Onibus":"Outros"}}</ion-label>
             </ion-col>
           </ion-row>
 
@@ -106,7 +106,7 @@
               <ion-label>Marca:</ion-label>
             </ion-col>
             <ion-col class="cell-class">
-              <ion-label class="lblInput">{{offer.veiculo.marca}}</ion-label>
+              <ion-label class="lblInput">{{offer.veiculo.marcaDescricao}}</ion-label>
             </ion-col>
           </ion-row>
 
@@ -115,20 +115,10 @@
               <ion-label>Modelo:</ion-label>
             </ion-col>
             <ion-col class="cell-class">
-              <ion-label class="lblInput">{{offer.veiculo.modelo}}</ion-label>
+              <ion-label class="lblInput">{{offer.veiculo.modeloDescricao}}</ion-label>
             </ion-col>
           </ion-row>
 
-          <ion-row aria-colspan="2">
-            <ion-col class="cell-class">
-              <ion-label>Versão:</ion-label>
-            </ion-col>
-          </ion-row>
-          <ion-row aria-colspan="2">
-            <ion-col class="cell-class">
-              <ion-label class="lblInput">{{offer.veiculo.referencia}}</ion-label>
-            </ion-col>
-          </ion-row>
           <ion-row aria-colspan="2">
             <ion-col>
             </ion-col>
@@ -146,7 +136,7 @@
               <ion-label>Modelo:</ion-label>
             </ion-col>
             <ion-col class="cell-class">
-              <ion-label class="lblInput">{{offer.veiculo.anoModelo}}</ion-label>
+              <ion-label class="lblInput">{{offer.veiculo.anoModeloDescricao}}</ion-label>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -163,14 +153,6 @@
             </ion-col>
             <ion-col class="cell-class">
               <ion-label class="lblInput">{{offer.veiculo.cor}}</ion-label>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="cell-class">
-              <ion-label>Combustível:</ion-label>
-            </ion-col>
-            <ion-col class="cell-class">
-              <ion-label class="lblInput">{{offer.veiculo.combustivel}}</ion-label>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -194,7 +176,9 @@
               <ion-label>Fipe:</ion-label>
             </ion-col>
             <ion-col class="cell-class">
-              <ion-label class="lblInput">{{offer.veiculo.fipe}}</ion-label>
+              <ion-label class="lblInput">{{offer.veiculo.referenciaDescricao}}</ion-label><br>
+              <ion-label class="lblInput">{{offer.veiculo.codigoFipe}}</ion-label> <br>
+              <ion-label class="lblInput">{{offer.veiculo.valorFipe}}</ion-label>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -202,7 +186,7 @@
               <ion-label>Preço:</ion-label>
             </ion-col>
             <ion-col class="cell-class">
-              <ion-label class="lblInput">{{offer.veiculo.preco}}</ion-label>
+              <h1><b>{{ (!!offer.veiculo.preco) ? (offer.veiculo.preco*1).toLocaleString('pt-BR', {minimumFractionDigits: 2 , style: 'currency', currency: 'BRL'}) : 0 }}</b></h1>
             </ion-col>
           </ion-row>
           <ion-row aria-colspan="2">

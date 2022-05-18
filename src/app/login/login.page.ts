@@ -56,10 +56,11 @@ export class LoginPage implements OnInit {
 
     this.platform.ready().then(() => {
 
-    //   if (!!this.localStorageRepository.recuperaConfiguracaoPorChave('user')) {
-    //     this.user = JSON.parse(this.localStorageRepository.recuperaConfiguracaoPorChave('user'));
-    //     this.logged = true;
-    //   }
+      if (this.localStorageRepository.recuperaConfiguracaoPorChave('user')) {
+          this.user = JSON.parse(this.localStorageRepository.recuperaConfiguracaoPorChave('user'));
+          this.logged = true;
+      }      
+
     });
 
   }
@@ -103,7 +104,7 @@ export class LoginPage implements OnInit {
                   this.rlUser = JSON.parse(rlUser);
 
 
-                  this.companyService.get(this.rlUser.companyId)
+                  this.companyService.getById(this.rlUser.companyId)
                   .then((result3: any) => {
                     this.loaderCtrl.hiddenLoader();
 
@@ -165,6 +166,7 @@ export class LoginPage implements OnInit {
     const alert = await this.alertController.create({
       message: 'Tem certeza que deseja deslogar do RepassAuto?',
       subHeader: 'RepassAuto',
+      cssClass:'custom-alert-class',
       buttons: [
         {
           text: 'Não',

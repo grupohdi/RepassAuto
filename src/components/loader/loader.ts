@@ -16,7 +16,9 @@ export class LoaderComponent {
     async showLoader(message?: string) {
       this.isLoading = true;
       this.loaderCtrl.create({
-        message: message ? message : 'Por favor, espere...'
+        message: message ? message : 'Por favor, espere...',
+        spinner:'lines',
+        cssClass:'custom-loader-class'
       }).then(loader => {
         loader.present().then(() => {
           if (!this.isLoading) {

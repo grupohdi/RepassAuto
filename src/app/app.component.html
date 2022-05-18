@@ -5,11 +5,11 @@
         <ion-list id="repassauto-list">
           <ion-list-header>RepassAuto</ion-list-header><br>
 
-          <div *ngIf="logged">
+          <div class="companyData" *ngIf="logged">
             <ion-item-divider></ion-item-divider>
             <ion-note>
               <ion-icon name="car-sport-outline"></ion-icon><b> {{ company.nomeFantasia.substr(0,25) }}</b>
-            </ion-note><br>
+            </ion-note>
             <ion-note>
               <ion-icon name="person-circle-outline"></ion-icon> {{ user.name.substr(0,25) }}
             </ion-note>
@@ -18,16 +18,16 @@
             </ion-note>
             <ion-note>
               <ion-icon name="call-outline"></ion-icon> {{ user.phone }}
-            </ion-note><br>
+            </ion-note>
             <ion-note>
               <ion-icon name="shirt-outline"></ion-icon>&nbsp; <b>{{ user.role=="platform_manager_access"?"Gerente":"Vendedor" }}</b>
             </ion-note>
             <ion-item-divider></ion-item-divider>
           </div>
-          
+
           <div *ngIf="!logged">
-            <ion-menu-toggle  auto-hide="false" *ngFor="let p of appPagesInit">
-              <ion-item routerDirection="root" [href]="[p.url+'?mode='+p.param]" lines="none" para detail="false" routerLinkActive="selected">
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of appPagesInit">
+              <ion-item (click)="openUrlMenu(p)" lines="none" detail="false" routerLinkActive="selected">
                 <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
@@ -35,8 +35,8 @@
           </div>
 
           <div *ngIf="manager">
-            <ion-menu-toggle  auto-hide="false" *ngFor="let p of appPagesManager">
-              <ion-item routerDirection="root" [href]="[p.url+'?mode='+p.param]" lines="none" detail="false" routerLinkActive="selected">
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of appPagesManager">
+              <ion-item (click)="openUrlMenu(p)" lines="none" detail="false" routerLinkActive="selected">
                 <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
@@ -44,19 +44,19 @@
           </div>
           <div *ngIf="vendor">
             <ion-menu-toggle auto-hide="false" *ngFor="let pUser of appPagesUser">
-            <ion-item routerDirection="root" [href]="[pUser.url+'?mode='+p.param]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="pUser.icon + '-outline'" [md]="pUser.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ pUser.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </div>
+              <ion-item (click)="openUrlMenu(p)" lines="none" detail="false" routerLinkActive="selected">
+                <ion-icon slot="start" [ios]="pUser.icon + '-outline'" [md]="pUser.icon + '-sharp'"></ion-icon>
+                <ion-label>{{ pUser.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
 
-      </ion-list>
+        </ion-list>
 
         <ion-item-divider>
           <ion-list id="labels-list">
             <ion-menu-toggle auto-hide="false" *ngFor="let p of labelPages; let i = index">
-              <ion-item routerDirection="root" [href]="[p.url+'/?mode='+p.param]" lines="none" detail="false" routerLinkActive="selected">
+              <ion-item (click)="openUrlMenu(p)" lines="none" detail="false" routerLinkActive="selected">
                 <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>

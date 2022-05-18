@@ -24,7 +24,7 @@ export class UsersPage implements OnInit {
   public company: any;
   public rlUsers: any[];
   public users = [];
-  public carregando: string = "Verificando se existem usuários cadastrados...";
+  public carregando: string = "Procurando Usuários cadastrados...";
 
   constructor(
     private router: Router,
@@ -65,7 +65,7 @@ export class UsersPage implements OnInit {
     this.platform.ready().then(async () => {
 
 
-      this.loaderCtrl.showLoader(`Aguarde, carregando usuários...`);
+      this.loaderCtrl.showLoader(`Carregando...`);
 
 
       await this.rlUserService.getByCompany(this.rlUser.companyId)
@@ -134,7 +134,7 @@ export class UsersPage implements OnInit {
     const alert = await this.alertController.create({
       subHeader: 'RepassAuto - Cadastro de Usuários',
       message: attemption,
-      cssClass: 'alert-warning',
+      cssClass: 'custom-alert-class',
       buttons: [
         {
           text: 'Sim',

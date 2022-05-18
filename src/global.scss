@@ -1,3 +1,12 @@
+@import '~swiper/scss';
+@import '~swiper/scss/autoplay';
+@import '~swiper/scss/keyboard';
+@import '~swiper/scss/pagination';
+@import '~swiper/scss/scrollbar';
+@import '~swiper/scss/zoom';
+@import '~@ionic/angular/css/ionic-swiper';
+
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -25,13 +34,6 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-@import '~swiper/scss';
-@import '~swiper/scss/autoplay';
-@import '~swiper/scss/keyboard';
-@import '~swiper/scss/pagination';
-@import '~swiper/scss/scrollbar';
-@import '~swiper/scss/zoom';
-@import '~@ionic/angular/css/ionic-swiper';
 
 @import './main.css';
 
@@ -43,7 +45,7 @@
     --border-width:3px;    
     --background:#1a992b;
     --button-color:#ffffff;
-    font-size: 16px;
+    font-size: 18px;
     font-family: Verdana, Geneva, Tahoma, sans-serif !important;
 }
 .toast-bad-custom-class {
@@ -55,4 +57,24 @@
     --button-color:#ffffff;
     font-size: 18px;
     font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+}
+
+.custom-alert-class {
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    font-size: 1.3em !important;
+    --color:#070707;
+    --border-radius: 15px;
+    --border-style: solid;
+    --background:#ffffff;
+    --button-color:#0716f3;
+    --max-width: 85%;
+}
+
+.custom-loader-class {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.3em !important;
+    --background:#ffffff;
+    --border-radius: 15px;
+    --spinner-color:#040694;
+    --max-width: 85%;
 }

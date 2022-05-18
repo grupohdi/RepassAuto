@@ -23,25 +23,24 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-label>e-mail:</ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-input #inputLogin (keypress)="onKeyPressed($event, 0)" [(ngModel)]="user.mail"></ion-input>
+            <ion-label>Login de Usuário</ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-label>Senha</ion-label>
+            <ion-input #inputLogin (keypress)="onKeyPressed($event, 0)" placeholder="E-Mail" type="email" required="true" [(ngModel)]="user.mail" [value]="user.mail"></ion-input>
           </ion-col>
+        </ion-row>
+        <ion-row>
           <ion-col>
-            <ion-input #inputPassword (keypress)="onKeyPressed($event, 1)" type="password" [(ngModel)]="user.password">
+            <ion-input #inputPassword (keypress)="onKeyPressed($event, 1)" placeholder="Senha" required="true" type="password" [(ngModel)]="user.password">
             </ion-input>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col colspan="2">
-            <ion-button (click)="login()" color="warning">Entrar</ion-button>
-            <ion-button (click)="sair()" color="danger">Sair</ion-button>
+            <ion-button (click)="sair()" class="btnButton" color="danger">Sair</ion-button>
+            <ion-button (click)="login()" class="btnButton" color="success">Entrar</ion-button>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="logged">

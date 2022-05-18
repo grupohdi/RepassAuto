@@ -1,12 +1,7 @@
-@import '~swiper/scss';
-@import '~swiper/scss/autoplay';
-@import '~swiper/scss/keyboard';
-@import '~swiper/scss/pagination';
-@import '~swiper/scss/scrollbar';
-@import '~swiper/scss/zoom';
-@import '~@ionic/angular/css/ionic-swiper';
-
-ion-menu-button {
+div {
+font-size: 26px;
+}
+  ion-menu-button {
   color: var(--ion-color-primary);
 }
 
@@ -49,10 +44,10 @@ ion-label{
 ion-card {
   width: 80% !important;
   align-items: center;
-  margin: 0 0 0 auto;
-  background-color: rgb(220, 220, 235);
+  margin: auto;
+  background-color: rgb(193, 243, 208);
   color: #000000;
-  box-shadow: 5px 5px 5px rgb(158, 155, 155);
+  box-shadow: 5px 5px 5px rgb(26, 112, 69);
 }
 
 .centered {
@@ -71,11 +66,11 @@ ion-label{
 
 ion-input{
     text-align: left;
-    width: 200px;
-    border-radius: 6px;
-    font-size: 16px;
+    width: 95%;
+    border-radius: 5px;
+    font-size: 20px;
     font-weight: 500;
-    background-color: rgb(234, 243, 238);
+    background-color: #ffffff
   }
 
 
@@ -83,14 +78,14 @@ ion-input{
   align-items: center;
   text-align: center;
   align-content: center;
-  font-size: 20px;
+  font-size: 22px;
   color: #199b14;
 }
 .loggedNot {
   align-items: center;
   text-align: center;
   align-content: center;
-  font-size: 20px;
+  font-size: 22px;
   color: #f70000;
 }
 
@@ -103,4 +98,15 @@ ion-input{
 }
 
 
-
+.btnButton {
+  display:flexbox;
+  align-items: center;
+  align-content: space-between;
+  width: 45%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 900;
+  font-size: 22px !important;
+  color:#dbd7d7 !important; 
+  border: 1px solid #5a5959 !important; 
+  border-radius: 5px;
+}

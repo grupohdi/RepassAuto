@@ -57,7 +57,12 @@ import { BrMaskerModule } from 'br-mask';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [ FormsModule, CommonModule, HttpClientModule, BrowserModule, AppRoutingModule, BrMaskerModule, IonicModule.forRoot()],
+  imports: [ FormsModule, CommonModule, HttpClientModule, BrowserModule, AppRoutingModule, BrMaskerModule, IonicModule.forRoot({
+    backButtonText: 'Retour',
+    mode: 'md',
+    scrollPadding: false,
+    scrollAssist: true
+  })],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SQLite,
     SplashScreen,
@@ -100,6 +105,7 @@ import { BrMaskerModule } from 'br-mask';
   { provide: 'VeiculoOfertaServiceToken', useClass: VeiculoOfertaService },
   { provide: 'VeiculoServiceToken', useClass: VeiculoService },
   { provide: 'VeiculoFotoServiceToken', useClass: VeiculoFotoService },
+  { provide: 'VeiculoOfertaServiceToken', useClass: VeiculoOfertaService },
   { provide: 'FipeServiceToken', useClass: FipeService },
   { provide: 'PerimetroServiceToken', useClass: PerimetroService },
   { provide: 'SetupServiceToken', useClass: SetupService },

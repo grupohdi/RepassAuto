@@ -18,8 +18,8 @@
 
   <div id="container">
 
-    <div id="carregando" *ngIf="!vehicles">
-      {{carregando}}
+    <div class="carregando" *ngIf="!vehicles">
+      <div class="carregandoTitle">{{carregando}}</div>
     </div>
 
 
@@ -47,6 +47,9 @@
 
           <ion-grid class="dadosGrid" (click)="abrir(vehicle)">
             <ion-row aria-colspan="4">
+              <ion-col class="cell-class">
+                <ion-label>Código:<b>{{ vehicle.id}}</b></ion-label>
+              </ion-col>
               <ion-col class="cell-class">
                 <ion-label><b>{{ (!!vehicle.preco) ? (vehicle.preco*1).toLocaleString('pt-BR', {minimumFractionDigits: 2 , style: 'currency', currency: 'BRL'}) : 0 }} &nbsp;</b></ion-label>
               </ion-col>

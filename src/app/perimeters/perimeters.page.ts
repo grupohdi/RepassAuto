@@ -22,7 +22,7 @@ export class PerimetersPage implements OnInit {
   public rlUser: any;
   public company: any;
   public perimeters = [];
-  public carregando: string = "Verificando se existem perímetros cadastrados...";
+  public carregando: string = "Procurando Perímetros cadastrados...";
 
   constructor(
     private router: Router,
@@ -66,7 +66,7 @@ export class PerimetersPage implements OnInit {
     this.platform.ready().then(async () => {
 
 
-      this.loaderCtrl.showLoader(`Aguarde, carregando perímetros...`);
+      this.loaderCtrl.showLoader(`Carregando...`);
 
 
       await this.perimetroService.getAll(this.rlUser.companyId, this.rlUser.userId)
@@ -117,7 +117,7 @@ export class PerimetersPage implements OnInit {
     const alert = await this.alertController.create({
       subHeader: 'RepassAuto - Cadastro de Perímetros',
       message: attemption,
-      cssClass: 'alert-warning',
+      cssClass: 'custom-alert-class',
       buttons: [
         {
           text: 'Sim',

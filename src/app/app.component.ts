@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { Platform,NavController } from '@ionic/angular';
+import { Platform,NavController} from '@ionic/angular';
+import { Router, NavigationExtras } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
@@ -54,6 +55,7 @@ export class AppComponent {
     private screenOrientation: ScreenOrientation,
     private statusBar: StatusBar,
     public nav: NavController,
+    public router: Router,
     private androidPermissions: AndroidPermissions,
     @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
 
@@ -92,7 +94,10 @@ export class AppComponent {
             this.logged = true;
             this.manager = (this.user.role.trim() === "platform_manager_access");
             this.vendor = (this.user.role.trim() ==="platform_user_access");
-            this.nav.navigateForward('/company');
+
+            let navigationExtras: NavigationExtras = {queryParams: {mode: "1"}};
+            this.router.navigate(['/myOffers'], navigationExtras);
+        
           };
         };
      };
@@ -101,6 +106,17 @@ export class AppComponent {
   
 
   }
+
+  async openUrlMenu(data: any) {
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        mode: data.param
+      }
+    };
+    this.router.navigate([data.url], navigationExtras);
+  }
+
 
   private verifyPermissions() {
 

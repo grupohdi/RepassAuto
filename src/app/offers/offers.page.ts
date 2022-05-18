@@ -25,7 +25,7 @@ export class OffersPage implements OnInit {
 
   public offers: any[];
   public vehicle: any = {marca:"", modelo:"", referencia:""};
-  public carregando: string = "Verificando se existem Ofertas...";
+  public carregando: string = "Procurando Ofertas...";
   public Marcas: any[] = [{"Descricao":"BMW"},{"Descricao":"Mercedez Bens"},{"Descricao":"Toyota"}];
   public Modelos: any[] = [{"Descricao":"X1"},{"Descricao":"C180"},{"Descricao":"XEI"}];
   public Versoes: any[]= [{"Descricao":"TURBO ACTIVE XDRIVE25I SPORT"},{"Descricao":"CGI AVANTGARDE 7G-TRONIC"},{"Descricao":"XEI 1.8 Aut. Gasolina"}];
@@ -84,10 +84,11 @@ export class OffersPage implements OnInit {
   initializeConfiguration() {
 
     this.platform.ready().then(() => {
-      this.loaderCtrl.showLoader(`Aguarde, carregando ofertas...`);
+
+      this.loaderCtrl.showLoader(`Carregando...`);
+
       this.veiculoOfertaService.getOffers()
         .then((result: any) => {
-          this.loaderCtrl.hiddenLoader();
           if (result) {
             this.offers = result;
             this.ordenar();
@@ -95,8 +96,9 @@ export class OffersPage implements OnInit {
           else {
             this.carregando = "Nesse momento não existem ofertas...";
           }
-        })
-        .catch((e: any) => {
+          this.loaderCtrl.hiddenLoader();
+
+        }).catch((e: any) => {
           this.loaderCtrl.hiddenLoader();
           this.alertCtrl.showAlert('RepassAuto - Ofertas', `Erro ao carregar as Ofertas.`);
         });
@@ -140,8 +142,14 @@ export class OffersPage implements OnInit {
     const alert = await this.alertController.create({
       subHeader: 'RepassAuto - Ofertas',
       message: attemption,
-      cssClass: 'alert-warning',
+      cssClass: 'custom-alert-class',
       buttons: [
+        {
+          text: 'Não',
+          handler: () => {
+            console.log('Não');
+          }
+        },
         {
           text: 'Aceitar',
           role: 'cancel',
@@ -150,12 +158,6 @@ export class OffersPage implements OnInit {
             let navigationExtras: NavigationExtras = { state: { offer }  };
             this.router.navigate(['/offers/vehicle-full'], navigationExtras);
                   }
-        },
-        {
-          text: 'Não',
-          handler: () => {
-            console.log('Não');
-          }
         }
       ]
     });

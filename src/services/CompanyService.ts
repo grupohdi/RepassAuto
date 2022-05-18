@@ -24,7 +24,7 @@ export class CompanyService implements ICompanyService {
     ) { }
 
 
-    get(companyId: string): Promise<any> {
+    getById(companyId: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
@@ -34,7 +34,7 @@ export class CompanyService implements ICompanyService {
 
                         this.localStorageRepository.adicionaConfiguracao("company", JSON.stringify(response));
 
-                        resolve(true);
+                        resolve(response);
                     }
                     else {
                         resolve(null);
@@ -64,6 +64,27 @@ export class CompanyService implements ICompanyService {
                     }
                 }, (error:any) => {
                     console.error("CompanyService - getByCNPJ - Erro: ", JSON.stringify(error));
+                    reject(null);
+                });
+
+        });
+    }
+
+    update(company: CompanyDto): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            this.httpClientProxy.put(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_COMPANY}/${company.id}`,company)
+                .subscribe((response: any) => {
+                    if (response) {
+
+                        resolve(response);
+                    }
+                    else {
+                        resolve(null);
+                    }
+                }, (error:any) => {
+                    console.error("CompanyService - update - Erro: ", JSON.stringify(error));
                     reject(null);
                 });
 

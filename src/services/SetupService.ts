@@ -8,7 +8,7 @@ import { ILocalStorageRepository } from '../Repository/interfaces/ILocalStorageR
 import { ValidacaoCamposProvider } from 'src/providers/validacao-campos/validacao-campos';
 
 const WEBAPI_PATH_SETUP = "/plt_setup_v1/setups";
-
+const WEBAPI_PATH_ONBOARDING_COMPANY = "/plt_setup_v1/onboarding/setup/company";
 
 @Injectable()
 export class SetupService implements ISetupService {
@@ -21,12 +21,10 @@ export class SetupService implements ISetupService {
         @Inject('ConfiguracaoServiceToken') private configuracaoService: IConfiguracaoService
     ) { }
 
-
-    save(companyInit: any): Promise<any> {
-
+    createCompanyData(companyData: any): Promise<any> {
         return new Promise((resolve, reject) => {
 
-            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), WEBAPI_PATH_SETUP, companyInit)
+            this.httpClientProxy.post(this.configuracaoService.webApiUrl(), WEBAPI_PATH_ONBOARDING_COMPANY, companyData)
                 .subscribe((response: any) => {
                     if (response) {
 
@@ -42,6 +40,5 @@ export class SetupService implements ISetupService {
 
         });
     }
-
 
 }

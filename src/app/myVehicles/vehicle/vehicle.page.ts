@@ -410,7 +410,7 @@ export class VehiclePage implements OnInit {
     const alert = await this.alertController.create({
       subHeader: 'RepassAuto - Fotos',
       message: 'Tem certeza que deseja excluir essa foto?',
-      cssClass: 'alert-warning',
+      cssClass: 'custom-alert-class',
       buttons: [
         {
           text: 'Sim',

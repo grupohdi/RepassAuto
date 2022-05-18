@@ -22,9 +22,10 @@
   </div>
 
   <div id="container">
-    <div id="carregando" *ngIf="!users">
-      {{carregando}}
+    <div class="carregando" *ngIf="!users">
+      <div class="carregandoTitle">{{carregando}}</div>
     </div>
+
     <div *ngIf="users">
 
 

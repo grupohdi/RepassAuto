@@ -1,15 +1,116 @@
+@import '~swiper/scss';
+@import '~swiper/scss/autoplay';
+@import '~swiper/scss/keyboard';
+@import '~swiper/scss/pagination';
+@import '~swiper/scss/scrollbar';
+@import '~swiper/scss/zoom';
+@import '~@ionic/angular/css/ionic-swiper';
+
+
 ion-menu-button {
   color: var(--ion-color-primary);
 }
 
-#container {
-  text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+
+ion-label {
+  font-size: 20px;
 }
+
+.semQuebra {
+  white-space: nowrap;
+}
+
+ion-card {
+  width: 90%;
+  background-color: #78e6bc;
+  color: #000000;
+  margin: 20px;
+  box-shadow: 5px 5px 5px rgb(66, 66, 66);
+}
+
+.cell-class {
+  border-color: black;
+  border-width: .01em;
+  border-style: solid;
+  margin-bottom: -1px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+}
+
+
+#addBox {
+  width: 100px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  background: rgb(20, 95, 1);
+  border-radius: 20px;
+}
+
+#minusBox {
+  width: 100px;
+  max-height: 65px;
+  margin: auto;
+  align-content: space-around;
+  background: #ff0000;
+  border-radius: 25px;
+}
+
+.dadosGrid {
+  width: 90%;
+}
+
+ion-icon {
+  font-size: 40px;
+  color: #ffffff;
+}
+
+
+ion-content {
+  display: block;
+  max-height: calc(90%) !important;
+}
+
+
+
+#container {
+  max-height: calc(90%) !important;
+  width: 98%;
+  margin: auto;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #e0dada;
+  display: block;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    display: block;
+  }
+
+  .carregando {
+    display: flexbox;
+    width: 98%;
+    height: 250px;
+    align-items: center;
+
+    .carregandoTitle {
+      width: 100%;
+      position: relative;
+      top: 50%;
+
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      font-weight: bold;
+      font-size: 22px;
+      color: red;
+    }
+  }
+
+}
+
+
 
 #container strong {
   font-size: 20px;
@@ -17,12 +118,25 @@ ion-menu-button {
 }
 
 #container p {
+  text-align: center;
+  font-weight: bold;
   font-size: 16px;
   line-height: 22px;
-  color: #8c8c8c;
-  margin: 0;
+  color: red;
+  margin-top: 15px;
+  margin: 5px;
 }
 
 #container a {
   text-decoration: none;
+}
+
+
+#agencia {
+  width: 95% !important;
+  font-size: 22px;
+  line-height: 22px;
+  color: #260975;
+  margin: 2px;
+  text-align: center;
 }

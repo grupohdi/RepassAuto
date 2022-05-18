@@ -51,36 +51,34 @@ export class VehicleFullPage implements OnInit {
     @Inject('VeiculoServiceToken') private veiculoService: IVeiculoService,
     @Inject('VeiculoFotoServiceToken') private veiculoFotoService: IVeiculoFotoService) {
 
-    this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.offer = this.router.getCurrentNavigation().extras.state.offer;
+      this.route.queryParams.subscribe(params => {
+        if (this.router.getCurrentNavigation().extras.state) {
+          this.offer = this.router.getCurrentNavigation().extras.state.offer;
+        }
+      }, (error) => {
+        console.error("VehicleFullPage - Erro ", error);
+      });
+  
+      let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
+      if (user) {
+        this.logged = JSON.parse(user);
       }
-    }, (error) => {
-      console.error("VehicleFullPage - Erro ", error);
-    });
-
-  }
+      let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
+      if (user) {
+        this.rlUser = JSON.parse(rlUser);
+      }
+      let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
+      if (company) {
+        this.company = JSON.parse(company);
+      }
+    }
 
   ngOnInit() {
-
-
-    let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
-    if (user) {
-      this.logged = JSON.parse(user);
-    }
-    let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
-    if (user) {
-      this.rlUser = JSON.parse(rlUser);
-    }
-    let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
-    if (company) {
-      this.company = JSON.parse(company);
-    }
 
   }
 
   ionViewDidEnter() {
-    this.initializeConfiguration();
+
   }
 
 
@@ -89,40 +87,9 @@ export class VehicleFullPage implements OnInit {
     console.log('slide change', swiper.activeIndex);
   }
 
-
-  initializeConfiguration() {
-
-    this.platform.ready().then(() => {
-
-      console.log(this.offer);
-
-      // if (this.vehicle) {
-      //   //this.loaderCtrl.showLoader(`Aguarde, carregando dados completos...`);
-      //   // this.veiculoService.getById(this.vehicle.id)
-      //   //   .then((result: any) => {
-
-      //   //     console.log(result);
-      //   //     this.loaderCtrl.hiddenLoader();
-
-      //   //     if (result) {
-      //   //       this.vehicle = result;
-
-      //   //     }
-      //   //   })
-      //   //   .catch((e: any) => {
-      //   //     this.loaderCtrl.hiddenLoader();
-      //   //     this.alertCtrl.showAlert('RepassAuto - Meus Veículos', `Erro ao carregar os veículos.`);
-      //   //   });
-      // }
-
-    });
-
-  }
-
-
   async goBack() {
 
-    this.nav.navigateBack('/offers');
+    this.nav.navigateRoot('/offers');
 
   }
 
@@ -130,26 +97,37 @@ export class VehicleFullPage implements OnInit {
 
     let image = this.offer.veiculoFotos[0].base64;
     let url = "";
-    let data: string = `\n
+    let data: string = `\n\n
     Agência/Concessionária:\n
     ${this.offer.company.razaoSocial}\n
     Contato:\n
     ${this.offer.company.contato} \n
     ${this.offer.company.telefone} \n
     ______________________\n\n
+
     Vendedor:\n
     ${this.offer.vendedor.name} \n
     ${this.offer.vendedor.mail} \n
     ${this.offer.vendedor.phone}\n
     ______________________\n\n
-    Veiculo:\n
-    Preço: *${this.offer.veiculo.preco}* \n
-    Referência FIPE: ${this.offer.veiculo.referencia} \n
-    Marca: ${this.offer.veiculo.marca} \n
-    Modelo:\n ${this.offer.veiculo.modelo} \n
-    Ano Modelo\Fabricação: ${this.offer.veiculo.anoFabricacao} \ ${this.offer.veiculo.anoModelo} \n
-    Placa: *${this.offer.veiculo.placa}* \n
-    Descrição:\n ${this.offer.veiculo.descricao} \n\n
+
+    FIPE: \n
+    Ref.: ${this.offer.veiculo.referenciaDescricao} \n
+    Cód.: ${this.offer.veiculo.codigoFipe} \n
+    Valor: ${this.offer.veiculo.valorFipe} \n
+     
+    ______________________\n\n
+
+    Veículo:\n
+    Preço: *${ (!!this.offer.veiculo.preco) ? (this.offer.veiculo.preco*1).toLocaleString('pt-BR', {minimumFractionDigits: 2 , style: 'currency', currency: 'BRL'}) : 0}* \n
+    Marca: ${this.offer.veiculo.marcaDescricao} \n
+    Modelo: ${this.offer.veiculo.modeloDescricao} \n
+    Ano Modelo: ${this.offer.veiculo.anoFabricacao} 
+    Ano Fabricação: ${this.offer.veiculo.anoModeloDescricao} \n
+    Kms: ${this.offer.veiculo.kms} \n
+    Cor: ${this.offer.veiculo.cor} \n
+    Placa: *${this.offer.veiculo.placa}* \n\n
+    Descrição: ${this.offer.veiculo.descricao} \n\n
     `;
 
     // Check if sharing via email is supported

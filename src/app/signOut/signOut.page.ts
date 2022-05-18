@@ -43,19 +43,19 @@ export class SignOutPage {
         subHeader: 'RepassAuto',
         buttons: [
           {
+            text: 'Não',
+            handler: () => {
+              this.navController.navigateForward('/');
+
+            }
+          },
+          {
             text: 'Sim',
             role: 'cancel',
             handler: () => {
               this.exitPage();
             }
           },
-          {
-            text: 'Não',
-            handler: () => {
-              this.navController.navigateForward('/');
-
-            }
-          }
         ]
       });
       await alert.present();
@@ -75,11 +75,7 @@ export class SignOutPage {
     this.localStorageRepository.removeConfiguracao("company");
 
     this.loaderCtrl.hiddenLoader();
-
-    let id = setInterval(() => {
-      window.location.reload();
-      clearInterval(id);
-    }, 1000);
+    window.location.reload();
 
 
 
