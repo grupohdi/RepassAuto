@@ -166,7 +166,7 @@ export class CompanyPage implements OnInit {
           this.logged = JSON.parse(user);
         }
         let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
-        if (user) {
+        if (rlUser) {
           this.rlUser = JSON.parse(rlUser);
         }
         let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');

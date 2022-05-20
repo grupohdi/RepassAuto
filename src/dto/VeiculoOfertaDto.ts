@@ -7,7 +7,7 @@ export class VeiculoOfertaDto {
     public userId: string;        
     public veiculoId: string;     
 
-    public status: string;        //(1 - Ativa, 2 - Em Negociação, 3-Finalizada, 4-Cancelada
+    public status: any;        //(1 - Ativa, 2 - Em Negociação, 3-Finalizada, 4-Cancelada
 
     public createdAt: Date;     
     public createdAtISO: string;  
@@ -23,7 +23,7 @@ export class VeiculoOfertaDto {
         this.id = "";            
         this.userId = "";        
         this.veiculoId = "";     
-        this.status = "";        //(1 - Ativa, 2 - Em Negociação, 3-Finalizada, 4-Cancelada
+        this.status = "1";        //(1 - Ativa, 2 - Em Negociação, 3-Finalizada, 4-Cancelada
         this.createdAt = new Date();     
         this.createdAtISO = "";  
         this.comments = "";      

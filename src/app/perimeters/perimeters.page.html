@@ -18,11 +18,13 @@
   </div>
 
   <div id="container">
-    <div class="carregando" *ngIf="!perimeters">
-      <div class="carregandoTitle">{{carregando}}</div>
-    </div>
-    <div *ngIf="perimeters">
 
+    <div class="carregando" *ngIf="!myOffers">
+      <div class="carregandoTitle">{{perimeters}}</div>
+    </div>
+
+
+    <div *ngIf="perimeters">
 
       <ion-card *ngFor="let perimeter of perimeters">
         <ion-card-content>

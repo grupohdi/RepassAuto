@@ -27,15 +27,10 @@ import { ToastComponent } from '../components/toast/toast';
 import { LocalNotificationComponent } from '../components/local-notification/local-notification';
 
 
-import { DataBaseProvider } from '../providers/database/database';
-import { UserProvider } from '../providers/database/user';
-import { ParametroProvider } from '../providers/database/parametro';
-
 import { UserService } from '../services/UserService';
 import { RlUserService } from '../services/RlUserService';
 import { CompanyService } from '../services/CompanyService';
 import { ParametroRepository } from '../Repository/ParametroRepository';
-import { ParametroService } from '../services/ParametroService';
 import { ConfiguracaoService } from '../services/ConfiguracaoService';
 import { VeiculoOfertaService } from '../services/VeiculoOfertaService';
 import { VeiculoService } from '../services/VeiculoService';
@@ -70,7 +65,6 @@ import { BrMaskerModule } from 'br-mask';
     ScreenOrientation,
     Network,
     ValidacaoCamposProvider,
-    DataBaseProvider,
     HttpInterceptorProvider,
     LocalStorageRepository,
     Keyboard,
@@ -84,8 +78,6 @@ import { BrMaskerModule } from 'br-mask';
     AndroidPermissions,
     ValidacaoCamposProvider,
     HttpInterceptorProvider,
-    UserProvider,
-    ParametroProvider,
     ScreenOrientation,
     Network,
     Camera,
@@ -100,7 +92,6 @@ import { BrMaskerModule } from 'br-mask';
   { provide: 'CompanyServiceToken', useClass: CompanyService },
   { provide: 'HttpClientProxyToken', useClass: HttpClientProxy },
   { provide: 'ParametroRepositoryToken', useClass: ParametroRepository },
-  { provide: 'ParametroServiceToken', useClass: ParametroService },
   { provide: 'ConfiguracaoServiceToken', useClass: ConfiguracaoService },
   { provide: 'VeiculoOfertaServiceToken', useClass: VeiculoOfertaService },
   { provide: 'VeiculoServiceToken', useClass: VeiculoService },

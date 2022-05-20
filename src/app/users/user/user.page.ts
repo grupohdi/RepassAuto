@@ -1,15 +1,15 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Component, ElementRef, Inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { AlertComponent } from '../../../components/alert/alert';
 import { LoaderComponent } from '../../../components/loader/loader';
 import { ILocalStorageRepository } from '../../../repository/interfaces/ILocalStorageRepository';
 import { IUserService } from '../../../services/interfaces/IUserService';
-import { IFipeService } from '../../../services/interfaces/IFipeService';
-import { IVeiculoFotoService } from '../../../services/interfaces/IVeiculoFotoService';
 import { UserDto } from '../../../dto/userDto';
 import { ActivatedRoute } from '@angular/router';
+import { ToastComponent } from '../../../components/toast/toast';
+
 
 @Component({
   selector: 'app-user',
@@ -18,17 +18,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class UserPage implements OnInit {
-  @ViewChild('inputName') inputName: any;
-  @ViewChild('inputMail') inputMail: any;
-  @ViewChild('inputPhone') inputPhone: any;
-  @ViewChild('inputPassword') inputPassword: any;
-  @ViewChild('selectRole') selectRole: any;
+  @ViewChildren('items') public items: QueryList<any>;
 
   public logged: any;
   public rlUser: any;
   public company: any;
 
-  public Roles: any[] = [{"role":"platform_manager_access"}, {"role":"platform_user_access"}];
+  public roles: any[] = [{ "role": "platform_manager_access", "description": "Gerente" }, { "role": "platform_user_access", "description": "Vendedor" }];
   public mensagemEmail: string = "Informe um email ainda não usado no RepassAuto...";
   public email: boolean = false;
   public userId: string = "";
@@ -49,12 +45,13 @@ export class UserPage implements OnInit {
     private alertCtrl: AlertComponent,
     private alertController: AlertController,
     public nav: NavController,
+    public toast: ToastComponent,
     @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
     @Inject('UserServiceToken') private userService: IUserService) {
 
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-        this.userId = this.router.getCurrentNavigation().extras.state.userId || "";
+        this.user = this.router.getCurrentNavigation().extras.state.user;
       }
 
     }, (error) => {
@@ -71,7 +68,7 @@ export class UserPage implements OnInit {
       this.logged = JSON.parse(user);
     }
     let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
-    if (user) {
+    if (rlUser) {
       this.rlUser = JSON.parse(rlUser);
     }
     let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
@@ -79,25 +76,12 @@ export class UserPage implements OnInit {
       this.company = JSON.parse(company);
     }
 
+    this.obterUsuario();
+
   }
 
   ionViewDidEnter() {
-    this.initializeConfiguration();
-    this.inputName.setFocus();
-
-  }
-
-
-
-  async initializeConfiguration() {
-
-    this.platform.ready().then( async() => {
-
-    await this.obterUsuario();
-
-
-  });
-
+    this.obterUsuario();
   }
 
 
@@ -107,22 +91,22 @@ export class UserPage implements OnInit {
 
   }
 
-
-
-
   async obterUsuario() {
 
-    if ( this.userId.trim() !== "") {
+    this.platform.ready().then(async () => {
 
-      this.loaderCtrl.showLoader(`Aguarde, obtendo dados do Usuário...`);
+      if (this.user.id.trim() !== "") {
 
-      this.userService.obterPorId(this.userId)
+        this.loaderCtrl.showLoader(`Carregando...`);
+
+        this.userService.obterPorId(this.userId)
           .then((result: any) => {
 
             this.loaderCtrl.hiddenLoader();
 
             if (result) {
-              this.user = result ;
+              this.user = result;
+              this.user.password = "";
 
             }
           })
@@ -132,12 +116,8 @@ export class UserPage implements OnInit {
           });
 
       }
-      else {
 
-        this.user = new UserDto();
-      }
-
-
+    });
 
   }
 
@@ -145,71 +125,117 @@ export class UserPage implements OnInit {
   async salvar() {
 
 
-    if (this.user.name.trim() === "" ) {
-      this.alertCtrl.showAlert('RepassAuto - Usuários', `Informe o Nome`);
-      this.inputName.setFocus();
-
-    }
-    else if (this.user.mail.trim() === "" ) {
-      this.alertCtrl.showAlert('RepassAuto - Usuários', `Informe o e-mail`);
-      this.inputMail.setFocus();
-
-    }
-    else if (this.user.phone.trim() === "" ) {
-      this.alertCtrl.showAlert('RepassAuto - Usuários', `Informe o telefone`);
-      this.inputPhone.setFocus();
-
-    }
-    else if (this.user.password.trim() === "" ) {
-      this.alertCtrl.showAlert('RepassAuto - Usuários', `Informe a senha`);
-      this.inputPassword.setFocus();
-
-    }
-    else if (this.user.role.trim() === "" ) {
-      this.alertCtrl.showAlert('RepassAuto - Usuários', `Informe a função`);
-      this.selectRole.setFocus();
-    }
-
-
-    let temEmail = [];
-    if ( this.user.id == null) {
-       temEmail = await this.userService.obterPorEmail(this.user.mail);
-       console.log('-------------------temEmail------------------');
-       console.log(temEmail);
-    }
-
-    if (temEmail.length >0 && this.user.id == null) {
-      this.mensagemEmail = "Atenção, esse memail já existe. Por favor, cadastre outro e-mail.";
-      this.email = false;
+    if (this.user.name.trim() === "") {
+      this.toast.showToastBottom('Informe o Nome.', 2000);
+      this.items.toArray()[0].setFocus();
       return false;
     }
-    else {
-      this.mensagemEmail = "E-Mail válidado com sucesso.";
-      this.email = true;
+    if (this.user.mail.trim() === "") {
+      this.toast.showToastBottom('Informe o e-mail.', 2000);
+      this.items.toArray()[1].setFocus();
+      return false;
+    }
+    if (this.user.phone.trim() === "") {
+      this.toast.showToastBottom('Informe o telefone.', 2000);
+      this.items.toArray()[2].setFocus();
+      return false;
+    }
+    if (this.user.password.trim() === "") {
+      this.toast.showToastBottom('Informe a senha.', 2000);
+      this.items.toArray()[3].setFocus();
+      return false;
+    }
+    if (this.user.role.trim() === "") {
+      this.toast.showToastBottom('Informe a função.', 2000);
+      this.items.toArray()[4].setFocus();
+      return false;
 
-      this.loaderCtrl.showLoader(`Aguarde, salvando dados do Usuário...`);
+    }
 
-      this.userService.salvar(this.user)
+    this.loaderCtrl.showLoader(`Salvando...`);
+
+    this.userService.salvar(this.user)
       .then((result: any) => {
 
-        this.loaderCtrl.hiddenLoader();
 
         if (result) {
-          this.user = result ;
+          this.user = result;
         }
+
+        this.loaderCtrl.hiddenLoader();
+        this.goBack();
+
       })
       .catch((e: any) => {
         this.loaderCtrl.hiddenLoader();
         this.alertCtrl.showAlert('RepassAuto - Usuários', `Erro ao salvar  Usuários`);
       });
 
+  }
+
+  onKeyPressed(event, index) {
+
+    if (event.keyCode == 13) {
+      if (index + 1 == 4) {
+        this.items.toArray()[index + 1].setFocus();
+      }
+      else {
+        this.items.toArray()[index + 1].setFocus();
+      }
     }
 
 
+    return true;
+  }
+
+  async userVerify() {
+
+    if (this.user.id == "") {
+
+      if (!this.isEmail(this.user.mail.trim())) {
+
+        this.toast.showToastBottom('E-MAIL Inválido!', 1500);
+        this.user.mail = "";
+        this.items.toArray()[1].setFocus();
+        return false;
+      }
 
 
+      await this.userService.obterPorEmail(this.user.mail.trim())
+        .then((response) => {
+
+          if (response) {
+            if (response.mail.trim() == this.user.mail.trim()) {
+
+              this.toast.showToastBottom('O <b>E-Mail</b> informado já foi usado! ', 3000);
+              this.user.mail = "";
+              this.items.toArray()[1].setFocus();
+              return false;
+            }
+            else {
+              this.toast.showToastTop('O <b>E-Mail</b> pode ser usado. OK ', 3000);
+              return true;
+            }
+
+          }
+          else {
+            this.toast.showToastTop('O <b>E-Mail</b> pode ser usado. OK ', 3000);
+            return true;
+          }
+
+        });
 
     }
+  }
+
+  isEmail(search: string): boolean {
+    let serchfind: boolean = false;
+
+    let regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    serchfind = regexp.test(search);
+
+    return serchfind;
+  }
 
 
 

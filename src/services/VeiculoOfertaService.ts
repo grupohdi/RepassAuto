@@ -71,7 +71,7 @@ export class VeiculoOfertaService implements IVeiculoOfertaService {
 
             return new Promise((resolve, reject) => {
 
-                this.httpClientProxy.put(this.configuracaoService.webApiUrl(), WEBAPI_PATH_OFFERS, veiculoOferta)
+                this.httpClientProxy.post(this.configuracaoService.webApiUrl(), WEBAPI_PATH_OFFERS, veiculoOferta)
                     .subscribe((response: any) => {
                         if (response.data) {
     
@@ -91,7 +91,7 @@ export class VeiculoOfertaService implements IVeiculoOfertaService {
 
             return new Promise((resolve, reject) => {
 
-                this.httpClientProxy.post(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_OFFERS}/${veiculoOferta.id}`, veiculoOferta)
+                this.httpClientProxy.put(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_OFFERS}/${veiculoOferta.id}`, veiculoOferta)
                     .subscribe((response: any) => {
                         if (response.data) {
     

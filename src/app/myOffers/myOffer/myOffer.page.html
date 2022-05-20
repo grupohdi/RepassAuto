@@ -27,38 +27,44 @@
 
           <ion-row>
             <ion-col>
-              <ion-label>Veiculos:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-select interface="action-sheet" cancelText="Cancelar" [interfaceOptions]="vehiclesActionSheetOptions" [(ngModel)]="myOffer.veiculoId">
-                <ion-select-option *ngFor="let vehicle of vehicles" [value]="vehicle.id">
-                  {{vehicle.placa}} - {{vehicle.marcaDescricao}} - {{vehicle.modeloDescricao}}
-                </ion-select-option>
-              </ion-select>
+              <div *ngIf="myOffer.id != '' ">
+                <ion-input disabled="true"  placeholder="Veiculo" value="{{vehicleDescription}}" ></ion-input>
+              </div>
+              <div *ngIf="myOffer.id == '' ">
+                <ion-select #items interface="action-sheet" placeholder="Veiculos" cancelText="Cancelar" [interfaceOptions]="vehiclesActionSheetOptions" [(ngModel)]="myOffer.veiculoId">
+                  <ion-select-option *ngFor="let vehicle of vehicles" [value]="vehicle.id" aria-selected="true">
+                    PLACA: {{vehicle.placa}} &nbsp;&nbsp; {{vehicle.marcaDescricao}} {{vehicle.modeloDescricao}}
+                  </ion-select-option>
+                </ion-select>
+              </div>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Status:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-select disabled="{{(veiculoOferta.status == '' || veiculoOferta.status == '1')?true:false}}" interface="action-sheet" cancelText="Cancelar" [interfaceOptions]="statusActionSheetOptions" [(ngModel)]="myOffer.status">
-                <ion-select-option *ngFor="let status of statusOptions" [value]="status.Value">
-                  {{status.Label}}
-                </ion-select-option>
-              </ion-select>
+                <ion-select #items disabled="{{ (statusOld>1) ? true:false}}" placeholder="Status" interface="action-sheet" cancelText="Cancelar" [interfaceOptions]="statusActionSheetOptions" [(ngModel)]="myOffer.status">
+                  <ion-select-option *ngFor="let status of statusOptions" [value]="status.Value">
+                    {{status.Label}}
+                  </ion-select-option>
+                </ion-select>
             </ion-col>
           </ion-row>
 
+          <ion-row>
+            <ion-col>
+              <div>
+                <ion-input disabled="true"  placeholder="data de criação" value="{{myOffer.createdAt | date: 'dd/MM/yyyy HH:mm:ss'}}"></ion-input>
+              </div>
+            </ion-col>
+          </ion-row>
 
           <ion-row aria-colspan="2">
-            <ion-col >
+            <ion-col>
               <ion-item-divider></ion-item-divider>
             </ion-col>
           </ion-row>
           <ion-row aria-colspan="2">
             <ion-col>
-              <ion-button center middle color="success" (click)="salvar()">{{btnSave}}</ion-button>
+              <ion-button #items disabled="{{ (statusOld>1) ? true:false}}" center middle color="success" (click)="confirmSave()">{{btnSave}}</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

@@ -192,7 +192,7 @@
                     <ion-row>
                       <ion-col>
                         <!-- 16 -->
-                        <ion-input #items (keypress)="onKeyPressed($event, 16)" maxlength="7" placeholder="Vencto (Mes/Ano)" [brmasker]="{mask: '99/9999'}" type="mask" [(ngModel)]="cartao.vencto" [value]="cartao.vencto"></ion-input>
+                        <ion-input #items (keypress)="onKeyPressed($event, 16)" maxlength="7" placeholder="Vencto (MM/AA)" [brmasker]="{mask: '99/99'}" type="mask" [(ngModel)]="cartao.vencto" [value]="cartao.vencto"></ion-input>
                       </ion-col>
                     </ion-row>
                     <ion-row>

@@ -23,7 +23,7 @@ export class UsersPage implements OnInit {
   public rlUser: any;
   public company: any;
   public rlUsers: any[];
-  public users = [];
+  public users: any[];
   public carregando: string = "Procurando Usuários cadastrados...";
 
   constructor(
@@ -41,92 +41,126 @@ export class UsersPage implements OnInit {
 
   ngOnInit() {
 
-    let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
-    if (user) {
-      this.logged = JSON.parse(user);
-    }
-    let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
-    if (user) {
-      this.rlUser = JSON.parse(rlUser);
-    }
-    let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
-    if (company) {
-      this.company = JSON.parse(company);
-    }
-
-    this.initializeConfiguration();
-  }
-
-  ionViewDidEnter() {
-  }
-
-  async initializeConfiguration() {
 
     this.platform.ready().then(async () => {
 
 
-      this.loaderCtrl.showLoader(`Carregando...`);
-
-
-      await this.rlUserService.getByCompany(this.rlUser.companyId)
-        .then(async (result: any) => {
-
-
-          // console.log('---------------------------------');
-          // console.log(result);
-
-          if (result) {
-            this.rlUsers = result || [];
-
-            this.users = [];
-
-            this.rlUsers.map((rlUser) => {
-
-              this.userService.obterPorId(rlUser.userId).then((user) => {
-              if (user) {
-                  this.users.push(user);
-                }
-              });
-            });
-            this.loaderCtrl.hiddenLoader();
-
-
-          } else {
-            this.carregando = "nenhum usuário cadastrado";
-            this.loaderCtrl.hiddenLoader();
-          }
-        })
-        .catch((e: any) => {
-          this.loaderCtrl.hiddenLoader();
-          this.alertCtrl.showAlert('RepassAuto - Usuários', `Erro ao carregar os usuários.`);
-        });
+      let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
+      if (user) {
+        this.logged = JSON.parse(user);
+      }
+      let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
+      if (user) {
+        this.rlUser = JSON.parse(rlUser);
+      }
+      let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
+      if (company) {
+        this.company = JSON.parse(company);
+      }
 
 
     });
 
   }
 
+  ionViewDidEnter() {
+    this.carregar();
+  }
 
-  async abrir(userId: string) {
+  async carregar() {
 
-    let navigationExtras: NavigationExtras = { "state": { "userId" : userId} };
+    this.loaderCtrl.showLoader(`Carregando...`);
 
-    //console.log(navigationExtras);
+    this.users = [];
+
+    await this.rlUserService.getByCompany(this.rlUser.companyId)
+      .then(async (result: any) => {
+
+
+        if (result) {
+          this.rlUsers = result || [];
+
+          let aUsers = [];
+          await this.rlUsers.map((rlUser) => {
+
+            this.userService.obterPorId(rlUser.userId).then((user) => {
+              if (user) {
+                aUsers.push(user);
+              }
+            });
+          });
+          this.users = aUsers;
+          await this.ordenar();
+
+
+          this.loaderCtrl.hiddenLoader();
+
+        } else {
+          this.carregando = "nenhum usuário cadastrado";
+          this.loaderCtrl.hiddenLoader();
+        }
+      })
+      .catch((e: any) => {
+        this.loaderCtrl.hiddenLoader();
+        this.alertCtrl.showAlert('RepassAuto - Usuários', `Erro ao carregar os usuários.`);
+      });
+
+
+
+  }
+
+  async carregarRefresh(refresher: any) {
+
+
+    this.users = null;
+
+    await this.rlUserService.getByCompany(this.rlUser.companyId)
+      .then(async (result: any) => {
+
+
+        if (result) {
+          this.rlUsers = result || [];
+
+          let aUsers = [];
+          await this.rlUsers.map((rlUser) => {
+
+            this.userService.obterPorId(rlUser.userId).then((user) => {
+              if (user) {
+                user.rlUserId = rlUser.id;
+                aUsers.push(user);
+              }
+            });
+          });
+          this.users = aUsers;
+          await this.ordenar();
+          refresher.target.complete();
+
+        } else {
+          this.carregando = "nenhum usuário cadastrado";
+          refresher.target.complete();
+        }
+      })
+      .catch((e: any) => {
+        refresher.target.complete();
+        this.alertCtrl.showAlert('RepassAuto - Usuários', `Erro ao carregar os usuários.`);
+      });
+
+  }
+
+
+  async abrir(user: UserDto) {
+
+    if (user == undefined) {
+      user = new UserDto();
+    }
+    let navigationExtras: NavigationExtras = { "state": { "user": user } };
     this.router.navigate(['/users/user'], navigationExtras);
 
 
   }
 
-  async adicionar(vehicle: any) {
 
-    let navigationExtras: NavigationExtras = { state: {} };
-
-    this.router.navigate(['/users/user'], navigationExtras);
-
-
-  }
-
-  async apagar(vehicle: any) {
+  async apagar(user: any) {
 
     let attemption = '<b>Atenção!</b><br> Para apagar um usuário, ele não pode estar em nenhuma transação.';
     attemption += 'Tem certeza?';
@@ -137,16 +171,20 @@ export class UsersPage implements OnInit {
       cssClass: 'custom-alert-class',
       buttons: [
         {
-          text: 'Sim',
-          role: 'cancel',
-          handler: () => {
-            console.log('sim');
-          }
-        },
-        {
           text: 'Não',
           handler: () => {
             console.log('Não');
+          }
+        },
+        {
+          text: 'Sim',
+          role: 'cancel',
+          handler: () => {
+
+            this.userService.deletar(user);
+            this.carregar();
+
+
           }
         }
       ]
@@ -156,6 +194,20 @@ export class UsersPage implements OnInit {
 
   }
 
+
+  async doRefresh(refresher) {
+    this.carregarRefresh(refresher);
+  }
+
+  async ordenar() {
+    await this.users.sort(function (a, b) {
+      if (a.createdAt > b.createdAt)
+        return -1;
+      if (a.createdAt < b.createdAt)
+        return 1;
+      return 0;
+    });
+  }
 
 
 }

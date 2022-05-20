@@ -42,8 +42,8 @@ export class LoginPage implements OnInit {
     @Inject('RlUserServiceToken') private rlUserService: IRlUserService,
     @Inject('CompanyServiceToken') private companyService: ICompanyService) {
 
-      this.initializeConfiguration();
-    }
+    this.initializeConfiguration();
+  }
 
   ngOnInit() {
   }
@@ -57,9 +57,9 @@ export class LoginPage implements OnInit {
     this.platform.ready().then(() => {
 
       if (this.localStorageRepository.recuperaConfiguracaoPorChave('user')) {
-          this.user = JSON.parse(this.localStorageRepository.recuperaConfiguracaoPorChave('user'));
-          this.logged = true;
-      }      
+        this.user = JSON.parse(this.localStorageRepository.recuperaConfiguracaoPorChave('user'));
+        this.logged = true;
+      }
 
     });
 
@@ -105,30 +105,30 @@ export class LoginPage implements OnInit {
 
 
                   this.companyService.getById(this.rlUser.companyId)
-                  .then((result3: any) => {
-                    this.loaderCtrl.hiddenLoader();
+                    .then((result3: any) => {
+                      this.loaderCtrl.hiddenLoader();
 
-                    if (result3) {
-                      let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
-                      if (company) {
-                        this.company = JSON.parse(company);
+                      if (result3) {
+                        let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
+                        if (company) {
+                          this.company = JSON.parse(company);
 
 
-                        let id = setInterval(() => {
-                          window.location.reload();
-                          clearInterval(id);
-                        }, 1000);
-                                    }
-                    }
-                    else {
+                          let id = setInterval(() => {
+                            window.location.reload();
+                            clearInterval(id);
+                          }, 1000);
+                        }
+                      }
+                      else {
+                        this.loaderCtrl.hiddenLoader();
+                        this.alertCtrl.showAlert('RepassAuto - Agencia', `Agencia inválida.`);
+                      }
+                    })
+                    .catch((e: any) => {
                       this.loaderCtrl.hiddenLoader();
                       this.alertCtrl.showAlert('RepassAuto - Agencia', `Agencia inválida.`);
-                    }
-                  })
-                  .catch((e: any) => {
-                    this.loaderCtrl.hiddenLoader();
-                    this.alertCtrl.showAlert('RepassAuto - Agencia', `Agencia inválida.`);
-                  });
+                    });
 
 
                 }
@@ -158,47 +158,47 @@ export class LoginPage implements OnInit {
       });
 
 
-
   }
 
   async sair() {
 
     const alert = await this.alertController.create({
-      message: 'Tem certeza que deseja deslogar do RepassAuto?',
+      message: 'Deseja sair do app RepassAuto?',
       subHeader: 'RepassAuto',
-      cssClass:'custom-alert-class',
+      cssClass: 'custom-alert-class',
       buttons: [
         {
           text: 'Não',
           handler: () => {
+            this.nav.navigateForward('/');
+
           }
         },
         {
           text: 'Sim',
           role: 'cancel',
           handler: () => {
-
-            this.loaderCtrl.showLoader('Saindo...');
-            this.userService.deslogar(this.user.id)
-              .then((result) => {
-
-                this.logged = false;
-                let id = setInterval(() => {
-                  window.location.reload();
-                  clearInterval(id);
-                }, 1000);
-
-              })
-              .catch((e) => {
-                this.loaderCtrl.hiddenLoader();
-                this.alertCtrl.showAlert('RepassAuto - deslogar', `Ocorreu um erro inesperado, tente novamente mais tarde.`);
-              });
-
+            this.exitPage();
           }
-        }
+        },
       ]
     });
     await alert.present();
+
+  }
+
+  exitPage() {
+    this.loaderCtrl.showLoader('Saindo do RepassAuto...');
+
+    this.localStorageRepository.removeConfiguracao("sessionToken");
+    this.localStorageRepository.removeConfiguracao("user");
+    this.localStorageRepository.removeConfiguracao("rlUser");
+    this.localStorageRepository.removeConfiguracao("company");
+
+    this.loaderCtrl.hiddenLoader();
+    window.location.reload();
+
+
 
   }
 

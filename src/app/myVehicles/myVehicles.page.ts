@@ -62,7 +62,7 @@ export class MyVehiclesPage implements OnInit {
       this.logged = JSON.parse(user);
     }
     let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
-    if (user) {
+    if (rlUser) {
       this.rlUser = JSON.parse(rlUser);
     }
     let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
@@ -145,6 +145,7 @@ export class MyVehiclesPage implements OnInit {
 
   async abrir(vehicle: any) {
 
+    debugger;
     let navigationExtras: NavigationExtras = { state: { vehicleId: vehicle.id } };
     this.router.navigate(['/myVehicles/vehicle'], navigationExtras);
 

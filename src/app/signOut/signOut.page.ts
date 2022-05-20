@@ -39,8 +39,9 @@ export class SignOutPage {
     if (this.localStorageRepository.recuperaConfiguracaoPorChave("user")) {
 
       const alert = await this.alertController.create({
-        message: 'Deseja sair do RepassAuto?',
+        message: 'Deseja sair do app RepassAuto?',
         subHeader: 'RepassAuto',
+        cssClass:'custom-alert-class',
         buttons: [
           {
             text: 'Não',

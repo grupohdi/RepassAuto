@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UserPageRoutingModule } from './user-routing.module';
 
 import { UserPage } from './user.page';
+import { BrMaskerModule } from 'br-mask';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { UserPage } from './user.page';
     FormsModule,
     IonicModule,
     SwiperModule,
+    BrMaskerModule,
     UserPageRoutingModule
   ],
   declarations: [UserPage]

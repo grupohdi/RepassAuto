@@ -20,18 +20,18 @@ export class AppComponent {
     { title: 'Cadastrar Agência', url: '/company', icon: 'settings', param:'0' },
   ];
   public appPagesManager = [
-    { title: 'Ofertas', url: '/offers', icon: 'megaphone', param:'0' },
-    { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket', param:'0' },
-    { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport' , param:'0'},
-    { title: 'Usuários', url: '/users', icon: 'people', param:'0' },
-    { title: 'Perímetros', url: '/perimeters', icon: 'location', param:'0' },
+    { title: 'Ofertas', url: '/offers', icon: 'megaphone', param:'1' },
+    { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket', param:'1' },
+    { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport' , param:'1'},
+    { title: 'Usuários', url: '/users', icon: 'people', param:'1' },
+    { title: 'Perímetros', url: '/perimeters', icon: 'location', param:'1' },
     { title: 'Manutenção Agência', url: '/company', icon: 'settings', param:'1' },
   ];
   public appPagesUser = [
-    { title: 'Ofertas', url: '/offers', icon: 'megaphone', param:'0' },
-    { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket', param:'0' },
-    { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport', param:'0' },
-    { title: 'Perímetros', url: '/perimeters', icon: 'settings', param:'0' },
+    { title: 'Ofertas', url: '/offers', icon: 'megaphone', param:'1' },
+    { title: 'Minhas Ofertas', url: '/myOffers', icon: 'rocket', param:'1' },
+    { title: 'Meus Veículos', url: '/myVehicles', icon: 'car-sport', param:'1' },
+    { title: 'Perímetros', url: '/perimeters', icon: 'settings', param:'1' },
   ];
 
 
@@ -96,7 +96,7 @@ export class AppComponent {
             this.vendor = (this.user.role.trim() ==="platform_user_access");
 
             let navigationExtras: NavigationExtras = {queryParams: {mode: "1"}};
-            this.router.navigate(['/myOffers'], navigationExtras);
+            this.router.navigate(['/users'], navigationExtras);
         
           };
         };

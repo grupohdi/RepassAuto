@@ -182,9 +182,9 @@ export class OffersPage implements OnInit {
 
   ordenar() {
     this.offers.sort(function (a, b) {
-      if (a.createdAt < b.updatedAt)
+      if (a.createdAt > b.createdAt)
         return -1;
-      if (a.createdAt > b.updatedAt)
+      if (a.createdAt < b.createdAt)
         return 1;
       return 0;
     });

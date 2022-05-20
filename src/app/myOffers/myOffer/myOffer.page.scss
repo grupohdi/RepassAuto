@@ -32,23 +32,10 @@ ion-label {
 
 ion-card {
   width: 90%;
-  background-color: #f5c084;
+  background-color: #78e6bc;
   color: #000000;
   margin: 20px;
   box-shadow: 5px 5px 5px rgb(66, 66, 66);
-}
-
-.cardFipe {
-  width: 100%;
-  background-color: #0c1bee;
-  color: #ffffff;
-  margin: 0 auto;
-  box-shadow: 5px 5px 5px rgb(66, 66, 66);
-  ion-card-content{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 20px;
-  }
-
 }
 
 
@@ -65,8 +52,8 @@ ion-textarea {
 }
 
 ion-input {
-  height: 25px;
-  width: 200px;
+  height: 30px;
+  width: 98%;
   text-align: left;
   align-items: left;
   align-content: left;
@@ -80,8 +67,8 @@ ion-input {
 }
 
 ion-select {
-  height: 25px;
-  width: 200px;
+  height: 30px;
+  width: 98%;
   text-align: left;
   align-items: left;
   align-content: left;
@@ -95,12 +82,13 @@ ion-select {
 }
 
 ion-button{
-  width:50%;
+  width:60%;
   display: block;
   margin-left: auto;
   margin-right: auto;
   font-weight: 900;
   font-size: 20px !important;
+  font-family: Arial, Helvetica, sans-serif;
   text-align: center;
 }
 
@@ -141,6 +129,10 @@ ion-item-divider {
 
 }
 
+.optionLabel {
+  font-size: 36px;
+  color: #ffffff;
+}
 
 
 

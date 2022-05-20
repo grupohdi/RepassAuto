@@ -25,56 +25,39 @@
         <ion-grid>
           <ion-row>
             <ion-col>
-              <ion-label>Nome:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input #inputName type="text" [(ngModel)]="user.name" [value]="user.name"></ion-input>
+              <ion-input #items (keypress)="onKeyPressed($event, 0)" placeholder="Nome" type="text" [(ngModel)]="user.name" [value]="user.name"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>E-Mail:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input #inputMail type="text" [(ngModel)]="user.mail" [value]="user.mail"></ion-input>
-                <div *ngIf="email" class="emailGood">{{mensagemEmail}}</div>
-                <div *ngIf="!email" class="emailBad">{{mensagemEmail}}</div>
+              <ion-input #items (keypress)="onKeyPressed($event, 1)" placeholder="e-mail" (change)="userVerify()" type="email" [(ngModel)]="user.mail" [value]="user.mail"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Telefone:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input #inputPhone type="text" [(ngModel)]="user.phone" [value]="user.phone"></ion-input>
+              <ion-input #items (keypress)="onKeyPressed($event, 2)" placeholder="Telefone (99) 9999-9999 / (99) 99999-9999" type="tel" [brmasker]="{phone: true}" [(ngModel)]="user.phone" [value]="user.phone"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Senha:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input #inputPassword type="password" [(ngModel)]="user.password" [value]="user.password"></ion-input>
+              <ion-input #items (keypress)="onKeyPressed($event, 3)" placeholder="Senha" type="password" [(ngModel)]="user.password" [value]="user.password"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Função:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-select  #selectRole interface="action-sheet" cancelText="Fechar e voltar" [interfaceOptions]="functionActionSheetOptions"  [(ngModel)]="user.role">
-                <ion-select-option *ngFor="let role of Roles" [value]="user.role">
-                  {{role.role ? "Gerente": "Vendedor"}}
+              <ion-select  #items interface="action-sheet" cancelText="Cancelar" [interfaceOptions]="functionActionSheetOptions"  [(ngModel)]="user.role">
+                <ion-select-option #selector *ngFor="let role of roles" [value]="role.role">
+                  {{role.description}}
                 </ion-select-option>
               </ion-select>
             </ion-col>
           </ion-row>
-          <ion-row aria-colspan="2">
+          <ion-row>
             <ion-col >
               <ion-item-divider></ion-item-divider>
             </ion-col>
           </ion-row>
-          <ion-row aria-colspan="2">
+          <ion-row>
             <ion-col>
               <ion-button color="success" (click)="salvar()">Salvar</ion-button>
             </ion-col>

@@ -7,6 +7,15 @@ export class ValidacaoCamposProvider {
 
   constructor() { }
 
+  isEmail(search: string): boolean {
+    let serchfind: boolean = false;
+
+    let regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    serchfind = regexp.test(search);
+
+    return serchfind;
+  }
+
   validaCPF(cpf) {
     let erro: String = "";
 
