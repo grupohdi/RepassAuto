@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
@@ -13,7 +13,7 @@ import { VeiculoFotoDto } from '../../../dto/VeiculoFotoDto';
 import { ActivatedRoute } from '@angular/router';
 
 import SwiperCore, { SwiperOptions, Autoplay, Keyboard, Pagination, Navigation, Scrollbar, A11y, Zoom } from 'swiper';
-import { initialize } from '@ionic/core';
+import { ToastComponent } from 'src/components/toast/toast';
 SwiperCore.use([Autoplay, Navigation, Keyboard, Pagination, Scrollbar, A11y, Zoom]);
 
 @Component({
@@ -23,6 +23,7 @@ SwiperCore.use([Autoplay, Navigation, Keyboard, Pagination, Scrollbar, A11y, Zoo
 })
 
 export class VehiclePage implements OnInit {
+  public vehicleForm: any;
 
   public logged: any;
   public rlUser: any;
@@ -31,8 +32,7 @@ export class VehiclePage implements OnInit {
 
   public fotoNaoDisponivel: VeiculoFotoDto[];
 
-  public vehicleId: string = null;
-  public vehicle: VeiculoDto = new VeiculoDto();
+  public vehicle: VeiculoDto;
 
   public activeIndexSwiper: number = 0;
   public config: SwiperOptions = {
@@ -44,12 +44,28 @@ export class VehiclePage implements OnInit {
     zoom: true,
   };
 
-  public Tipos: any[] = [{ "Label": "Carro", "Value": "1" }, { "Label": "Moto", "Value": "2" }, { "Label": "Caminhão / Van", "Value": "3" }];
+  public Tipos: any[] = [{ "Label": "Carro", "Value": "1" }, { "Label": "Moto", "Value": "2" },
+  { "Label": "Caminhão / Van", "Value": "3" },
+  { "Label": "Outros", "Value": "9" }];
   public Referencias: any[];
   public Marcas: any[];
   public Modelos: any[];
   public AnoModelos: any[];
   public CardFipe: any = { "CodigoFipe": "000000-0", "Valor": "R$ 0,00" };
+  public Cores: any[] = [
+    { "cor": "Branco" },
+    { "cor": "Preto" },
+    { "cor": "Prata" },
+    { "cor": "Cinza" },
+    { "cor": "Amarelo" },
+    { "cor": "Azul" },
+    { "cor": "Verde" },
+    { "cor": "Vermelho" },
+    { "cor": "Marrom" },
+    { "cor": "Laranja" },
+    { "cor": "Rosa" },
+    { "cor": "Roxo" },
+  ];
 
   tipoActionSheetOptions: any = {
     header: 'Tipos de automóveis',
@@ -76,6 +92,111 @@ export class VehiclePage implements OnInit {
     subHeader: 'Selecione o Ano/Modelo',
   };
 
+  corActionSheetOptions: any = {
+    header: 'Cores Básicas',
+    subHeader: 'Selecione a Cor',
+  };
+
+  paisActionSheetOptions: any = {
+    header: 'Países',
+    subHeader: 'Selecione o País',
+  };
+
+  estadoActionSheetOptions: any = {
+    header: 'Estados',
+    subHeader: 'Selecione o Estado',
+  };
+
+  cidadeActionSheetOptions: any = {
+    header: 'Cidades',
+    subHeader: 'Selecione a Cidade',
+  };
+
+
+  public Paises: any[] = [
+    { "nome": "Brasil" },
+    { "nome": "Colômbia" },
+    { "nome": "Chile" },
+    { "nome": "Argentina" },
+  ];
+
+  public Estados: any[] = [
+    { "pais": "Brasil", "estado": "São Paulo", "uf": "SP" },
+    { "pais": "Brasil", "estado": "Rio de Janeiro", "uf": "RJ" },
+    { "pais": "Brasil", "estado": "Paraná", "uf": "PR" },
+    { "pais": "Brasil", "estado": "Santa Catarina", "uf": "SC" },
+    { "pais": "Brasil", "estado": "Rio Grande do Sul", "uf": "RS" },
+    { "pais": "Brasil", "estado": "Minas Gerais", "uf": "MG" },
+    { "pais": "Brasil", "estado": "Acre", "uf": "AC" },
+    { "pais": "Brasil", "estado": "Alagoas", "uf": "AL" },
+    { "pais": "Brasil", "estado": "Amapá", "uf": "AP" },
+    { "pais": "Brasil", "estado": "Amazonas", "uf": "AM" },
+    { "pais": "Brasil", "estado": "Bahia", "uf": "BA" },
+    { "pais": "Brasil", "estado": "Ceará", "uf": "CE" },
+    { "pais": "Brasil", "estado": "Distrito Federal", "uf": "DF" },
+    { "pais": "Brasil", "estado": "Espírito Santo", "uf": "ES" },
+    { "pais": "Brasil", "estado": "Goiás", "uf": "GO" },
+    { "pais": "Brasil", "estado": "Maranhão", "uf": "MA" },
+    { "pais": "Brasil", "estado": "Mato Grosso", "uf": "MT" },
+    { "pais": "Brasil", "estado": "Mato Grosso do Sul	", "uf": "MS" },
+    { "pais": "Brasil", "estado": "Pará", "uf": "PA" },
+    { "pais": "Brasil", "estado": "Paraíba", "uf": "PB" },
+    { "pais": "Brasil", "estado": "Pernambuco", "uf": "PE" },
+    { "pais": "Brasil", "estado": "Piauí", "uf": "PI" },
+    { "pais": "Brasil", "estado": "Rio Grande do Norte 	", "uf": "RN" },
+    { "pais": "Brasil", "estado": "Rondônia", "uf": "RO" },
+    { "pais": "Brasil", "estado": "Roraima", "uf": "RR" },
+    { "pais": "Brasil", "estado": "Sergipe", "uf": "SE" },
+    { "pais": "Brasil", "estado": "Tocantins", "uf": "TO" },
+
+    { "pais": "Colômbia", "estado": "Bogotá", "uf": "Bogotá" },
+    { "pais": "Chile", "estado": "Santiago", "uf": "Santiago" },
+    { "pais": "Argentina", "estado": "Buenos Aires", "uf": "Buenos Aires" },
+
+  ];
+
+
+  public Cidades: any[] = [
+    { "nome": "São Paulo", "uf": "SP" },
+    { "nome": "São Bernardo do Campo", "uf": "SP" },
+    { "nome": "Santo André", "uf": "SP" },
+    { "nome": "São Caetano do Sul", "uf": "SP" },
+    { "nome": "Guarulhos", "uf": "SP" },
+    { "nome": "Mogi das Cruzes", "uf": "SP" },
+    { "nome": "Suzano", "uf": "SP" },
+
+    { "nome": "Rio de Janeiro", "uf": "RJ" },
+    { "nome": "Petropolis", "uf": "RJ" },
+    { "nome": "Cabo Frio", "uf": "RJ" },
+    { "nome": "Campo dos Goytacazes", "uf": "RJ" },
+    { "nome": "Volta Redonda", "uf": "RJ" },
+    { "nome": "Teresópolis", "uf": "RJ" },
+    { "nome": "Duque de Caxias", "uf": "RJ" },
+    { "nome": "Magé", "uf": "RJ" },
+    { "nome": "Paraty", "uf": "RJ" },
+    { "nome": "Angra dos Reis", "uf": "RJ" },
+
+
+    { "nome": "Belo Horizonte", "uf": "MG" },
+    { "nome": "Uberaba", "uf": "MG" },
+    { "nome": "Uberlândia", "uf": "MG" },
+    { "nome": "Contagem", "uf": "MG" },
+    { "nome": "Gov. Valadares", "uf": "MG" },
+    { "nome": "Uberlândia", "uf": "MG" },
+    { "nome": "Juiz de Fora", "uf": "MG" },
+
+    { "nome": "Curitiba", "uf": "PR" },
+    { "nome": "Ponta Grossa", "uf": "PR" },
+
+    { "nome": "Camburiú", "uf": "SC" },
+    { "nome": "Blumenau", "uf": "SC" },
+    { "nome": "Florianópolis", "uf": "SC" },
+
+    { "nome": "Porto Alegre", "uf": "RS" },
+    { "nome": "Pelotas", "uf": "RS" },
+
+  ];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -84,16 +205,16 @@ export class VehiclePage implements OnInit {
     private alertCtrl: AlertComponent,
     private alertController: AlertController,
     public nav: NavController,
+    public toast: ToastComponent,
     @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
     @Inject('VeiculoServiceToken') private veiculoService: IVeiculoService,
     @Inject('FipeServiceToken') private fipeService: IFipeService,
     @Inject('VeiculoFotoServiceToken') private veiculoFotoService: IVeiculoFotoService) {
 
-    this.route.queryParams.subscribe(params => {
+
+    this.route.queryParams.subscribe(async (params) => {
       if (this.router.getCurrentNavigation().extras.state) {
-        this.vehicleId = this.router.getCurrentNavigation().extras.state.vehicleId;
-        console.log("-------this.vehicleId------------");
-        console.log(this.vehicleId);
+        this.vehicle = this.router.getCurrentNavigation().extras.state.vehicle;
       }
 
     }, (error) => {
@@ -103,11 +224,6 @@ export class VehiclePage implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-
-
-  ionViewDidEnter() {
 
     let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
     if (user) {
@@ -121,57 +237,50 @@ export class VehiclePage implements OnInit {
     if (company) {
       this.company = JSON.parse(company);
     }
-
-    this.carregarVeiculo();
-
   }
 
-  carregarVeiculo() {
-
-    this.platform.ready()
-      .then(async () => {
 
 
+  async ionViewDidEnter() {
+
+    await this.preencheTabelaReferencias();
+    await this.carregar();
+
+    this.platform.ready().then(async () => {
+
+
+    });
+  }
+
+  async carregar() {
+
+
+    if (this.vehicle.id == "") {
+
+      this.salvar();
+
+    }
+    else {
+
+      if (this.vehicle.referencia) {
+        this.preencheMarcas();
+      }
+      if (this.vehicle.marca) {
+        this.preencheModelos();
+      }
+      if (this.vehicle.modelo) {
+        this.preencheAnoModelo();
+      }
+
+      if (this.vehicle.veiculoFotos.length == 0) {
         let dto = new VeiculoFotoDto();
         dto.base64 = this.photoNotAvailable;
         this.fotoNaoDisponivel = new Array(dto);
+        this.vehicle.veiculoFotos = this.fotoNaoDisponivel;
+      }
 
-        if (this.vehicleId == "") {
-
-          this.vehicle = new VeiculoDto();
-          this.vehicle.companyId = this.company.id;
-          this.vehicle.userId = this.logged.id
-
-          this.salvar();
-        }
-        else {
-
-          this.veiculoService.getById(this.vehicleId)
-            .then(async (result: any) => {
-
-              this.loaderCtrl.hiddenLoader();
-
-              // console.log("=====carregou veic================")
-              // console.log(result);
-              if (result) {
-                this.vehicle = result[0];
-
-                await this.preencheTabelaReferencias();
-                await this.preencheMarcas();
-                await this.preencheModelos();
-                await this.preencheAnoModelo();
-
-              }
-            })
-            .catch((e: any) => {
-              this.loaderCtrl.hiddenLoader();
-              this.alertCtrl.showAlert('RepassAuto - Meus Veículos', `Erro ao carregar o veículo.`);
-            });
-        }
-      });
-
+    }
   }
-
 
   onSlideChange([swiper]) {
     this.activeIndexSwiper = swiper.activeIndex;
@@ -193,56 +302,54 @@ export class VehiclePage implements OnInit {
     else {
       this.loaderCtrl.showLoader(`Salvando...`);
 
-      if (this.Tipos) {
+      if (this.vehicle.tipo < "9") {
         await this.Tipos.map(tipo => {
           if (this.vehicle.tipo == tipo.Value) {
             this.vehicle.tipoDescricao = tipo.Label;
           }
         });
-      }
-      if (this.Referencias) {
         await this.Referencias.map(ref => {
           if (this.vehicle.referencia == ref.Codigo) {
             this.vehicle.referenciaDescricao = ref.Mes;
           }
         });
-      }
-      if (this.Marcas) {
         await this.Marcas.map(marca => {
           if (this.vehicle.marca == marca.Value) {
             this.vehicle.marcaDescricao = marca.Label;
           }
         });
-      }
-      if (this.Modelos) {
         await this.Modelos.map(modelo => {
           if (this.vehicle.modelo == modelo.Value) {
             this.vehicle.modeloDescricao = modelo.Label;
           }
         });
-      }
-      if (this.AnoModelos) {
         await this.AnoModelos.map(ano => {
           if (this.vehicle.anoModelo == ano.Value) {
             this.vehicle.anoModeloDescricao = ano.Label;
           }
         });
       }
+
     }
 
     let vehicleToSave: VeiculoDto = this.vehicle;
     vehicleToSave.veiculoFotos = [];
 
     this.veiculoService.save(vehicleToSave)
-      .then((result: any) => {
+      .then((result: VeiculoDto[]) => {
 
         this.loaderCtrl.hiddenLoader();
 
-        if (result) {
-          console.log("=====criou veic================")
-          console.log(result);
-          this.vehicle.id = result[0].id;
-          this.vehicleId = result[0].id;
+        this.toast.showToastTop(`Salvo com sucesso!`, 2000);
+
+        if (result[0]) {
+          this.vehicle = result[0];
+          if (this.vehicle.veiculoFotos.length == 0) {
+            let dto = new VeiculoFotoDto();
+            dto.base64 = this.photoNotAvailable;
+            this.fotoNaoDisponivel = new Array(dto);
+            this.vehicle.veiculoFotos = this.fotoNaoDisponivel;
+          }
         }
       })
       .catch((e: any) => {
@@ -256,7 +363,7 @@ export class VehiclePage implements OnInit {
 
   async preencheTabelaReferencias() {
 
-    this.fipeService.obterTabelaReferencia()
+    await this.fipeService.obterTabelaReferencia()
       .then((result: any) => {
 
         if (result) {
@@ -272,7 +379,7 @@ export class VehiclePage implements OnInit {
 
   async preencheMarcas() {
 
-    this.fipeService.obterMarcas(this.vehicle.referencia, this.vehicle.tipo)
+    await this.fipeService.obterMarcas(this.vehicle.referencia, this.vehicle.tipo)
       .then((result: any) => {
 
         if (result) {
@@ -280,8 +387,7 @@ export class VehiclePage implements OnInit {
         }
       })
       .catch((e: any) => {
-        this.loaderCtrl.hiddenLoader();
-        this.alertCtrl.showAlert('RepassAuto - Meus Veículos', `Erro ao carregar os veículos.`);
+        this.alertCtrl.showAlert('RepassAuto - Meus Veículos', `Erro ao carregar Marcas.`);
       });
 
   }
@@ -289,7 +395,7 @@ export class VehiclePage implements OnInit {
   async preencheModelos() {
 
 
-    this.fipeService.obterModelos(this.vehicle.referencia, this.vehicle.tipo, this.vehicle.marca)
+    await this.fipeService.obterModelos(this.vehicle.referencia, this.vehicle.tipo, this.vehicle.marca)
       .then((result: any) => {
 
         if (result) {
@@ -297,7 +403,7 @@ export class VehiclePage implements OnInit {
         }
       })
       .catch((e: any) => {
-        this.alertCtrl.showAlert('RepassAuto - Meus Veículos', `Erro ao carregar os veículos.`);
+        this.alertCtrl.showAlert('RepassAuto - Meus Veículos', `Erro ao carregar Modelos.`);
       });
 
   }
@@ -316,7 +422,7 @@ export class VehiclePage implements OnInit {
     };
 
 
-    this.fipeService.obterAnoModelo(params)
+    await this.fipeService.obterAnoModelo(params)
       .then((result: any) => {
 
         if (result) {
@@ -336,7 +442,6 @@ export class VehiclePage implements OnInit {
     this.loaderCtrl.showLoader(`Aguarde, preenchendo FIPE preço médio...`);
 
     let anoModelo: any[] = ["2022", "1"];
-    console.log(this.vehicle.anoModelo);
     if (this.vehicle.anoModelo) {
       anoModelo = this.vehicle.anoModelo.split('-');
     }
@@ -352,7 +457,7 @@ export class VehiclePage implements OnInit {
       "tipoConsulta": "tradicional"
     };
 
-    this.fipeService.obterValor(params)
+    await this.fipeService.obterValor(params)
       .then((result: any) => {
 
         this.loaderCtrl.hiddenLoader();
@@ -370,10 +475,22 @@ export class VehiclePage implements OnInit {
   }
 
 
+  async preencheUfs() {
 
-  async tiraFoto() {
+    this.vehicle.uf = "";
+    this.vehicle.cidade = "";
+  }
 
-    this.veiculoFotoService.tiraFoto(this.vehicle.id)
+  async preencheCidades() {
+
+    this.vehicle.cidade = "";
+
+  }
+
+
+  async tiraFoto(source: number) {
+
+    this.veiculoFotoService.tiraFoto(this.vehicle.id, source)
       .then((veiculoFotoDto: VeiculoFotoDto) => {
 
         this.loaderCtrl.showLoader(`Enviando a foto...`);
@@ -413,6 +530,12 @@ export class VehiclePage implements OnInit {
       cssClass: 'custom-alert-class',
       buttons: [
         {
+          text: 'Não',
+          handler: () => {
+            console.log('Não');
+          }
+        },
+        {
           text: 'Sim',
           role: 'cancel',
           handler: () => {
@@ -438,12 +561,6 @@ export class VehiclePage implements OnInit {
               });
 
 
-          }
-        },
-        {
-          text: 'Não',
-          handler: () => {
-            console.log('Não');
           }
         }
       ]

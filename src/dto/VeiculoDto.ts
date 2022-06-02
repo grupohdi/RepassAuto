@@ -82,7 +82,7 @@ export class VeiculoDto {
         this.createdAtISO = "";
         this.updatedAt = new Date();
         this.updatedAtISO = "";
-        this.status = "";
+        this.status = "1";
         this.comments = "";
         this.meta = [];
         this.tags = "";

@@ -24,7 +24,7 @@ export class UsersPage implements OnInit {
   public company: any;
   public rlUsers: any[];
   public users: any[];
-  public carregando: string = "Procurando Usuários cadastrados...";
+  public carregando: string = "Procurando por Usuários cadastrados...";
 
   constructor(
     private router: Router,
@@ -64,50 +64,9 @@ export class UsersPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.carregar();
+    this.doRefresh(null);
   }
 
-  async carregar() {
-
-    this.loaderCtrl.showLoader(`Carregando...`);
-
-    this.users = [];
-
-    await this.rlUserService.getByCompany(this.rlUser.companyId)
-      .then(async (result: any) => {
-
-
-        if (result) {
-          this.rlUsers = result || [];
-
-          let aUsers = [];
-          await this.rlUsers.map((rlUser) => {
-
-            this.userService.obterPorId(rlUser.userId).then((user) => {
-              if (user) {
-                aUsers.push(user);
-              }
-            });
-          });
-          this.users = aUsers;
-          await this.ordenar();
-
-
-          this.loaderCtrl.hiddenLoader();
-
-        } else {
-          this.carregando = "nenhum usuário cadastrado";
-          this.loaderCtrl.hiddenLoader();
-        }
-      })
-      .catch((e: any) => {
-        this.loaderCtrl.hiddenLoader();
-        this.alertCtrl.showAlert('RepassAuto - Usuários', `Erro ao carregar os usuários.`);
-      });
-
-
-
-  }
 
   async carregarRefresh(refresher: any) {
 
@@ -133,15 +92,22 @@ export class UsersPage implements OnInit {
           });
           this.users = aUsers;
           await this.ordenar();
-          refresher.target.complete();
+  
+          if (refresher)
+              refresher.target.complete();
 
         } else {
           this.carregando = "nenhum usuário cadastrado";
-          refresher.target.complete();
+
+          if (refresher)
+            refresher.target.complete();
         }
       })
       .catch((e: any) => {
-        refresher.target.complete();
+
+        if (refresher)
+          refresher.target.complete();
+  
         this.alertCtrl.showAlert('RepassAuto - Usuários', `Erro ao carregar os usuários.`);
       });
 
@@ -182,7 +148,7 @@ export class UsersPage implements OnInit {
           handler: () => {
 
             this.userService.deletar(user);
-            this.carregar();
+            this.doRefresh(null);
 
 
           }

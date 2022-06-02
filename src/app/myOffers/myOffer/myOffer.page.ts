@@ -97,7 +97,6 @@ export class MyOfferPage implements OnInit {
       }
 
 
-      this.preencherVeiculos();
 
     }, (error) => {
       console.error("VehiclePage - Erro ", error);
@@ -106,15 +105,12 @@ export class MyOfferPage implements OnInit {
   }
 
   async ngOnInit() {
-
-    //await this.preencherVeiculos();
-
   }
 
 
 
   async ionViewDidEnter() {
-    //await this.preencherVeiculos();
+    this.preencherVeiculos();
   }
 
 

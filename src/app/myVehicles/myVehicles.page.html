@@ -11,7 +11,7 @@
 
 <ion-content [fullscreen]="true">
  
-  <div id="addBox" (click)="adicionarVeiculo()">
+  <div id="addBox" (click)="abrir()">
     <ion-icon name="add-outline"></ion-icon>
     <ion-icon name="car-sport-outline"></ion-icon>
   </div>
@@ -20,6 +20,7 @@
 
     <div class="carregando" *ngIf="!vehicles">
       <div class="carregandoTitle">{{carregando}}</div>
+      <div><img src="../../assets/imgs/carregando.gif" height="70" width="70"></div>
     </div>
 
 
@@ -71,9 +72,9 @@
               </ion-col>
             </ion-row>
           </ion-grid>
-          Data de inclusão do veículoa: {{vehicle.createdAtISO | date: 'dd/MM/yyyy HH:mm:ss'}}
+          Data de inclusão do veículo: {{ (vehicle.createdAt+'000') | date: 'dd/MM/yyyy HH:mm:ss'}}
 
-          <div id="minusBox" slot="end" (click)="apagarVeiculo()">
+          <div id="minusBox" slot="end" (click)="apagar(vehicle.id)">
             <ion-icon name="remove-outline"></ion-icon>
             <ion-icon name="car-sport-outline"></ion-icon>
           </div>

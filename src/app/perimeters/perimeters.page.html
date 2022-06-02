@@ -12,17 +12,21 @@
 
 <ion-content [fullscreen]="true">
 
-  <div id="addBox" (click)="adicionar()">
+
+  <div #map id="map"></div>
+
+  <!-- <div id="addBox" (click)="adicionar()">
     <ion-icon name="add-outline"></ion-icon>
     <ion-icon name="location-outline"></ion-icon>
   </div>
 
+
   <div id="container">
 
-    <div class="carregando" *ngIf="!myOffers">
-      <div class="carregandoTitle">{{perimeters}}</div>
+    <div class="carregando" *ngIf="!perimeters">
+      <div class="carregandoTitle">{{carregando}}</div>
+      <div><img src="../../assets/imgs/carregando.gif" height="70" width="70"></div>
     </div>
-
 
     <div *ngIf="perimeters">
 
@@ -58,4 +62,6 @@
 
     </div>
   </div>
+ -->
+
 </ion-content>

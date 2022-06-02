@@ -49,7 +49,7 @@ export class CompanyService implements ICompanyService {
 
     getByCNPJ(cnpj: string): Promise<any> {
     
-        let strJson =  `{"cnpj": "${cnpj}" }`;
+        let strJson:any =  {"cnpj": cnpj };
 
         return new Promise((resolve, reject) => {
 

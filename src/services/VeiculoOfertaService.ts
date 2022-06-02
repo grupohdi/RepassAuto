@@ -19,13 +19,11 @@ export class VeiculoOfertaService implements IVeiculoOfertaService {
         @Inject('ConfiguracaoServiceToken') private configuracaoService: IConfiguracaoService
     ) { }
 
-    getOffers() : Promise<VeiculoOfertaDto[]> {
-
-        let strJson: string = '{ "status": "1"}';
+    getOffers(filtersData:any) : Promise<VeiculoOfertaDto[]> {
 
         return new Promise((resolve, reject) => {
 
-            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), WEBAPI_PATH_OFFERS_FILTER, strJson)
+            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), WEBAPI_PATH_OFFERS_FILTER, filtersData)
                 .subscribe((response: any) => {
                     if (response.data) {
 
@@ -44,7 +42,7 @@ export class VeiculoOfertaService implements IVeiculoOfertaService {
 
     getByUser(userId:string) : Promise<any> {
 
-        let strJson: string = `{ "userId" : "${userId}"}`;
+        let strJson: any = { "userId" : userId};
 
         return new Promise((resolve, reject) => {
 

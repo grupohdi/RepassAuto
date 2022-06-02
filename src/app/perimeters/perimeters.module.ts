@@ -15,6 +15,6 @@ import { PerimetersPage } from './perimeters.page';
     IonicModule,
     PerimetersPageRoutingModule
   ],
-  declarations: [PerimetersPage]
+  declarations: [PerimetersPage ]
 })
 export class PerimetersPageModule {}

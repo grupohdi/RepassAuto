@@ -64,7 +64,7 @@ export class UserService implements IUserService {
 
     obterPorEmail(email: string): Promise<any> {
 
-        let strJson: string = `{ "mail" : "${email}"}`;
+        let strJson: any = { "mail" : email};
 
         return new Promise((resolve, reject) => {
 
@@ -89,7 +89,7 @@ export class UserService implements IUserService {
     gerarToken(): Promise<any> {
 
         let json = {
-            "mail": "admin@grupohdi.com",
+            "mail": "adminservice@grupohdi.com",
             "password": "admin123"
         };
 

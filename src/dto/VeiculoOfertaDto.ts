@@ -4,6 +4,7 @@ import { VeiculoFotoDto } from '../dto/VeiculoFotoDto';
 
 export class VeiculoOfertaDto {
     public id: string;            
+    public companyId: string;        
     public userId: string;        
     public veiculoId: string;     
 
@@ -17,10 +18,12 @@ export class VeiculoOfertaDto {
 
     veiculo: VeiculoDto;
     veiculoFotos: VeiculoFotoDto[];
+    perimetros: any[];
 
     constructor() {
 
         this.id = "";            
+        this.companyId = "";        
         this.userId = "";        
         this.veiculoId = "";     
         this.status = "1";        //(1 - Ativa, 2 - Em Negociação, 3-Finalizada, 4-Cancelada
@@ -32,5 +35,6 @@ export class VeiculoOfertaDto {
     
         this.veiculo =  new VeiculoDto();
         this.veiculoFotos = [new VeiculoFotoDto()];
+        this.perimetros = [];
     }
 }

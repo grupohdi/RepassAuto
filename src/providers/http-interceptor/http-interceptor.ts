@@ -38,8 +38,8 @@ export class HttpInterceptorProvider implements HttpInterceptor {
       }
 
       if (request.url.includes("/filters/items")) {
-        params = params.append('limit', '1000');
-        params = params.append('page', '1');
+          params = params.append('limit', '1000');
+          params = params.append('page', '1');
       }
     }
 
@@ -58,7 +58,7 @@ export class HttpInterceptorProvider implements HttpInterceptor {
 
     // headers = headers.append('Access-Control-Allow-Headers', '*');
     // headers = headers.append('Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    // headers = headers.append("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    headers = headers.append("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
 
 
 

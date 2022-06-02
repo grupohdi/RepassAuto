@@ -28,17 +28,17 @@ export class VeiculoService implements IVeiculoService {
 
         return new Promise((resolve, reject) => {
 
-            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_VEHICLE}/${veiculoId}`,null)
+            this.httpClientProxy.get(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_VEHICLE}/${veiculoId}`, null)
                 .subscribe((response: any) => {
                     if (response) {
 
-                        console.log("---------getById----------------------------",response);
+                        console.log("---------getById----------------------------", response);
                         resolve(response);
                     }
                     else {
                         resolve(null);
                     }
-                }, (error:any) => {
+                }, (error: any) => {
                     console.error("VeiculoService - get - Erro: ", JSON.stringify(error));
                     reject(null);
                 });
@@ -48,7 +48,7 @@ export class VeiculoService implements IVeiculoService {
 
     getMyVehicle(companyId: string, userId: string): Promise<any> {
 
-        const strJson = `{ "companyId": "${companyId}", "userId": "${userId}"}`;
+        const strJson:any = { "companyId": companyId, "userId": userId};
 
         return new Promise((resolve, reject) => {
 
@@ -61,52 +61,67 @@ export class VeiculoService implements IVeiculoService {
                     else {
                         resolve(null);
                     }
-                }, (error:any) => {
+                }, (error: any) => {
                     console.error("VeiculoService - get - Erro: ", JSON.stringify(error));
                     reject(null);
                 });
 
         });
-    
+
     }
-    
+
     save(vehicle: VeiculoDto): Promise<VeiculoDto> {
 
         return new Promise((resolve, reject) => {
 
             if (vehicle.id == "") {
                 this.httpClientProxy.post(this.configuracaoService.webApiUrl(), WEBAPI_PATH_VEHICLE, vehicle)
-                .subscribe((response: any) => {
-                    if (response) {
+                    .subscribe((response: any) => {
+                        if (response) {
 
-                        resolve(response);
-                    }
-                    else {
-                        resolve(null);
-                    }
-                }, (error:any) => {
-                    console.error("VeiculoService - salvar - Erro: ", JSON.stringify(error));
-                    reject(null);
-                });
+                            resolve(response);
+                        }
+                        else {
+                            resolve(null);
+                        }
+                    }, (error: any) => {
+                        console.error("VeiculoService - salvar - Erro: ", JSON.stringify(error));
+                        reject(null);
+                    });
             }
             else {
 
                 this.httpClientProxy.put(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_VEHICLE}/${vehicle.id}`, vehicle)
-                .subscribe((response: any) => {
-                    if (response) {
+                    .subscribe((response: any) => {
+                        if (response) {
 
-                        resolve(response);
-                    }
-                    else {
-                        resolve(null);
-                    }
-                }, (error:any) => {
-                    console.error("VeiculoService - salvar - Erro: ", JSON.stringify(error));
-                    reject(null);
-                });
+                            resolve(response);
+                        }
+                        else {
+                            resolve(null);
+                        }
+                    }, (error: any) => {
+                        console.error("VeiculoService - salvar - Erro: ", JSON.stringify(error));
+                        reject(null);
+                    });
             }
 
         });
     }
-    
+
+    delete(vehicleId: string): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            this.httpClientProxy.delete(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_VEHICLE}/${vehicleId}`)
+                .subscribe((response: any) => {
+                    resolve(true);
+                }, (error: any) => {
+                    console.error("VeiculoService - delete - Erro: ", JSON.stringify(error));
+                    reject(false);
+                });
+
+        });
+
+    }
 }

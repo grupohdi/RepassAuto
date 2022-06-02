@@ -83,51 +83,16 @@ export class MyOffersPage implements OnInit {
       this.company = JSON.parse(company);
     }
 
-    //this.carregar();
+    let dto = new VeiculoFotoDto();
+    dto.base64 = this.photoNotAvailable;
+    this.fotoNaoDisponivel = [dto];
   }
 
 
   ionViewDidEnter() {
 
-    this.carregar();
+    this.doRefresh(null);
 
-  }
-
-  async carregar() {
-
-    this.platform.ready().then(async () => {
-
-      this.loaderCtrl.showLoader(`Carregando...`);
-      let dto = new VeiculoFotoDto();
-      dto.base64 = this.photoNotAvailable;
-      this.fotoNaoDisponivel = [dto];
-
-      this.veiculoOfertaService.getByUser(this.rlUser.userId)
-        .then((result: any) => {
-
-          // console.log('---------veiculoOfertaService--------------------');
-          // console.log(result);
-
-          if (result) {
-            this.myOffers = result;
-
-            this.ordenar();
-          }
-          else {
-            this.carregando = "Nenhuma oferta cadastrada.";
-          }
-          this.loaderCtrl.hiddenLoader();
-
-        })
-        .catch((error: any) => {
-
-          this.carregando = "Nenhuma oferta cadastrada.";
-
-          this.loaderCtrl.hiddenLoader();
-          this.alertCtrl.showAlert('RepassAuto - Meus Veículos', `Erro ao carregar os veículos. `);
-        });
-
-    });
   }
 
   carregarRefresh(refresher: any) {

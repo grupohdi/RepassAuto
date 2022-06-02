@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule  } from '@angular/forms';
 import { SwiperModule } from 'swiper/angular';
 import { IonicModule } from '@ionic/angular';
 
 import { VehiclePageRoutingModule } from './vehicle-routing.module';
 
 import { VehiclePage } from './vehicle.page';
+import { BrMaskerModule } from 'br-mask';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { VehiclePage } from './vehicle.page';
     FormsModule,
     IonicModule,
     SwiperModule,
+    BrMaskerModule,
     VehiclePageRoutingModule
   ],
   declarations: [VehiclePage]

@@ -7,7 +7,7 @@ ion-label {
   font-size: 20px;
 }
 
-.semQuebra{
+.semQuebra {
   white-space: nowrap;
 }
 
@@ -41,10 +41,10 @@ ion-card {
   max-height: 65px;
   margin: 5px;
   align-items: flex-end;
-  align-content:flex-end;
+  align-content: flex-end;
   background: #ff0000;
   border-radius: 25px;
-  float:right;
+  float: right;
 }
 
 .dadosGrid {
@@ -129,4 +129,42 @@ ion-content {
   color: #260975;
   margin: 2px;
   text-align: center;
+}
+
+#map {
+  width: 100%;
+  height: 100%
+}
+
+
+.btnMap {
+  height: 25px;
+  width: 200px;
+  font-size: 20px !important;
+  font-weight: 500;
+  border: 1px solid #5a5959;
+  border-radius: 5px;
+  background: #16e44a;
+  color: black;
+  padding: 4px !important;
+}
+
+
+.inputClass {
+  height: 25px;
+  width: 200px;
+  text-align: left;
+  align-items: left;
+  align-content: left;
+  font-size: 20px !important;
+  font-weight: 500;
+  border: 1px solid #5a5959;
+  border-radius: 5px;
+  background: white;
+  color: black;
+  padding: 4px !important;
+}
+
+test {
+  color: #0c9cf0;
 }

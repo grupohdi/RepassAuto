@@ -6,4 +6,5 @@ export interface IPerimetroService {
     getById(perimeterId: string): Promise<any>;
 
     save(perimetroDto: PerimetroDto): Promise<any>;
+    delete(perimetroId: string): Promise<any>;
 }

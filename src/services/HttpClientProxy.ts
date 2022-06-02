@@ -10,9 +10,9 @@ export class HttpClientProxy implements IHttpClientProxy {
 
     constructor(private http: HttpClient) { }
 
-    public get(baseAddress: string, url: string, data: string) {
+    public get(baseAddress: string, url: string, data: any) {
 
-        let head: any  = { "headers": {"filters": `${data}`}} ;
+        let head: any  = { "headers": {"filters": `${JSON.stringify(data)}`}} ;
 
         return this.http.get(`${baseAddress}${url}`, head);
 

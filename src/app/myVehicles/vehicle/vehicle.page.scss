@@ -40,9 +40,9 @@ ion-card {
 
 .cardFipe {
   width: 100%;
-  background-color: #0c1bee;
+  background-color: #98989c;
   color: #ffffff;
-  margin: 0 auto;
+  margin: 5px;
   box-shadow: 5px 5px 5px rgb(66, 66, 66);
   ion-card-content{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -65,8 +65,8 @@ ion-textarea {
 }
 
 ion-input {
-  height: 25px;
-  width: 200px;
+  height: 30px;
+  width: 100%;
   text-align: left;
   align-items: left;
   align-content: left;
@@ -80,8 +80,8 @@ ion-input {
 }
 
 ion-select {
-  height: 25px;
-  width: 200px;
+  height: 30px;
+  width: 100%;
   text-align: left;
   align-items: left;
   align-content: left;
@@ -99,8 +99,9 @@ ion-button{
   display: block;
   margin-left: auto;
   margin-right: auto;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 900;
-  font-size: 20px !important;
+  font-size: 24px !important;
   text-align: center;
 }
 
@@ -117,27 +118,41 @@ ion-item-divider {
 }
 
 
-#box {
-
-  display: flexbox;
+.box {
+  max-width: 98%;
+  display: flex;
   height: 50px;
-
-  #leftbox {
-    float: left;
-    background: rgb(20, 95, 1);
-    width: 30%;
-  }
-
-  #rightbox {
-    float: right;
-    background: #ff0000;
-    width: 30%;
-  }
+  margin: 10px;
 
   ion-icon {
     font-size: 36px;
     color: #ffffff;
   }
+
+  .leftbox {
+    width: 33%;
+    margin: 3px;
+    float: left;
+    border-radius: 5px;
+    background: rgb(20, 95, 1);
+  }
+
+  .centerbox {
+    width: 33%;
+    margin: 3px;
+    float: center;
+    border-radius: 5px;
+    background: rgb(23, 82, 243);
+  }
+
+  .rightbox {
+    width: 33%;
+    margin: 3px;
+    float: right;
+    border-radius: 5px;
+    background: #ff0000;
+  }
+
 
 }
 

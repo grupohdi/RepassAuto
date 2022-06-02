@@ -24,7 +24,7 @@ export class PerimetroService implements IPerimetroService {
     ) { }
 
 
-    getById(perimeterId: string): Promise<any> {
+    public getById(perimeterId: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
@@ -46,9 +46,9 @@ export class PerimetroService implements IPerimetroService {
         });
     }
 
-    getAll(companyId: string, userId: string): Promise<any> {
+    public getAll(companyId: string, userId: string): Promise<any> {
 
-        const strJson = `{ "companyId": "${companyId}", "userId": "${userId}"}`;
+        const strJson:any = { "companyId": companyId, "userId": userId};
 
         return new Promise((resolve, reject) => {
 
@@ -70,7 +70,7 @@ export class PerimetroService implements IPerimetroService {
     
     }
     
-    save(perimetroDto: PerimetroDto): Promise<PerimetroDto> {
+    public save(perimetroDto: PerimetroDto): Promise<PerimetroDto> {
 
         return new Promise((resolve, reject) => {
 
@@ -109,4 +109,25 @@ export class PerimetroService implements IPerimetroService {
         });
     }
     
+    public delete(perimetroId: string): Promise<PerimetroDto> {
+
+        return new Promise((resolve, reject) => {
+
+
+                this.httpClientProxy.delete(this.configuracaoService.webApiUrl(), `${WEBAPI_PATH_PERIMETER}/${perimetroId}`)
+                .subscribe((response: any) => {
+                    if (response) {
+
+                        resolve(response);
+                    }
+                    else {
+                        resolve(null);
+                    }
+                }, (error:any) => {
+                    console.error("PerimetroService - salvar - Erro: ", JSON.stringify(error));
+                    reject(null);
+                });
+
+        });
+    }
 }

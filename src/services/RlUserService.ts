@@ -25,7 +25,7 @@ export class RlUserService implements IRlUserService {
 
     getByUser(userId: string): Promise<any> {
 
-        let strJson: string = `{ "userId" : "${userId}"}`;
+        let strJson: any = { "userId" : userId};
 
         return new Promise((resolve, reject) => {
 
@@ -50,7 +50,7 @@ export class RlUserService implements IRlUserService {
 
     getByCompany(companyId: string): Promise<any> {
 
-        let strJson: string = `{ "companyId" : "${companyId}"}`;
+        let strJson: any = { "companyId" : companyId};
 
         return new Promise((resolve, reject) => {
 

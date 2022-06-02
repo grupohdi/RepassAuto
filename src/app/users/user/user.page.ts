@@ -27,7 +27,6 @@ export class UserPage implements OnInit {
   public roles: any[] = [{ "role": "platform_manager_access", "description": "Gerente" }, { "role": "platform_user_access", "description": "Vendedor" }];
   public mensagemEmail: string = "Informe um email ainda não usado no RepassAuto...";
   public email: boolean = false;
-  public userId: string = "";
   public user: UserDto = new UserDto();
 
   functionActionSheetOptions: any = {
@@ -99,7 +98,7 @@ export class UserPage implements OnInit {
 
         this.loaderCtrl.showLoader(`Carregando...`);
 
-        this.userService.obterPorId(this.userId)
+        this.userService.obterPorId(this.user.id)
           .then((result: any) => {
 
             this.loaderCtrl.hiddenLoader();

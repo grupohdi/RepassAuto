@@ -24,6 +24,7 @@ import { HttpClientProxy } from '../services/HttpClientProxy';
 import { AlertComponent } from '../components/alert/alert';
 import { LoaderComponent } from '../components/loader/loader';
 import { ToastComponent } from '../components/toast/toast';
+import { FiltersComponent } from '../components/filters/filters.component';
 import { LocalNotificationComponent } from '../components/local-notification/local-notification';
 
 
@@ -44,14 +45,18 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { BrMaskerModule } from 'br-mask';
 
+// geolocation and native-geocoder
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+
+
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent,FiltersComponent],
+  entryComponents: [FiltersComponent],
   imports: [ FormsModule, CommonModule, HttpClientModule, BrowserModule, AppRoutingModule, BrMaskerModule, IonicModule.forRoot({
     backButtonText: 'Retour',
     mode: 'md',
@@ -69,6 +74,7 @@ import { BrMaskerModule } from 'br-mask';
     LocalStorageRepository,
     Keyboard,
     Geolocation,
+    NativeGeocoder,
     AlertComponent,
     LoaderComponent,
     ToastComponent,

@@ -29,26 +29,29 @@
       <ion-card-content>
 
         <div *ngIf="vehicle.veiculoFotos.length > 0">
-        <swiper [config]="config" (slideChange)="onSlideChange($event)">
-          <ng-template swiperSlide *ngFor="let foto of vehicle.veiculoFotos">
-            <img src="{{ foto.base64 }}" width="200" height="100" />
-          </ng-template>
-        </swiper>
-      </div>
-      <div *ngIf="vehicle.veiculoFotos.length == 0">
-        <swiper [config]="config" (slideChange)="onSlideChange($event)">
-          <ng-template swiperSlide *ngFor="let foto of fotoNaoDisponivel">
-            <img src="{{ foto.base64 }}" width="200" height="100" />
-          </ng-template>
-        </swiper>
-      </div>
+          <swiper [config]="config" (slideChange)="onSlideChange($event)">
+            <ng-template swiperSlide *ngFor="let foto of vehicle.veiculoFotos">
+              <img src="{{ foto.base64 }}" width="200" height="100" />
+            </ng-template>
+          </swiper>
+        </div>
+        <div *ngIf="vehicle.veiculoFotos.length == 0">
+          <swiper [config]="config" (slideChange)="onSlideChange($event)">
+            <ng-template swiperSlide *ngFor="let foto of fotoNaoDisponivel">
+              <img src="{{ foto.base64 }}" width="200" height="100" />
+            </ng-template>
+          </swiper>
+        </div>
 
 
-      <div id="box">
-          <div id="leftbox" (click)="tiraFoto()">
+        <div class="box">
+          <div class="leftbox" (click)="tiraFoto(0)">
             <ion-icon name="camera-outline"></ion-icon>
           </div>
-          <div id="rightbox" (click)="apagaFoto()">
+          <div class="centerbox" (click)="tiraFoto(1)">
+            <ion-icon name="images-outline"></ion-icon>
+          </div>
+          <div class="rightbox" (click)="apagaFoto()">
             <ion-icon name="remove-circle-outline"></ion-icon>
           </div>
         </div>
@@ -56,85 +59,75 @@
         <ion-grid>
           <ion-row>
             <ion-col>
-              <ion-label>Tipo:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-select  interface="action-sheet"  cancelText="Fechar e voltar" [interfaceOptions]="tipoActionSheetOptions"  [(ngModel)]="vehicle.tipo" (ionChange)="preencheTabelaReferencias()">
-                <ion-select-option *ngFor="let tipo of Tipos" [value]="tipo.Value">
-                  {{tipo.Label}}
-                </ion-select-option>
+              <ion-select interface="action-sheet" placeholder="Tipo: Carro/Moto/Caminhão" cancelText="Cancelar" [interfaceOptions]="tipoActionSheetOptions" [(ngModel)]="vehicle.tipo">
+                <div *ngFor="let tipo of Tipos">
+                  <ion-select-option [value]="tipo.Value">{{tipo.Label}}</ion-select-option>
+                </div>
               </ion-select>
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="vehicle.tipo<9">
             <ion-col>
-              <ion-label>Referência:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-select interface="action-sheet" cancelText="Fechar e voltar"  [interfaceOptions]="referenciaActionSheetOptions" [(ngModel)]="vehicle.referencia" (ionChange)="preencheMarcas()">
-                <ion-select-option *ngFor="let referencia of Referencias" [value]="referencia.Codigo">
-                  {{referencia.Mes}}
-                </ion-select-option>
+              <ion-select interface="action-sheet" placeholder="Mês/Ano Referência" cancelText="Cancelar" [interfaceOptions]="referenciaActionSheetOptions" [(ngModel)]="vehicle.referencia" (ionChange)="preencheMarcas()">
+                <div *ngFor="let referencia of Referencias">
+                  <ion-select-option [value]="referencia.Codigo">{{referencia.Mes}}</ion-select-option>
+                </div>
               </ion-select>
             </ion-col>
           </ion-row>
-
-          <ion-row>
+          <ion-row *ngIf="vehicle.tipo<9">
             <ion-col>
-              <ion-label>Marca:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-select interface="action-sheet" cancelText="Fechar e voltar" [interfaceOptions]="marcaActionSheetOptions" [(ngModel)]="vehicle.marca" (ionChange)="preencheModelos()">
-                <ion-select-option *ngFor="let marca of Marcas" [value]="marca.Value">
+              <ion-select class="ion-select" interface="action-sheet" placeholder="Marca" cancelText="Cancelar" [interfaceOptions]="marcaActionSheetOptions" [(ngModel)]="vehicle.marca" value="{{vehicle.marca}}" (ionChange)="preencheModelos()">
+                <ion-select-option *ngFor="let marca of Marcas" value="{{marca.Value}}">
                   {{marca.Label}}
                 </ion-select-option>
               </ion-select>
             </ion-col>
           </ion-row>
-
-          <ion-row>
+          <ion-row *ngIf="vehicle.tipo<9">
             <ion-col>
-              <ion-label>Modelo:</ion-label>
+              <ion-select interface="action-sheet" placeholder="Modelo" cancelText="Cancelar" [interfaceOptions]="modeloActionSheetOptions" [(ngModel)]="vehicle.modelo" [(value)]="vehicle.modeloDescricao" (ionChange)="preencheAnoModelo()">
+                <div *ngFor="let modelo of Modelos">
+                  <ion-select-option value="{{modelo.Value}}">{{modelo.Label}}</ion-select-option>
+                </div>
+              </ion-select>
             </ion-col>
+          </ion-row>
+          <ion-row *ngIf="vehicle.tipo<9">
             <ion-col>
-              <ion-select interface="action-sheet" cancelText="Fechar e voltar" [interfaceOptions]="modeloActionSheetOptions" [(ngModel)]="vehicle.modelo" (ionChange)="preencheAnoModelo()">
-                <ion-select-option *ngFor="let modelo of Modelos" [value]="modelo.Value">
-                  {{modelo.Label}}
-                </ion-select-option>
+              <ion-select interface="action-sheet" placeholder="Ano Modelo" cancelText="Cancelar" [interfaceOptions]="anoModeloActionSheetOptions" [(ngModel)]="vehicle.anoModelo" value="{{vehicle.anoModelo}}" (ionChange)="preencheCardFipe()">
+                <div *ngFor="let anoModelo of AnoModelos">
+                  <ion-select-option value="{{anoModelo.Value}}">
+                    {{anoModelo.Label}}
+                  </ion-select-option>
+                </div>
               </ion-select>
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="vehicle.tipo==9">
             <ion-col>
-              <ion-label>Ano Modelo:</ion-label>
+              <ion-input type="text" placeholder="Marca" [(ngModel)]="vehicle.marcaDescricao" [(value)]="vehicle.marcaDescricao"></ion-input>
             </ion-col>
+          </ion-row>
+          <ion-row *ngIf="vehicle.tipo==9">
             <ion-col>
-              <ion-select interface="action-sheet" cancelText="Fechar e voltar" [interfaceOptions]="anoModeloActionSheetOptions" [(ngModel)]="vehicle.anoModelo" (ionChange)="preencheCardFipe()">
-                <ion-select-option *ngFor="let anoModelo of AnoModelos" [value]="anoModelo.Value">
-                  {{anoModelo.Label}}
-                </ion-select-option>
-              </ion-select>
+              <ion-input type="text" placeholder="Modelo" [(ngModel)]="vehicle.modeloDescricao" [(value)]="vehicle.modeloDescricao"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="vehicle.tipo==9">
+            <ion-col>
+              <ion-input type="text" placeholder="Motor" [(ngModel)]="vehicle.anoModeloDescricao" [(value)]="vehicle.anoModeloDescricao"></ion-input>
             </ion-col>
           </ion-row>
 
-          <ion-row>
-            <ion-col>
-              <ion-label>Ano Fabr.:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.anoFabricacao" [value]="vehicle.anoFabricacao"></ion-input>
-            </ion-col>
-          </ion-row>
-
-
-          <ion-row aria-colspan="2">
+          <ion-row aria-colspan="2" *ngIf="vehicle.tipo<9">
             <ion-col>
               <ion-card class="cardFipe">
                 <ion-card-content>
-                    Fipe: <b>{{ vehicle.codigoFipe}}</b><br>
-                    Preço Médio: <b>{{ vehicle.valorFipe}}</b>
+                  Fipe: <b>{{ vehicle.codigoFipe}}</b><br>
+                  Preço Médio: <b>{{ vehicle.valorFipe}}</b>
                 </ion-card-content>
               </ion-card>
 
@@ -143,133 +136,112 @@
 
           <ion-row>
             <ion-col>
-              <ion-label>Preço Venda:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.preco" [value]="vehicle.preco"></ion-input>
+              <ion-input placeholder="Preço Venda R$" type="number" [(ngModel)]="vehicle.preco" [(value)]="vehicle.preco"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Placa:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.placa" [value]="vehicle.placa"></ion-input>
+              <ion-input type="text" placeholder="Placa" [(ngModel)]="vehicle.placa" [(value)]="vehicle.placa"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>KMs:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.kms" [value]="vehicle.kms"></ion-input>
+              <ion-input type="text" placeholder="KMs" [(ngModel)]="vehicle.kms" [(value)]="vehicle.kms"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Cor:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.cor" [value]="vehicle.cor"></ion-input>
+              <ion-select interface="action-sheet" placeholder="Cor predominante" cancelText="Cancelar" [interfaceOptions]="corActionSheetOptions" [(ngModel)]="vehicle.cor">
+                <div *ngFor="let cor of Cores">
+                  <ion-select-option [value]="cor.cor">{{cor.cor}}</ion-select-option>
+                </div>
+              </ion-select>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Chassi:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.chassi" [value]="vehicle.chassi"></ion-input>
+              <ion-input type="text" placeholder="Chassi" [(ngModel)]="vehicle.chassi" [(value)]="vehicle.chassi"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row aria-colspan="2">
             <ion-col>
-              <ion-label>Descrição:</ion-label>
+              <ion-textarea rows="8" placeholder="Descrição" [(ngModel)]="vehicle.descricao" [(value)]="vehicle.descricao"></ion-textarea>
             </ion-col>
           </ion-row>
           <ion-row aria-colspan="2">
             <ion-col>
-              <ion-textarea rows="8" [(ngModel)]="vehicle.descricao" [value]="vehicle.descricao"></ion-textarea>
-            </ion-col>
-          </ion-row>
-          <ion-row aria-colspan="2">
-            <ion-col >
               <ion-item-divider></ion-item-divider>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Latitude:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.latitude" [value]="vehicle.latitude"></ion-input>
+              <ion-input type="text" placeholder="Latitude" [(ngModel)]="vehicle.latitude" [(value)]="vehicle.latitude"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Longitude:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.longitude" [value]="vehicle.longitude"></ion-input>
+              <ion-input type="text" placeholder="Longitude" [(ngModel)]="vehicle.longitude" [(value)]="vehicle.longitude"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Logradouro:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.logradouro" [value]="vehicle.logradouro"></ion-input>
+              <ion-input type="text" placeholder="Logradouro" [(ngModel)]="vehicle.logradouro" [(value)]="vehicle.logradouro"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Número:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.numero" [value]="vehicle.numero"></ion-input>
+              <ion-input type="text" placeholder="Número" [(ngModel)]="vehicle.numero" [(value)]="vehicle.numero"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Compl.:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.complemento" [value]="vehicle.complemento"></ion-input>
+              <ion-input type="text" placeholder="Complemento" [(ngModel)]="vehicle.complemento" [(value)]="vehicle.complemento"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>CEP:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.cep" [value]="vehicle.cep"></ion-input>
+              <ion-input placeholder="CEP" maxlength="9" [brmasker]="{mask: '99999-999'}" type="mask" [(ngModel)]="vehicle.cep" [(value)]="vehicle.cep"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label>Cidade:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.cidade" [value]="vehicle.cidade"></ion-input>
+              <ion-input placeholder="Bairro" type="text" [(ngModel)]="vehicle.bairro" [(value)]="vehicle.bairro"></ion-input>
             </ion-col>
           </ion-row>
+
+
           <ion-row>
             <ion-col>
-              <ion-label>UF:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.uf" [value]="vehicle.uf"></ion-input>
+              <ion-select interface="action-sheet" placeholder="País" cancelText="Cancelar" [interfaceOptions]="paisActionSheetOptions" [(ngModel)]="vehicle.pais" [(value)]="vehicle.pais" (ionChange)="preencheUfs()">
+                <ion-select-option *ngFor="let pais of Paises" [value]="pais.nome">
+                  {{pais.nome}}
+                </ion-select-option>
+              </ion-select>
             </ion-col>
           </ion-row>
+
           <ion-row>
             <ion-col>
-              <ion-label>País:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input type="text" [(ngModel)]="vehicle.pais" [value]="vehicle.pais"></ion-input>
+              <ion-select interface="action-sheet" placeholder="UF" cancelText="Cancelar" [interfaceOptions]="estadoActionSheetOptions" [(value)]="vehicle.uf" [(ngModel)]="vehicle.uf" (ionChange)="preencheCidades()">
+                <div *ngFor="let estado of Estados">
+                  <ion-select-option *ngIf="estado.pais == vehicle.pais" [value]="estado.uf">{{estado.uf}} - {{estado.estado}}</ion-select-option>
+                </div>
+              </ion-select>
             </ion-col>
           </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-select interface="action-sheet" placeholder="Cidade" cancelText="Cancelar" [interfaceOptions]="cidadeActionSheetOptions" [(ngModel)]="vehicle.cidade" [(value)]="vehicle.cidade">
+                <div *ngFor="let cidade of Cidades">
+                  <ion-select-option *ngIf="cidade.uf == vehicle.uf" [value]="cidade.nome">{{cidade.nome}}</ion-select-option>
+                </div>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
           <ion-row aria-colspan="2">
-            <ion-col >
+            <ion-col>
               <ion-item-divider></ion-item-divider>
             </ion-col>
           </ion-row>

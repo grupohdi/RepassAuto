@@ -2,7 +2,7 @@ import { VeiculoOfertaDto } from "../../dto/VeiculoOfertaDto";
 
 export interface IVeiculoOfertaService {
 
-    getOffers(): Promise<VeiculoOfertaDto[]>;
+    getOffers(filtersData:any) : Promise<VeiculoOfertaDto[]>;
     getByUser(userId:string): Promise<any>;
     save(veiculoOferta: VeiculoOfertaDto): Promise<any>;
 }

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MyOfferPageRoutingModule } from './myOffer-routing.module';
 
 import { MyOfferPage } from './myOffer.page';
+import { BrMaskerModule } from 'br-mask';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { MyOfferPage } from './myOffer.page';
     FormsModule,
     IonicModule,
     SwiperModule,
+    BrMaskerModule,
     MyOfferPageRoutingModule
   ],
   declarations: [MyOfferPage]

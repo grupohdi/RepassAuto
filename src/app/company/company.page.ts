@@ -29,40 +29,106 @@ export class CompanyPage implements OnInit {
   companyId: string;
   mode: number;
 
-  public estadoActionSheetOptions: any = {
-    header: 'Estados Brasilieiros',
+  paisActionSheetOptions: any = {
+    header: 'Países',
+    subHeader: 'Selecione o País',
+  };
+
+  estadoActionSheetOptions: any = {
+    header: 'Estados',
     subHeader: 'Selecione o Estado',
   };
 
-  public Estados: any[] = [
-    { "Estado": "São Paulo", "Sigla": "SP" },
-    { "Estado": "Rio de Janeiro", "Sigla": "RJ" },
-    { "Estado": "Rio Grande do Sul", "Sigla": "RS" },
-    { "Estado": "Acre", "Sigla": "AC" },
-    { "Estado": "Alagoas", "Sigla": "AL" },
-    { "Estado": "Amapá", "Sigla": "AP" },
-    { "Estado": "Amazonas", "Sigla": "AM" },
-    { "Estado": "Bahia", "Sigla": "BA" },
-    { "Estado": "Ceará", "Sigla": "CE" },
-    { "Estado": "Distrito Federal", "Sigla": "DF" },
-    { "Estado": "Espírito Santo", "Sigla": "ES" },
-    { "Estado": "Goiás", "Sigla": "GO" },
-    { "Estado": "Maranhão", "Sigla": "MA" },
-    { "Estado": "Mato Grosso", "Sigla": "MT" },
-    { "Estado": "Mato Grosso do Sul	", "Sigla": "MS" },
-    { "Estado": "Minas Gerais", "Sigla": "MG" },
-    { "Estado": "Pará", "Sigla": "PA" },
-    { "Estado": "Paraíba", "Sigla": "PB" },
-    { "Estado": "Paraná", "Sigla": "PR" },
-    { "Estado": "Pernambuco", "Sigla": "PE" },
-    { "Estado": "Piauí", "Sigla": "PI" },
-    { "Estado": "Rio Grande do Norte 	", "Sigla": "RN" },
-    { "Estado": "Rondônia", "Sigla": "RO" },
-    { "Estado": "Roraima", "Sigla": "RR" },
-    { "Estado": "Santa Catarina", "Sigla": "SC" },
-    { "Estado": "Sergipe", "Sigla": "SE" },
-    { "Estado": "Tocantins", "Sigla": "TO" },
+  cidadeActionSheetOptions: any = {
+    header: 'Cidades',
+    subHeader: 'Selecione a Cidade',
+  };
+
+
+  public Paises: any[] = [
+    { "nome": "Brasil" },
+    { "nome": "Colômbia" },
+    { "nome": "Chile" },
+    { "nome": "Argentina"},
   ];
+
+  public Estados: any[] = [
+    { "pais": "Brasil", "estado": "São Paulo", "uf": "SP" },
+    { "pais": "Brasil", "estado": "Rio de Janeiro", "uf": "RJ" },
+    { "pais": "Brasil", "estado": "Paraná", "uf": "PR" },
+    { "pais": "Brasil", "estado": "Santa Catarina", "uf": "SC" },
+    { "pais": "Brasil", "estado": "Rio Grande do Sul", "uf": "RS" },
+    { "pais": "Brasil", "estado": "Minas Gerais", "uf": "MG" },
+    { "pais": "Brasil", "estado": "Acre", "uf": "AC" },
+    { "pais": "Brasil", "estado": "Alagoas", "uf": "AL" },
+    { "pais": "Brasil", "estado": "Amapá", "uf": "AP" },
+    { "pais": "Brasil", "estado": "Amazonas", "uf": "AM" },
+    { "pais": "Brasil", "estado": "Bahia", "uf": "BA" },
+    { "pais": "Brasil", "estado": "Ceará", "uf": "CE" },
+    { "pais": "Brasil", "estado": "Distrito Federal", "uf": "DF" },
+    { "pais": "Brasil", "estado": "Espírito Santo", "uf": "ES" },
+    { "pais": "Brasil", "estado": "Goiás", "uf": "GO" },
+    { "pais": "Brasil", "estado": "Maranhão", "uf": "MA" },
+    { "pais": "Brasil", "estado": "Mato Grosso", "uf": "MT" },
+    { "pais": "Brasil", "estado": "Mato Grosso do Sul	", "uf": "MS" },
+    { "pais": "Brasil", "estado": "Pará", "uf": "PA" },
+    { "pais": "Brasil", "estado": "Paraíba", "uf": "PB" },
+    { "pais": "Brasil", "estado": "Pernambuco", "uf": "PE" },
+    { "pais": "Brasil", "estado": "Piauí", "uf": "PI" },
+    { "pais": "Brasil", "estado": "Rio Grande do Norte 	", "uf": "RN" },
+    { "pais": "Brasil", "estado": "Rondônia", "uf": "RO" },
+    { "pais": "Brasil", "estado": "Roraima", "uf": "RR" },
+    { "pais": "Brasil", "estado": "Sergipe", "uf": "SE" },
+    { "pais": "Brasil", "estado": "Tocantins", "uf": "TO" },
+
+    { "pais": "Colômbia", "estado": "Bogotá", "uf": "Bogotá" },
+    { "pais": "Chile", "estado": "Santiago", "uf": "Santiago" },
+    { "pais": "Argentina", "estado": "Buenos Aires", "uf": "Buenos Aires" },
+
+  ];
+
+
+  public Cidades: any[] = [
+    { "nome": "São Paulo", "uf": "SP" },
+    { "nome": "São Bernardo do Campo", "uf": "SP" },
+    { "nome": "Santo André", "uf": "SP" },
+    { "nome": "São Caetano do Sul", "uf": "SP" },
+    { "nome": "Guarulhos", "uf": "SP" },
+    { "nome": "Mogi das Cruzes", "uf": "SP" },
+    { "nome": "Suzano", "uf": "SP" },
+
+    { "nome": "Rio de Janeiro", "uf": "RJ" },
+    { "nome": "Petropolis", "uf": "RJ" },
+    { "nome": "Cabo Frio", "uf": "RJ" },
+    { "nome": "Campo dos Goytacazes", "uf": "RJ" },
+    { "nome": "Volta Redonda", "uf": "RJ" },
+    { "nome": "Teresópolis", "uf": "RJ" },
+    { "nome": "Duque de Caxias", "uf": "RJ" },
+    { "nome": "Magé", "uf": "RJ" },
+    { "nome": "Paraty", "uf": "RJ" },
+    { "nome": "Angra dos Reis", "uf": "RJ" },
+
+
+    { "nome": "Belo Horizonte", "uf": "MG" },
+    { "nome": "Uberaba", "uf": "MG" },
+    { "nome": "Uberlândia", "uf": "MG" },
+    { "nome": "Contagem", "uf": "MG" },
+    { "nome": "Gov. Valadares", "uf": "MG" },
+    { "nome": "Uberlândia", "uf": "MG" },
+    { "nome": "Juiz de Fora", "uf": "MG" },
+
+    { "nome": "Curitiba", "uf": "PR" },
+    { "nome": "Ponta Grossa", "uf": "PR" },
+
+    { "nome": "Camburiú", "uf": "SC" },
+    { "nome": "Blumenau", "uf": "SC" },
+    { "nome": "Florianópolis", "uf": "SC" },
+
+    { "nome": "Porto Alegre", "uf": "RS" },
+    { "nome": "Pelotas", "uf": "RS" },
+
+  ];
+
 
 
   public companyData: any = {
@@ -311,6 +377,18 @@ export class CompanyPage implements OnInit {
         });
 
     }
+  }
+
+  async preencheUfs() {
+
+    this.companyData.uf = "";
+    this.companyData.cidade = "";
+  }
+
+  async preencheCidades() {
+
+    this.companyData.cidade = "";
+
   }
 
 

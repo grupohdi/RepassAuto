@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Filtros nas Ofertas:</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="boxFilter">
+
+    <div class="box">
+      <ion-select placeholder="Perímetros" cancelText="Cancelar" okText="OK" multiple="true" [interfaceOptions]="perimeterOptions" [(ngModel)]="filtersData.step2.perimeters">
+        <div *ngFor="let perimeter of perimeters">
+          <ion-select-option [value]="perimeter">{{perimeter.description}}</ion-select-option>
+        </div>
+      </ion-select>
+    </div>
+
+    <div class="box">
+      <ion-input class="inputHalf" type="number" [(ngModel)]="filtersData.step3.price.min" placeholder="Preço Mínimo"></ion-input>
+      <ion-input class="inputHalf" type="number" [(ngModel)]="filtersData.step3.price.max" placeholder="Preço Máximo"></ion-input>
+    </div>
+
+    <div class="box">
+      <ion-input class="inputHalf" type="number" [(ngModel)]="filtersData.step3.year.min" placeholder="Ano Modelo Mínimo"></ion-input>
+      <ion-input class="inputHalf" type="number" [(ngModel)]="filtersData.step3.year.max" placeholder="Ano Modelo Máximo"></ion-input>
+    </div>
+
+    <div class="box">
+      <ion-input class="input" type="text" [(ngModel)]="filtersData.step3.blend" placeholder="Marca"></ion-input>
+    </div>
+
+    <div class="box">
+      <ion-input class="input" type="text" [(ngModel)]="filtersData.step3.model" placeholder="Modelo"></ion-input>
+    </div>
+
+
+    <div class="box">
+      <ion-button (click)="filtrar()">Filtrar</ion-button>
+    </div>
+  </div>
+
+</ion-content>
