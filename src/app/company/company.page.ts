@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChildren, QueryList, Inject, Injectable, ViewChild, HostListener } from '@angular/core';
+import * as $ from 'jquery';
+import { Component, OnInit, ViewChildren, QueryList, Inject, Injectable, ViewChild, HostListener, ElementRef, Input } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { AlertController, NavParams, Platform, ToastController } from '@ionic/angular';
 import { AlertComponent } from '../../components/alert/alert';
@@ -11,6 +12,14 @@ import { IUserService } from '../../services/interfaces/IUserService';
 import { EventsService } from '../../services/EventsService';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult } from '@ionic-native/native-geocoder/ngx';
+
+var latitude = -23.594144;
+var longitude = -46.562924;
+
+
+
 @Component({
   selector: 'app-company',
   templateUrl: './company.page.html',
@@ -19,8 +28,10 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 @Injectable()
 export class CompanyPage implements OnInit {
+  public map: any;
   @ViewChildren('items') items: QueryList<any>;
 
+  showMap: boolean = true;
   logged: any;
   rlUser: any;
   company: any;
@@ -28,107 +39,6 @@ export class CompanyPage implements OnInit {
   promptAlert: any;
   companyId: string;
   mode: number;
-
-  paisActionSheetOptions: any = {
-    header: 'Países',
-    subHeader: 'Selecione o País',
-  };
-
-  estadoActionSheetOptions: any = {
-    header: 'Estados',
-    subHeader: 'Selecione o Estado',
-  };
-
-  cidadeActionSheetOptions: any = {
-    header: 'Cidades',
-    subHeader: 'Selecione a Cidade',
-  };
-
-
-  public Paises: any[] = [
-    { "nome": "Brasil" },
-    { "nome": "Colômbia" },
-    { "nome": "Chile" },
-    { "nome": "Argentina"},
-  ];
-
-  public Estados: any[] = [
-    { "pais": "Brasil", "estado": "São Paulo", "uf": "SP" },
-    { "pais": "Brasil", "estado": "Rio de Janeiro", "uf": "RJ" },
-    { "pais": "Brasil", "estado": "Paraná", "uf": "PR" },
-    { "pais": "Brasil", "estado": "Santa Catarina", "uf": "SC" },
-    { "pais": "Brasil", "estado": "Rio Grande do Sul", "uf": "RS" },
-    { "pais": "Brasil", "estado": "Minas Gerais", "uf": "MG" },
-    { "pais": "Brasil", "estado": "Acre", "uf": "AC" },
-    { "pais": "Brasil", "estado": "Alagoas", "uf": "AL" },
-    { "pais": "Brasil", "estado": "Amapá", "uf": "AP" },
-    { "pais": "Brasil", "estado": "Amazonas", "uf": "AM" },
-    { "pais": "Brasil", "estado": "Bahia", "uf": "BA" },
-    { "pais": "Brasil", "estado": "Ceará", "uf": "CE" },
-    { "pais": "Brasil", "estado": "Distrito Federal", "uf": "DF" },
-    { "pais": "Brasil", "estado": "Espírito Santo", "uf": "ES" },
-    { "pais": "Brasil", "estado": "Goiás", "uf": "GO" },
-    { "pais": "Brasil", "estado": "Maranhão", "uf": "MA" },
-    { "pais": "Brasil", "estado": "Mato Grosso", "uf": "MT" },
-    { "pais": "Brasil", "estado": "Mato Grosso do Sul	", "uf": "MS" },
-    { "pais": "Brasil", "estado": "Pará", "uf": "PA" },
-    { "pais": "Brasil", "estado": "Paraíba", "uf": "PB" },
-    { "pais": "Brasil", "estado": "Pernambuco", "uf": "PE" },
-    { "pais": "Brasil", "estado": "Piauí", "uf": "PI" },
-    { "pais": "Brasil", "estado": "Rio Grande do Norte 	", "uf": "RN" },
-    { "pais": "Brasil", "estado": "Rondônia", "uf": "RO" },
-    { "pais": "Brasil", "estado": "Roraima", "uf": "RR" },
-    { "pais": "Brasil", "estado": "Sergipe", "uf": "SE" },
-    { "pais": "Brasil", "estado": "Tocantins", "uf": "TO" },
-
-    { "pais": "Colômbia", "estado": "Bogotá", "uf": "Bogotá" },
-    { "pais": "Chile", "estado": "Santiago", "uf": "Santiago" },
-    { "pais": "Argentina", "estado": "Buenos Aires", "uf": "Buenos Aires" },
-
-  ];
-
-
-  public Cidades: any[] = [
-    { "nome": "São Paulo", "uf": "SP" },
-    { "nome": "São Bernardo do Campo", "uf": "SP" },
-    { "nome": "Santo André", "uf": "SP" },
-    { "nome": "São Caetano do Sul", "uf": "SP" },
-    { "nome": "Guarulhos", "uf": "SP" },
-    { "nome": "Mogi das Cruzes", "uf": "SP" },
-    { "nome": "Suzano", "uf": "SP" },
-
-    { "nome": "Rio de Janeiro", "uf": "RJ" },
-    { "nome": "Petropolis", "uf": "RJ" },
-    { "nome": "Cabo Frio", "uf": "RJ" },
-    { "nome": "Campo dos Goytacazes", "uf": "RJ" },
-    { "nome": "Volta Redonda", "uf": "RJ" },
-    { "nome": "Teresópolis", "uf": "RJ" },
-    { "nome": "Duque de Caxias", "uf": "RJ" },
-    { "nome": "Magé", "uf": "RJ" },
-    { "nome": "Paraty", "uf": "RJ" },
-    { "nome": "Angra dos Reis", "uf": "RJ" },
-
-
-    { "nome": "Belo Horizonte", "uf": "MG" },
-    { "nome": "Uberaba", "uf": "MG" },
-    { "nome": "Uberlândia", "uf": "MG" },
-    { "nome": "Contagem", "uf": "MG" },
-    { "nome": "Gov. Valadares", "uf": "MG" },
-    { "nome": "Uberlândia", "uf": "MG" },
-    { "nome": "Juiz de Fora", "uf": "MG" },
-
-    { "nome": "Curitiba", "uf": "PR" },
-    { "nome": "Ponta Grossa", "uf": "PR" },
-
-    { "nome": "Camburiú", "uf": "SC" },
-    { "nome": "Blumenau", "uf": "SC" },
-    { "nome": "Florianópolis", "uf": "SC" },
-
-    { "nome": "Porto Alegre", "uf": "RS" },
-    { "nome": "Pelotas", "uf": "RS" },
-
-  ];
-
 
 
   public companyData: any = {
@@ -159,10 +69,10 @@ export class CompanyPage implements OnInit {
       "nome": "",
     }],
 
-    "UsuarioGerenteNome" : "",
-    "UsuarioGerenteEmail" : "",
-    "UsuarioGerenteTelefone" : "",
-    "UsuarioGerenteSenha" : "",
+    "UsuarioGerenteNome": "",
+    "UsuarioGerenteEmail": "",
+    "UsuarioGerenteTelefone": "",
+    "UsuarioGerenteSenha": "",
 
   };
 
@@ -187,6 +97,7 @@ export class CompanyPage implements OnInit {
     private platform: Platform,
     private keyboard: Keyboard,
     public navParams: NavParams,
+    private geolocation: Geolocation,
     @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
     @Inject('CompanyServiceToken') private companyService: ICompanyService,
     @Inject('UserServiceToken') private userService: IUserService,
@@ -207,84 +118,96 @@ export class CompanyPage implements OnInit {
 
 
   async ionViewDidEnter() {
-    if (this.mode == 0) {
-      await this.userService.gerarToken();
-      this.btnCriar = "* Criar";
-      this.lblCriar = "* Cria a Agência e Usuário para acessar as excelentes ofertas de repasse de veículos no RepassAuto.";
-    } else if (this.mode == 1) {
 
-      this.loaderCtrl.showLoader(`Carregando...`);
-      await this.getCompanyData();
-      this.btnCriar = "Atualizar";
-      this.lblCriar = "Atualiza os dados da Agência e Cartão.";
 
-    }
+    this.platform.ready().then( async () => {
+
+
+      if (this.mode == 0) {
+        await this.userService.gerarToken();
+        this.btnCriar = "* Criar";
+        this.lblCriar = "* Cria a Agência e Usuário para acessar as excelentes ofertas de repasse de veículos no RepassAuto.";
+      } else if (this.mode == 1) {
+
+        this.loaderCtrl.showLoader(`Carregando...`);
+        await this.getCompanyData();
+        this.btnCriar = "Atualizar";
+        this.lblCriar = "Atualiza os dados da Agência e Cartão.";
+
+      }
+
+      initAutocomplete();
+
+    });
+
+
   }
 
   async getCompanyData() {
 
-    this.platform.ready().then(() => {
 
-      if (this.mode == 1) {
+    if (this.mode == 1) {
 
-        let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
-        if (user) {
-          this.logged = JSON.parse(user);
-        }
-        let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
-        if (rlUser) {
-          this.rlUser = JSON.parse(rlUser);
-        }
-        let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
-        if (company) {
-          this.company = JSON.parse(company);
-        }
-
-
-        this.companyService.getById(this.rlUser.companyId)
-          .then((response: any) => {
-
-            if (response) {
-
-              this.companyData = response;
-
-              if ((this.companyData.cartoes == undefined) || 
-                  (this.companyData.cartoes.length==0) ) {
-
-                    this.companyData.cartoes = [{
-                    "bandeira": "",
-                    "numero": "",
-                    "vencto": "",
-                    "codigo": "",
-                    "nome": "",
-                  }];
-
-              }
-
-              this.userService.obterPorId(this.rlUser.userId)
-                .then((userResponse: any) => {
-
-
-                  this.loaderCtrl.hiddenLoader();
-                  if (userResponse) {
-                    this.userData = userResponse;
-                    console.log('this.userData', this.userData);
-                  }
-                })
-                .catch((error) => {
-                  this.loaderCtrl.hiddenLoader();
-                  this.alertCtrl.showAlert('RepassAuto - Agência', `Erro .`);
-                });
-          
-            };
-          })
-          .catch((error) => {
-            this.loaderCtrl.hiddenLoader();
-            this.alertCtrl.showAlert('RepassAuto - Agência', `Erro .`);
-          });
-
+      let user = this.localStorageRepository.recuperaConfiguracaoPorChave('user');
+      if (user) {
+        this.logged = JSON.parse(user);
       }
-    });
+      let rlUser = this.localStorageRepository.recuperaConfiguracaoPorChave('rlUser');
+      if (rlUser) {
+        this.rlUser = JSON.parse(rlUser);
+      }
+      let company = this.localStorageRepository.recuperaConfiguracaoPorChave('company');
+      if (company) {
+        this.company = JSON.parse(company);
+      }
+
+
+      this.companyService.getById(this.rlUser.companyId)
+        .then((response: any) => {
+
+          if (response) {
+
+            this.companyData = response;
+
+            latitude = this.companyData.latitude;
+            longitude = this.companyData.longitude;
+
+
+            if ((this.companyData.cartoes == undefined) ||
+              (this.companyData.cartoes.length == 0)) {
+
+              this.companyData.cartoes = [{
+                "bandeira": "",
+                "numero": "",
+                "vencto": "",
+                "codigo": "",
+                "nome": "",
+              }];
+
+            }
+
+            this.userService.obterPorId(this.rlUser.userId)
+              .then((userResponse: any) => {
+
+
+                this.loaderCtrl.hiddenLoader();
+                if (userResponse) {
+                  this.userData = userResponse;
+                }
+              })
+              .catch((error) => {
+                this.loaderCtrl.hiddenLoader();
+                this.alertCtrl.showAlert('RepassAuto - Agência', `Erro .`);
+              });
+
+          };
+        })
+        .catch((error) => {
+          this.loaderCtrl.hiddenLoader();
+          this.alertCtrl.showAlert('RepassAuto - Agência', `Erro .`);
+        });
+
+    }
 
   }
 
@@ -383,12 +306,6 @@ export class CompanyPage implements OnInit {
 
     this.companyData.uf = "";
     this.companyData.cidade = "";
-  }
-
-  async preencheCidades() {
-
-    this.companyData.cidade = "";
-
   }
 
 
@@ -611,4 +528,191 @@ export class CompanyPage implements OnInit {
 
     return serchfind;
   }
+
 }
+
+
+
+// @ts-nocheck TODO remove when fixed
+
+// This example adds a search box to a map, using the Google Place Autocomplete
+// feature. People can enter geographical searches. The search box will return a
+// pick list containing a mix of places and predicted search terms.
+
+// This example requires the Places library. Include the libraries=places
+// parameter when you first load the API. For example:
+// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+function initAutocomplete() {
+  const map = new google.maps.Map(
+    document.getElementById("map") as HTMLElement,
+    {
+      center: { lat: latitude, lng: longitude },
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: false,
+      zoomControl: true,
+      streetViewControl: false,
+    }
+  );
+
+  // Create the search box and link it to the UI element.
+  const input = document.getElementById("pac-input") as HTMLInputElement;
+  const searchBox = new google.maps.places.SearchBox(input);
+
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener("bounds_changed", () => {
+    searchBox.setBounds(map.getBounds() as google.maps.LatLngBounds);
+  });
+
+  let markers: google.maps.Marker[] = [];
+
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener("places_changed", () => {
+    const places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+    markers = [];
+
+    // For each place, get the icon, name and location.
+    const bounds = new google.maps.LatLngBounds();
+
+    places.forEach((place) => {
+      if (!place.geometry || !place.geometry.location) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+
+      const icon = {
+        url: place.icon as string,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25),
+      };
+
+      // Create a marker for each place.
+      markers.push(
+        new google.maps.Marker({
+          map,
+          icon,
+          title: place.name,
+          position: place.geometry.location,
+        })
+      );
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+}
+    });
+    //console.log(bounds.toJSON());
+    map.fitBounds(bounds);
+    const location = bounds.toJSON();
+    getGeoencoder(location.north, location.east);
+
+  });
+
+  map.addListener('click', function (e) {
+
+    let location = e.latLng.toJSON();
+
+    getGeoencoder(location.lat, location.lng);
+
+  });
+
+}
+
+//geocoder method to fetch address from coordinates passed as arguments
+function getGeoencoder(latitude, longitude): void {
+
+
+  const geoencoderOptions: NativeGeocoderOptions = {
+    useLocale: true,
+    maxResults: 5
+  };
+  const nativeGeocoder = new NativeGeocoder;
+
+  nativeGeocoder.reverseGeocode(latitude, longitude, geoencoderOptions)
+    .then((result: NativeGeocoderResult[]) => {
+
+      var estados: any[] = [
+        { "pais": "Brasil", "estado": "São Paulo", "uf": "SP" },
+        { "pais": "Brasil", "estado": "Rio de Janeiro", "uf": "RJ" },
+        { "pais": "Brasil", "estado": "Paraná", "uf": "PR" },
+        { "pais": "Brasil", "estado": "Santa Catarina", "uf": "SC" },
+        { "pais": "Brasil", "estado": "Rio Grande do Sul", "uf": "RS" },
+        { "pais": "Brasil", "estado": "Minas Gerais", "uf": "MG" },
+        { "pais": "Brasil", "estado": "Acre", "uf": "AC" },
+        { "pais": "Brasil", "estado": "Alagoas", "uf": "AL" },
+        { "pais": "Brasil", "estado": "Amapá", "uf": "AP" },
+        { "pais": "Brasil", "estado": "Amazonas", "uf": "AM" },
+        { "pais": "Brasil", "estado": "Bahia", "uf": "BA" },
+        { "pais": "Brasil", "estado": "Ceará", "uf": "CE" },
+        { "pais": "Brasil", "estado": "Distrito Federal", "uf": "DF" },
+        { "pais": "Brasil", "estado": "Espírito Santo", "uf": "ES" },
+        { "pais": "Brasil", "estado": "Goiás", "uf": "GO" },
+        { "pais": "Brasil", "estado": "Maranhão", "uf": "MA" },
+        { "pais": "Brasil", "estado": "Mato Grosso", "uf": "MT" },
+        { "pais": "Brasil", "estado": "Mato Grosso do Sul	", "uf": "MS" },
+        { "pais": "Brasil", "estado": "Pará", "uf": "PA" },
+        { "pais": "Brasil", "estado": "Paraíba", "uf": "PB" },
+        { "pais": "Brasil", "estado": "Pernambuco", "uf": "PE" },
+        { "pais": "Brasil", "estado": "Piauí", "uf": "PI" },
+        { "pais": "Brasil", "estado": "Rio Grande do Norte 	", "uf": "RN" },
+        { "pais": "Brasil", "estado": "Rondônia", "uf": "RO" },
+        { "pais": "Brasil", "estado": "Roraima", "uf": "RR" },
+        { "pais": "Brasil", "estado": "Sergipe", "uf": "SE" },
+        { "pais": "Brasil", "estado": "Tocantins", "uf": "TO" },
+      ];
+
+      if (result[0]) {
+
+        let lat: any = result[0].latitude;
+        let lng: any = result[0].longitude;
+
+
+        $('#companyDataLatitude').val((lat * 1).toFixed(6));
+        $('#companyDataLongitude').val((lng * 1).toFixed(6));
+
+
+        $('#companyDataLogradouro').val(result[0].thoroughfare);
+        $('#companyDataNumero').val(result[0].subThoroughfare);
+        $('#companyDataCep').val(result[0].postalCode);
+        $('#companyDataBairro').val(result[0].subLocality);
+        $('#companyDataPais').val(result[0].countryName);
+        $('#companyDataUf').val( estados.find( x => x.estado == result[0].administrativeArea).uf );
+        $('#companyDataCidade').val(result[0].subAdministrativeArea);
+
+
+      }
+
+
+    })
+    .catch((error: any) => {
+      alert('Error getting location ' + JSON.stringify(error));
+    });
+}
+
+
+declare global {
+  interface Window {
+    initAutocomplete: () => void;
+  }
+}
+window.initAutocomplete = initAutocomplete;
+export {};
+
+

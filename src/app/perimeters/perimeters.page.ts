@@ -104,7 +104,7 @@ export class PerimetersPage implements OnInit {
   async loadMap(lat, lng) {
     let latLng = new google.maps.LatLng(lat, lng);
     this.map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 12,
+      zoom: 11,
       center: latLng,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControl: true,
@@ -234,17 +234,18 @@ export class PerimetersPage implements OnInit {
         },
         infowindow: infowindow
       });
-      marker.setMap(this.map);
+      marker.setMap(map);
 
       let html: string = `<div id="mapInfoWindow">
-        Perimetro: <b>${item.id}</b> <br />
-        <input type="hidden" name="key" id="key" value="${item.id}"> <br />
+        Perímetro:  <b> <span name="keyId" id="keyId"><b style="color:#ff0000">${item.id}</b></span> 
+        <input type="hidden" name="key" id="key" value="${item.id}"><br />
         Descrição: <input class="inputTextClass" type="text" name="description" id="description" value="${item.description}" maxlenght="20" > <br />
         Range(KM): <input class="inputTextClass" type="number" name="range" id="range" value="${item.range}" maxlenght="4" > <br />
         Latitude: <input class="inputClass" type="number" name="latitude" id="latitude" value="${item.latitude}" maxlenght="4" > <br />
         Longitude: <input class="inputClass" type="number" name="longitude" id="longitude" value="${item.longitude}" maxlenght="4" > <br />
-        <input type="button" class="btntClass" name="#btnSalvar" id="btnSalvar" value="Salvar" /><br>
-        <input type="button" class="btntClass" name="#btnExcluir" id="btnExcluir" value="Excluir" /><br>
+        <input type="button" class="btnBadtClass" name="#btnExcluir" id="btnExcluir" value="Excluir" />
+        <input type="button" class="btnGoodClass" name="#btnSalvar" id="btnSalvar" value="Salvar"><br>
+        <div class="divClass" name="#btnFechar" id="btnFechar">[X] Fechar</div>
         </div>`;
 
       infowindow.setContent(html);
@@ -274,6 +275,125 @@ export class PerimetersPage implements OnInit {
       });
 
 
+
+
+      // adds a listener to the marker
+      // gets the coords when drag event ends
+      // then updates the input with the new coords
+      google.maps.event.addListener(marker, 'dragend', function (evt) {
+
+        marker.infowindow.open(map, this);
+
+        var range: any = $("#range").val();
+        var oldLat = $("#latitude").val();
+        var oldLng = $("#longitude").val();
+
+        $("#latitude").val(evt.latLng.lat());
+        $("#longitude").val(evt.latLng.lng());
+        map.panTo(evt.latLng);
+
+        const cityCircle = new google.maps.Circle({
+          strokeColor: '#0c9cf0',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#0c9cf0',
+          fillOpacity: 0.25,
+          center: evt.latLng,
+          radius: range * 1000,
+        });
+        cityCircle.setMap(map);
+        circles.push(cityCircle);
+
+        circles.map(circle => {
+          let center = circle.center.toJSON();
+          if (center.lat == oldLat && center.lng == oldLng) {
+            circle.setMap(null);
+          }
+        });
+
+      });
+
+      google.maps.event.addListener(infowindow, 'domready', function () {
+
+
+        $('#btnSalvar').on('click', async function () {
+
+          perimeter.id = $('#key').val();
+          perimeter.description = $('#description').val();
+          perimeter.range = $('#range').val();
+          perimeter.latitude = $('#latitude').val();
+          perimeter.longitude = $('#longitude').val();
+
+          $('#keyId').html(`<b style="color:#ff0000">salvando...</b>`);
+          const response = await salvar(perimeter, perimeterService);
+          if (response) {
+            $('#keyId').html(`<b>${response.id}</b>`);
+            $('#key').val(response.id);
+
+            const cityCircle = new google.maps.Circle({
+              strokeColor: '#0c9cf0',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#0c9cf0',
+              fillOpacity: 0.25,
+              center: { lat: response.latitude * 1, lng: response.longitude * 1 },
+              radius: response.range * 1000,
+            });
+            cityCircle.setMap(map);
+            circles.push(cityCircle);
+
+          }
+
+
+        });
+
+        $('#btnExcluir').on('click', async function () {
+
+          perimeter.id = $('#key').val();
+
+          if (perimeter.id != "") {
+            $('#keyId').html(`<b style="color:#ff0000">Excluindo...</b>`);
+            await excluir(perimeter.id, perimeterService).then(async (response) => {
+
+              await circles.map(circle => {
+                let circleCenter = circle.center.toJSON();
+
+                if (circleCenter.lat == perimeter.latitude && circleCenter.lng == perimeter.longitude) {
+                  circle.setMap(null);
+                }
+              });
+
+              await markers.map(marker => {
+                let markerPosition = marker.position.toJSON();
+
+                if (markerPosition.lat == perimeter.latitude && markerPosition.lng == perimeter.longitude) {
+                  markers.splice(marker);
+                  marker.infowindow.close(marker);
+                  marker.setMap(null);
+                }
+              });
+
+            }).catch((error) => {
+              $('#keyId').html(`<b style="color:#ff0000">Erro ao excluir..</b>`);
+            });
+          }
+
+        });
+
+
+        $('#btnFechar').on('click', async function () {
+
+          markers.map(marker => {
+            marker.infowindow.close(marker);
+          });
+        });
+
+      });
+
+
+
+
+
     });
 
 
@@ -288,7 +408,8 @@ export class PerimetersPage implements OnInit {
         maxWidth: 400
       });
       let html: string = `<div id="mapInfoWindow">
-        Perímetro:  <b> <span name="key_Incluir" id="key_Incluir"></span> <br />
+        Perímetro: <span name="keyIdr" id="keyId"></span>
+        <input type="hidden" name="key_Incluir" id="key_Incluir" value=""><br />
         Descrição: <input class="inputTextClass" type="text" placeholder="Descrição" name="description_Incluir" id="description_Incluir" maxlength="20" ><br>
         Range(KM): <input class="inputTextClass" type="number" placeholder="Range (KM)" name="range_Incluir" id="range_Incluir" maxlength="4" ><br>
         Latitude: <input class="inputClass" type="number" placeholder="Latitude" name="latitude_Incluir" id="latitude_Incluir" value="${position.lat}"> <br>
@@ -309,7 +430,7 @@ export class PerimetersPage implements OnInit {
           labelOrigin: new google.maps.Point(15, 50)
         },
         label: {
-          text: 'Novo',
+          text: '',
           color: 'green',
           fontSize: '16px',
           fontWeight: '900',
@@ -321,6 +442,22 @@ export class PerimetersPage implements OnInit {
       marker.setMap(map);
       markers.push(marker);
 
+
+      infowindow.open(map, marker);
+
+
+      //---------------------------------------------------------------------------
+      marker.addListener('click', function () {
+
+        markers.map(marker => {
+          marker.infowindow.close(marker);
+        });
+
+        this.infowindow.open(map, this);
+      });
+
+
+      //---------------------------------------------------------------------------
       google.maps.event.addListener(infowindow, 'domready', function () {
 
 
@@ -332,27 +469,35 @@ export class PerimetersPage implements OnInit {
           perimeter.latitude = $('#latitude_Incluir').val();
           perimeter.longitude = $('#longitude_Incluir').val();
 
-          $('#key_Incluir').html(`<b>salvando...</b>`);
-          const response = await salvar(perimeter, perimeterService);
-          if (response) {
-            $('#key_Incluir').html(`<b>${response.id}</b>`);
+          $('#key_Incluir').html(`<b style="color:#ff0000">Incluindo...</b>`);
+          await salvar(perimeter, perimeterService).then((response) => {
+            if (response) {
 
-            let cityCircle = new google.maps.Circle({
-              strokeColor: "#FF0000",
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: "#FF0000",
-              fillOpacity: 0.35,
-              center: { lat: response.latitude * 1, lng: response.longitude * 1 },
-              radius: response.range * 1000,
-            });
-            cityCircle.setMap(map);
-            circles.push(cityCircle);
+              if ($('#key_Incluir').val() == "") {
 
-          }
+                const cityCircle = new google.maps.Circle({
+                  strokeColor: '#0c9cf0',
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: '#0c9cf0',
+                  fillOpacity: 0.25,
+                  center: { lat: response.latitude * 1, lng: response.longitude * 1 },
+                  radius: response.range * 1000,
+                });
+                cityCircle.setMap(map);
+                circles.push(cityCircle);
+              }
+              $('#keyId').html(`<b style="color:#ff0000">${response.id}</b>`);
+              $('#key_Incluir').val(response.id);
 
+            }
+
+          }).catch((error) => {
+            $('#keyId').html(`<b style="color:#ff0000">Erro ao incluir...</b>`);
+          });
 
         });
+
 
         $('#btn_Incluir_Excluir').on('click', async function () {
 
@@ -362,27 +507,36 @@ export class PerimetersPage implements OnInit {
           perimeter.latitude = $('#latitude_Incluir').val();
           perimeter.longitude = $('#longitude_Incluir').val();
 
-          await circles.map(circle => {
-            let circleCenter = circle.center.toJSON();
-
-            if (circleCenter.lat == perimeter.latitude &&
-              circleCenter.lng == perimeter.longitude) {
-              circle.setMap(null);
-            }
-          });
-
-          await markers.map(marker => {
-            let markerPosition = marker.position.toJSON();
-            if (markerPosition.lat == perimeter.latitude &&
-              markerPosition.lng == perimeter.longitude) {
-              marker.infowindow.close(marker);
-              marker.setMap(null);
-            }
-          });
-
-
           if (perimeter.id != "") {
-            await excluir(perimeter.id, perimeterService);
+            await excluir(perimeter.id, perimeterService).then(async (response) => {
+
+              await circles.map(circle => {
+                let circleCenter = circle.center.toJSON();
+                console.log('circleCenter', circleCenter);
+
+                if (circleCenter.lat === perimeter.latitude &&
+                  circleCenter.lng === perimeter.longitude) {
+                  circle.setMap(null);
+                }
+              });
+
+              await markers.map(marker => {
+                let markerPosition = marker.position.toJSON();
+                console.log('markerPosition', markerPosition);
+
+                if (markerPosition.lat == perimeter.latitude &&
+                  markerPosition.lng == perimeter.longitude) {
+                  markers.splice(marker);
+                  marker.infowindow.close(marker);
+                  marker.setMap(null);
+                }
+              });
+
+
+            }).catch((error) => {
+              $('#key_Incluir').html(`<b style="color:#ff0000">Erro ao excluir..</b>`);
+            });
+
           }
 
         });
@@ -398,16 +552,9 @@ export class PerimetersPage implements OnInit {
       });
 
 
-      infowindow.open(map, marker);
 
-      marker.addListener('click', function () {
 
-        markers.map(marker => {
-          marker.infowindow.close(marker);
-        });
 
-        this.infowindow.open(map, this);
-      });
 
     });
 

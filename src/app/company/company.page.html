@@ -77,78 +77,86 @@
           </ion-row>
           <ion-row>
             <ion-col>
+
+              <ion-accordion-group>
+                <ion-accordion value="colors">
+                  <ion-item slot="header">
+                    <ion-label>Definir o endereço pelo Mapa</ion-label>
+                  </ion-item>
+
+                  <ion-list slot="content">
+                    <ion-item>
+                      <div id="divMap">
+                        <input name="pac-input" id="pac-input" type="text" placeholder="Procurar endereço..."/><br>
+                        <div name="map" id="map"></div>
+                      </div>
+                    </ion-item>
+                  </ion-list>
+                </ion-accordion>
+              </ion-accordion-group>
+
+
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
               <!-- 5 -->
-              <ion-input #items (keypress)="onKeyPressed($event, 5)" placeholder="Latitude ex: -23.99999" type="text" [(ngModel)]="companyData.latitude" [value]="companyData.latitude"></ion-input>
+              <ion-input disabled name="companyDataLatitude" id="companyDataLatitude"  (keypress)="onKeyPressed($event, 5)" placeholder="Latitude ex: -23.99999" type="text" [(ngModel)]="companyData.latitude" [value]="companyData.latitude"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <!-- 6 -->
-              <ion-input #items (keypress)="onKeyPressed($event, 6)" placeholder="Longitude ex: -46.99999" type="text" [(ngModel)]="companyData.longitude" [value]="companyData.longitude"></ion-input>
+              <ion-input disabled name="companyDataLongitude" id="companyDataLongitude" #items (keypress)="onKeyPressed($event, 6)" placeholder="Longitude ex: -46.99999" type="text" [(ngModel)]="companyData.longitude" [value]="companyData.longitude"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <!-- 7 -->
-              <ion-input #items (keypress)="onKeyPressed($event, 7)" placeholder="Logradouro" type="text" [(ngModel)]="companyData.logradouro" [value]="companyData.logradouro"></ion-input>
+              <ion-input  disabled name="companyDataLogradouro" id="companyDataLogradouro" placeholder="Logradouro" type="text" [(ngModel)]="companyData.logradouro" [value]="companyData.logradouro"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <!-- 8 -->
-              <ion-input #items (keypress)="onKeyPressed($event, 8)" placeholder="Numero" type="text" [(ngModel)]="companyData.numero" [value]="companyData.numero"></ion-input>
+              <ion-input disabled name="companyDataNumero" id="companyDataNumero"  placeholder="Numero" type="text" [(ngModel)]="companyData.numero" [value]="companyData.numero"></ion-input>
             </ion-col>
           </ion-row>
-          <ion-row>
+          <!-- <ion-row>
             <ion-col>
-              <!-- 9 -->
-              <ion-input #items (keypress)="onKeyPressed($event, 9)" placeholder="Complemento" type="text" [(ngModel)]="companyData.complemento" [value]="companyData.complemento"></ion-input>
+              <ion-input placeholder="Complemento" type="text" [(ngModel)]="companyData.complemento" [value]="companyData.complemento"></ion-input>
             </ion-col>
-          </ion-row>
+          </ion-row> -->
           <ion-row>
             <ion-col>
               <!-- 10 -->
-              <ion-input #items (keypress)="onKeyPressed($event, 10)" placeholder="CEP" maxlength="9" [brmasker]="{mask: '99999-999'}" type="mask" [(ngModel)]="companyData.cep" [value]="companyData.cep"></ion-input>
+              <ion-input disabled name="#companyDataCep" id="companyDataCep"  placeholder="CEP" maxlength="9" [brmasker]="{mask: '99999-999'}" type="mask" [(ngModel)]="companyData.cep" [value]="companyData.cep"></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <!-- 11 -->
-              <ion-input #items (keypress)="onKeyPressed($event, 11)" placeholder="Bairro" type="text" [(ngModel)]="companyData.bairro" [value]="companyData.bairro"></ion-input>
-            </ion-col>
-          </ion-row>
-
-
-          <ion-row>
-            <ion-col>
-              <ion-select #items interface="action-sheet" placeholder="País" cancelText="Cancelar" [interfaceOptions]="paisActionSheetOptions" [(ngModel)]="companyData.pais" [(value)]="companyData.pais" (ionChange)="preencheUfs()">
-                <ion-select-option *ngFor="let pais of Paises" [value]="pais.nome">
-                  {{pais.nome}}
-                </ion-select-option>
-              </ion-select>
+              <ion-input disabled name="#companyDataBairro" id="companyDataBairro"  (keypress)="onKeyPressed($event, 11)" placeholder="Bairro" type="text" [(ngModel)]="companyData.bairro" [value]="companyData.bairro"></ion-input>
             </ion-col>
           </ion-row>
 
           <ion-row>
             <ion-col>
-              <ion-select #items interface="action-sheet" placeholder="UF" cancelText="Cancelar" [interfaceOptions]="estadoActionSheetOptions" [(value)]="companyData.uf" [(ngModel)]="companyData.uf" (ionChange)="preencheCidades()">
-                <div *ngFor="let estado of Estados">
-                  <ion-select-option *ngIf="estado.pais == companyData.pais" [value]="estado.uf">{{estado.uf}} - {{estado.estado}}</ion-select-option>
-              </div>
-            </ion-select>
+              <ion-input disabled  name="#companyDataCidade" id="companyDataCidade"  placeholder="Cidade" type="text" [(ngModel)]="companyData.cidade" [value]="companyData.cidade"></ion-input>
             </ion-col>
           </ion-row>
 
           <ion-row>
             <ion-col>
-              <ion-select #items interface="action-sheet" placeholder="Cidade" cancelText="Cancelar" [interfaceOptions]="cidadeActionSheetOptions" [(ngModel)]="companyData.cidade" [(value)]="companyData.cidade">
-                <div *ngFor="let cidade of Cidades">
-                  <ion-select-option  *ngIf="cidade.uf == companyData.uf" [value]="cidade.nome">{{cidade.nome}}</ion-select-option>
-              </div>
-              </ion-select>
+              <ion-input disabled name="companyDataUf" id="companyDataUf"  placeholder="UF" type="text" [(ngModel)]="companyData.uf" [value]="companyData.uf"></ion-input>
             </ion-col>
           </ion-row>
 
+          <ion-row>
+            <ion-col>
+              <ion-input disabled name="companyDataPais" id="companyDataPais"  placeholder="Cidade" type="text" [(ngModel)]="companyData.pais" [value]="companyData.pais"></ion-input>
+            </ion-col>
+          </ion-row>
 
           <ion-row aria-colspan="2">
             <ion-col>
@@ -274,9 +282,11 @@
           </ion-row>
         </ion-grid>
 
+
       </ion-card-content>
 
     </ion-card>
+
 
   </div>
 

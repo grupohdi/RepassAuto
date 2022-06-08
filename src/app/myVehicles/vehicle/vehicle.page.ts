@@ -11,9 +11,11 @@ import { IVeiculoFotoService } from '../../../services/interfaces/IVeiculoFotoSe
 import { VeiculoDto } from '../../../dto/VeiculoDto';
 import { VeiculoFotoDto } from '../../../dto/VeiculoFotoDto';
 import { ActivatedRoute } from '@angular/router';
+import { ToastComponent } from 'src/components/toast/toast';
+declare var google: any;
+
 
 import SwiperCore, { SwiperOptions, Autoplay, Keyboard, Pagination, Navigation, Scrollbar, A11y, Zoom } from 'swiper';
-import { ToastComponent } from 'src/components/toast/toast';
 SwiperCore.use([Autoplay, Navigation, Keyboard, Pagination, Scrollbar, A11y, Zoom]);
 
 @Component({
@@ -23,8 +25,10 @@ SwiperCore.use([Autoplay, Navigation, Keyboard, Pagination, Scrollbar, A11y, Zoo
 })
 
 export class VehiclePage implements OnInit {
+  public map: any;
   public vehicleForm: any;
 
+  public openMap: boolean = false;
   public logged: any;
   public rlUser: any;
   public company: any;
@@ -197,6 +201,7 @@ export class VehiclePage implements OnInit {
 
   ];
 
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -243,11 +248,11 @@ export class VehiclePage implements OnInit {
 
   async ionViewDidEnter() {
 
-    await this.preencheTabelaReferencias();
-    await this.carregar();
 
     this.platform.ready().then(async () => {
 
+      await this.preencheTabelaReferencias();
+      await this.carregar();
 
     });
   }
@@ -567,6 +572,8 @@ export class VehiclePage implements OnInit {
     });
     await alert.present();
   }
+
+
 
 
 }
