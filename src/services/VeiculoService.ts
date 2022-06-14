@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { IHttpClientProxy } from './interfaces/IHttpClientProxy';
 import { IConfiguracaoService } from './interfaces/IConfiguracaoService';
 import { ILocalStorageRepository } from '../Repository/interfaces/ILocalStorageRepository';
-import { ValidacaoCamposProvider } from 'src/providers/validacao-campos/validacao-campos';
+import {FunctionsProvider } from 'src/providers/functions/functions';
 
 const WEBAPI_PATH_VEHICLE = "/plt_veiculo_v1/vehicles";
 const WEBAPI_PATH_VEHICLE_FILTER = "/plt_veiculo_v1/vehicles/filters/items";
@@ -17,7 +17,7 @@ export class VeiculoService implements IVeiculoService {
 
     constructor(
         public http: HttpClient,
-        public vcProvider: ValidacaoCamposProvider,
+        public vcProvider:FunctionsProvider,
         @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
         @Inject('HttpClientProxyToken') private httpClientProxy: IHttpClientProxy,
         @Inject('ConfiguracaoServiceToken') private configuracaoService: IConfiguracaoService

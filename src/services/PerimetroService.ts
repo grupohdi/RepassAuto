@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { IHttpClientProxy } from './interfaces/IHttpClientProxy';
 import { IConfiguracaoService } from './interfaces/IConfiguracaoService';
 import { ILocalStorageRepository } from '../Repository/interfaces/ILocalStorageRepository';
-import { ValidacaoCamposProvider } from 'src/providers/validacao-campos/validacao-campos';
+import {FunctionsProvider } from 'src/providers/functions/functions';
 
 const WEBAPI_PATH_PERIMETER = "/plt_perimetro_v1/perimeters";
 const WEBAPI_PATH_PERIMETER_FILTER = "/plt_perimetro_v1/perimeters/filters/items";
@@ -17,7 +17,7 @@ export class PerimetroService implements IPerimetroService {
 
     constructor(
         public http: HttpClient,
-        public vcProvider: ValidacaoCamposProvider,
+        public vcProvider:FunctionsProvider,
         @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
         @Inject('HttpClientProxyToken') private httpClientProxy: IHttpClientProxy,
         @Inject('ConfiguracaoServiceToken') private configuracaoService: IConfiguracaoService

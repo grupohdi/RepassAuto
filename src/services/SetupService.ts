@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { IHttpClientProxy } from './interfaces/IHttpClientProxy';
 import { IConfiguracaoService } from './interfaces/IConfiguracaoService';
 import { ILocalStorageRepository } from '../Repository/interfaces/ILocalStorageRepository';
-import { ValidacaoCamposProvider } from 'src/providers/validacao-campos/validacao-campos';
+import {FunctionsProvider } from 'src/providers/functions/functions';
 
 const WEBAPI_PATH_SETUP = "/plt_setup_v1/setups";
 const WEBAPI_PATH_ONBOARDING_COMPANY = "/plt_setup_v1/onboarding/setup/company";
@@ -15,7 +15,7 @@ export class SetupService implements ISetupService {
 
     constructor(
         public http: HttpClient,
-        public vcProvider: ValidacaoCamposProvider,
+        public vcProvider:FunctionsProvider,
         @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
         @Inject('HttpClientProxyToken') private httpClientProxy: IHttpClientProxy,
         @Inject('ConfiguracaoServiceToken') private configuracaoService: IConfiguracaoService

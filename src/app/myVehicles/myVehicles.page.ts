@@ -124,6 +124,18 @@ export class MyVehiclesPage implements OnInit {
       vehicle = new VeiculoDto();
       vehicle.companyId = this.rlUser.companyId;
       vehicle.userId = this.rlUser.userId;
+
+      vehicle.latitude = this.company.latitude;
+      vehicle.longitude = this.company.longitude;
+      vehicle.logradouro = this.company.logradouro;
+      vehicle.numero = this.company.numero;
+      vehicle.bairro = this.company.bairro;
+      vehicle.cep = this.company.cep;
+      vehicle.cidade = this.company.cidade;
+      vehicle.uf = this.company.uf;
+      vehicle.pais = this.company.pais;
+
+
     }
     let navigationExtras: NavigationExtras = { state: { "vehicle": vehicle } };
     this.router.navigate(['/myVehicles/vehicle'], navigationExtras);

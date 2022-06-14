@@ -17,7 +17,7 @@ import { Network } from '@ionic-native/network/ngx';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorProvider } from '../providers/http-interceptor/http-interceptor';
-import { ValidacaoCamposProvider } from '../providers/validacao-campos/validacao-campos';
+import {FunctionsProvider } from '../providers/functions/functions';
 import { LocalStorageRepository } from '../repository/LocalStorageRepository';
 import { HttpClientProxy } from '../services/HttpClientProxy';
 
@@ -69,7 +69,7 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
     StatusBar,
     ScreenOrientation,
     Network,
-    ValidacaoCamposProvider,
+   FunctionsProvider,
     HttpInterceptorProvider,
     LocalStorageRepository,
     Keyboard,
@@ -82,7 +82,7 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
     StatusBar,
     SplashScreen,
     AndroidPermissions,
-    ValidacaoCamposProvider,
+   FunctionsProvider,
     HttpInterceptorProvider,
     ScreenOrientation,
     Network,

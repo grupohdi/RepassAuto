@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IHttpClientProxy } from './interfaces/IHttpClientProxy';
 import { IConfiguracaoService } from './interfaces/IConfiguracaoService';
 import { ILocalStorageRepository } from '../Repository/interfaces/ILocalStorageRepository';
-import { ValidacaoCamposProvider } from 'src/providers/validacao-campos/validacao-campos';
+import {FunctionsProvider } from 'src/providers/functions/functions';
 import { RlUserDto } from 'src/dto/RlUserDto';
 
 const WEBAPI_PATH_USER = "/plt_user_v1/users";
@@ -24,7 +24,7 @@ export class UserService implements IUserService {
 
     constructor(
         public http: HttpClient,
-        public vcProvider: ValidacaoCamposProvider,
+        public vcProvider:FunctionsProvider,
         @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
         @Inject('RlUserServiceToken') private rlUserService: IRlUserService,
         @Inject('HttpClientProxyToken') private httpClientProxy: IHttpClientProxy,

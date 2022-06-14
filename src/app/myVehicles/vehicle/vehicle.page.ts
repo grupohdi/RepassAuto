@@ -12,7 +12,6 @@ import { VeiculoDto } from '../../../dto/VeiculoDto';
 import { VeiculoFotoDto } from '../../../dto/VeiculoFotoDto';
 import { ActivatedRoute } from '@angular/router';
 import { ToastComponent } from 'src/components/toast/toast';
-declare var google: any;
 
 
 import SwiperCore, { SwiperOptions, Autoplay, Keyboard, Pagination, Navigation, Scrollbar, A11y, Zoom } from 'swiper';

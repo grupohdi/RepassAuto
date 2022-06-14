@@ -96,7 +96,7 @@ export class AppComponent {
             this.vendor = (this.user.role.trim() ==="platform_user_access");
 
             let navigationExtras: NavigationExtras = {queryParams: {mode: "1"}};
-            this.router.navigate(['/company'], navigationExtras);
+            this.router.navigate(['/offers'], navigationExtras);
         
           };
         };

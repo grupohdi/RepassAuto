@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { IHttpClientProxy } from './interfaces/IHttpClientProxy';
 import { IConfiguracaoService } from './interfaces/IConfiguracaoService';
 import { ILocalStorageRepository } from '../Repository/interfaces/ILocalStorageRepository';
-import { ValidacaoCamposProvider } from 'src/providers/validacao-campos/validacao-campos';
+import {FunctionsProvider } from 'src/providers/functions/functions';
 
 const WEBAPI_PATH_RLUSER = "/plt_rl_user_v1/user/relationships";
 const WEBAPI_PATH_RLUSER_FILTER = "/plt_rl_user_v1/user/relationships/filters/items";
@@ -16,7 +16,7 @@ export class RlUserService implements IRlUserService {
 
     constructor(
         public http: HttpClient,
-        public vcProvider: ValidacaoCamposProvider,
+        public vcProvider:FunctionsProvider,
         @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
         @Inject('HttpClientProxyToken') private httpClientProxy: IHttpClientProxy,
         @Inject('ConfiguracaoServiceToken') private configuracaoService: IConfiguracaoService

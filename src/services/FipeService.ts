@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { IHttpClientProxy } from './interfaces/IHttpClientProxy';
 import { IConfiguracaoService } from './interfaces/IConfiguracaoService';
 import { ILocalStorageRepository } from '../Repository/interfaces/ILocalStorageRepository';
-import { ValidacaoCamposProvider } from 'src/providers/validacao-campos/validacao-campos';
+import {FunctionsProvider } from 'src/providers/functions/functions';
 
 const WEBAPI_PATH_TABELA_REFERENCIA = "/plt_veiculo_v1/fipe/tabelaReferencia";
 const WEBAPI_PATH_MARCA = "/plt_veiculo_v1/fipe/marcas";
@@ -19,7 +19,7 @@ export class FipeService implements IFipeService {
 
     constructor(
         public http: HttpClient,
-        public vcProvider: ValidacaoCamposProvider,
+        public vcProvider:FunctionsProvider,
         @Inject('LocalStorageRepositoryToken') private localStorageRepository: ILocalStorageRepository,
         @Inject('HttpClientProxyToken') private httpClientProxy: IHttpClientProxy,
         @Inject('ConfiguracaoServiceToken') private configuracaoService: IConfiguracaoService
