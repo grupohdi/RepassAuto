@@ -14,7 +14,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ToastComponent } from 'src/components/toast/toast';
 import { FunctionsProvider } from '..//src/src/provider/';
 
-
+//
 declare var google: any;
 
 
